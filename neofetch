@@ -15,6 +15,7 @@ version="3.1.0-git"
 
 # Neofetch-Sh
 POSIXLY_CORRECT=1
+arr() { echo $1 | awk -v i=$2 '{ print $i }' ;}
 
 #bash_version="${BASH_VERSION/.*}" # todo: bash-specific / should be rm'ed
 sys_locale="${LANG:-C}"
@@ -93,16 +94,16 @@ script_config() {
     gtk2="on"
     gtk3="on"
     public_ip_host="http://ident.me"
-    disk_show=('/')
+    disk_show='/'
     disk_subtitle="mount"
     song_shorthand="off"
     install_time="on"
     install_time_format="12h"
-    colors=(distro)
+    colors="distro"
     bold="on"
     underline_enabled="on"
     underline_char="-"
-    block_range=(0 7)
+    block_range='0 7'
     color_blocks="on"
     block_width=3
     block_height=1
@@ -119,10 +120,10 @@ script_config() {
     image_backend="ascii"
     image_source="auto"
     ascii_distro="auto"
-    ascii_colors=(distro)
+    ascii_colors="distro"
     ascii_bold="on"
     image_loop="off"
-    thumbnail_dir="${XDG_CACHE_HOME:-${HOME}/.cache}/thumbnails/neofetch"
+    thumbnail_dir="${XDG_CACHE_HOME:-${HOME}/.cache}/thumbnails/neofetch" # todo: rm
     crop_mode="normal"
     crop_offset="center"
     image_size="auto"
@@ -660,7 +661,7 @@ get_shell() {
             "sh" | "ash" | "dash") ;;
 
             "mksh" | "ksh")
-                shell+="$("$SHELL" -c 'printf "%s" "$KSH_VERSION"')"
+                shell="$shell $(\"$SHELL\" -c 'printf \"%s\" \"$KSH_VERSION\"')"
                 shell="${shell/ * KSH}"
                 shell="$(echo $shell | sed 's/version//')"
             ;;
@@ -713,7 +714,7 @@ get_de() {
             # the desktop variables are sometimes also set to the
             # window manager name. This checks to see if WM == DE
             # and dicards the DE value.
-            [ "$wm" && echo "$de" | grep -qE '^$wm$' ] && { unset -v de; return; }
+            [ "$wm" ] && echo "$de" | grep -qE '^$wm$' && { unset -v de; return; }
         ;;
     esac
 
@@ -1190,8 +1191,8 @@ get_gpu() {
 
             for gpu in "${gpus[@]}"; do
                 # GPU shorthand tests.
-                [ "$gpu_type" = "dedicated" && echo "$gpu" | grep -qE '(i|I)ntel' ] || \
-                [ "$gpu_type" = "integrated" && ! echo "$gpu" | grep -qE '(i|I)ntel' ] && \
+                [ "$gpu_type" = "dedicated" ] && echo "$gpu" | grep -qE '(i|I)ntel' || \
+                [ "$gpu_type" = "integrated" ] && ! echo "$gpu" | grep -qE '(i|I)ntel' && \
                     { unset -v gpu; continue; }
 
                 case "$gpu" in
@@ -1930,25 +1931,25 @@ get_disk() {
     # Get "df" flags.
     case "$os" in
         "Haiku") err "Disk doesn't work on Haiku due to the non-standard 'df'"; return ;;
-        "Mac OS X") df_flags=('-P' '-h') ;;
-        "AIX") df_flags=('-P' '-g') ;;
-        *) df_flags=('-h') ;;
+        "Mac OS X") df_flags="-P -h" ;;
+        "AIX") df_flags="-P -g" ;;
+        *) df_flags="-h" ;;
     esac
 
     # Create an array called 'disks' where each element is a separate line from
     # df's output. We then unset the first element which removes the column titles.
     IFS=$'\n'
-    disks=($(df "${df_flags[@]}" "${disk_show[@]:-/}" 2>/dev/null))
+    disks="$(df "arr $df_flags 0" "${disk_show[@]:-/}" 2>/dev/null)"
     unset 'disks[0]'
     IFS="$old_ifs"
 
     # Stop here if 'df' fails to print disk info.
-    [ -z "${disks[@]}" ] && \
+    [ -z "$(arr $disks 0)" ] && \
         { err "Disk: df failed to print the disks, make sure the disk_show array is set properly."; return; }
 
     for disk in "${disks[@]}"; do
         # Create a second array and make each element split at whitespace this time.
-        disk_info=($disk)
+        disk_info="$disk"
         disk_perc="${disk_info[4]/'%'}"
 
         disk="${disk_info[2]/i} / ${disk_info[1]/i} (${disk_perc}%)"
@@ -2090,7 +2091,7 @@ get_local_ip() {
 get_public_ip() {
     if command -v dig >/dev/null; then
         public_ip="$(dig +time=1 +tries=1 +short myip.opendns.com @resolver1.opendns.com)"
-       [ echo "$public_ip" | grep -qE '^\;' ] && unset public_ip
+       echo "$public_ip" | grep -qE '^\;' && unset public_ip
     fi
 
     if [ -z "$public_ip" ] && command -v curl >/dev/null; then
@@ -2141,7 +2142,7 @@ get_install_date() {
 
     install_date="${install_date//-/ }"
     install_date="${install_date%:*}"
-    install_date=($install_date)
+    install_date="$install_date"
     install_date="$(convert_time "${install_date[@]}")"
 }
 
@@ -2155,16 +2156,17 @@ get_cols() {
         printf -v block_width "%${block_width}s"
 
         # Set variables.
-        start="${block_range[0]}"
-        end="${block_range[1]}"
+        start="$(arr $block_range 1)"
+        end="$(arr $block_range 2)"
 
         # Generate the string.
-        for ((start; start<=end; start++)); do
+        while [ $start -le $end ]; do
             case "$start" in
                 [0-6]) blocks+="${reset}\033[3${start}m\033[4${start}m${block_width}" ;;
                 7) blocks+="${reset}\033[3${start}m\033[4${start}m${block_width}" ;;
                 *) blocks2+="\033[38;5;${start}m\033[48;5;${start}m${block_width}" ;;
             esac
+            start=$((start+1))
         done
 
         # Convert height into spaces.
@@ -2302,7 +2304,7 @@ get_image_source() {
 
             if [ -d "$image_source" ]; then
                 shopt -s nullglob # todo: bash-specific / should be rm'ed
-                files=("${image_source%/}"/*.{png,jpg,jpeg,jpe,gif})
+                files="\"${image_source%/}\"/*.{png,jpg,jpeg,jpe,gif}"
                 shopt -u nullglob # todo: bash-specific / should be rm'ed
                 image="${files[RANDOM % ${#files[@]}]}"
 
@@ -2412,14 +2414,14 @@ get_term_size() {
     # get the terminal size.
     if [ -n "$TMUX" ]; then
         printf "%b" "\033Ptmux;\033\033[14t\033\033[c\033\\"
-        read_flags=(-d c)
+        read_flags="-d c"
 
     elif [ "$image_backend" = "tycat" ]; then
         printf "%b" "\033}qs\000"
 
     else
         printf "%b" "\033[14t\033[c"
-        read_flags=(-d c)
+        read_flags="-d c"
     fi
 
     # The escape codes above print the desired output as
@@ -2486,7 +2488,7 @@ get_image_size() {
             image_size="$((columns * font_width / 2))"
             term_height="$((term_height - term_height / 4))"
 
-            $((term_height < image_size)) && \
+            [ $term_height -lt $image_size ] && \
                 image_size="$term_height"
         ;;
 
@@ -2494,7 +2496,7 @@ get_image_size() {
             percent="${image_size/\%}"
             image_size="$((percent * term_width / 100))"
 
-            $(((percent * term_height / 50) < image_size)) && \
+            [ "$((percent * term_height / 50))" -lt $image_size ] && \
                 image_size="$((percent * term_height / 100))"
         ;;
 
@@ -2541,7 +2543,7 @@ make_thumbnail() {
             # This checks to see if height is greater than width
             # so we can do a better crop of portrait images.
             size="$og_height"
-            $((og_height > og_width)) && size="$og_width"
+            [ $og_height -gt og_width ] && size="$og_width"
         fi
 
         case "$crop_mode" in
@@ -2687,12 +2689,12 @@ scrot_upload() {
     case "$image_host" in
         "teknik")
             image_url="$(curl -sf -F file="@${image_file};type=image/png" "https://api.teknik.io/v1/Upload")"
-            image_url="$(awk -F 'url:|,' '{printf $2}' <<< "${image_url//\"}")"
+            image_url="$(echo "${image_url//\"}" | awk -F 'url:|,' '{printf $2}')"
         ;;
 
         "imgur")
             image_url="$(curl -sH "Authorization: Client-ID 0e8b44d15e9fc95" -F image="@${image_file}" "https://api.imgur.com/3/upload")"
-            image_url="$(awk -F 'id:|,' '{printf $2}' <<< "${image_url//\"}")"
+            image_url="$(echo "${image_url//\"}" | awk -F 'id:|,' '{printf $2}')"
             [ "$image_url" ] && image_url="https://i.imgur.com/${image_url}.png"
         ;;
     esac
@@ -2703,7 +2705,7 @@ scrot_upload() {
 scrot_args() {
     scrot="on"
 
-    if [ echo "$2" | grep -qE '\.(png|jpg|jpe|jpeg|gif)$' ]; then
+    if echo "$2" | grep -qE '\.(png|jpg|jpe|jpeg|gif)$'; then
         scrot_name="${2##*/}"
         scrot_dir="${2/$scrot_name}"
 
@@ -2721,22 +2723,22 @@ scrot_program() {
     # falling back to OS specific screenshot tools.
     if [ -n "$DISPLAY" ]; then
         if [ "$scrot_cmd" != "auto" ] && command -v "$scrot_cmd" >/dev/null; then
-            scrot_program=("$scrot_cmd")
+            scrot_program="$scrot_cmd"
 
         elif command -v scrot >/dev/null; then
-            scrot_program=(scrot)
+            scrot_program="scrot"
 
         elif command -v maim >/dev/null; then
-            scrot_program=(maim)
+            scrot_program="maim"
 
         elif command -v import >/dev/null; then
-            scrot_program=(import -window root)
+            scrot_program="import -window root"
 
         elif command -v imlib2_grab >/dev/null; then
-            scrot_program=(imlib2_grab)
+            scrot_program="imlib2_grab"
 
         elif command -v gnome-screenshot >/dev/null; then
-            scrot_program=(gnome-screenshot -f)
+            scrot_program="gnome-screenshot -f"
 
         else
             err "Scrot: No screen capture tool found."
@@ -2744,8 +2746,8 @@ scrot_program() {
         fi
     else
         case "$os" in
-            "Mac OS X") scrot_program=(screencapture -S) ;;
-            "Haiku") scrot_program=(screenshot -s) ;;
+            "Mac OS X") scrot_program="screencapture -S" ;;
+            "Haiku") scrot_program="screenshot -s" ;;
         esac
     fi
 
@@ -2760,9 +2762,9 @@ scrot_program() {
     printf "%s\r" "Taking scrot..."
 
     # Take the scrot.
-    "${scrot_program[@]}" "$1"
+    "$(arr $scrot_program 0)" "$1"
 
-    err "Scrot: Screen captured using ${scrot_program[0]}"
+    err "Scrot: Screen captured using $(arr $scrot_program 1)"
 }
 
 # TEXT FORMATTING
@@ -3521,9 +3523,9 @@ get_distro_colors() {
 
     # Overwrite distro colors if '$ascii_colors' doesn't
     # equal 'distro'.
-    if [ "${ascii_colors[0]}" != "distro" ]; then
+    if [ "$(arr ascii_colors 1)" != "distro" ]; then
         color_text="off"
-        set_colors "${ascii_colors[@]}"
+        set_colors "$(arr ascii_colors 0)"
     fi
 }
 
@@ -3539,7 +3541,7 @@ set_colors() {
 }
 
 set_text_colors() {
-    if [ "${colors[0]}" = "distro" ]; then
+    if [ "$(arr colors 1)" = "distro" ]; then
         title_color="$(color "$1")"
         at_color="$reset"
         underline_color="$reset"
@@ -3773,7 +3775,7 @@ old_options() {
     [ "$ascii_logo_size" ] && err "Config: ascii_logo_size is deprecated, use ascii_distro='{alpine,arch,crux,gentoo,openbsd,void}_small' instead."
 
     # $start and $end were replaced with ${block_range[@]} in 3.0.
-    [ "$start" && "$end" ] && { err "Config: \$start and \$end are deprecated, use block_range=(0 7) instead."; block_range=("$start" "$end"); }
+    [ "$start" && "$end" ] && { err "Config: \$start and \$end are deprecated, use block_range='0 7' instead."; block_range="\"$start\" \"$end\""; }
 
     # Fahrenheit support was added to CPU so the options were changed.
     [ "$cpu_temp" = "on" ] && { err "Config: cpu_temp='on' is deprecated, use cpu_temp='C' or 'F' instead."; cpu_temp="C"; }
@@ -3788,11 +3790,11 @@ old_options() {
 cache_uname() {
     # Cache the output of uname so we don't
     # have to spawn it multiple times.
-    uname=($(uname -srm))
+    uname="$(uname -srm)"
 
-    kernel_name="${uname[0]}"
-    kernel_version="${uname[1]}"
-    machine_arch="${uname[2]}"
+    kernel_name="$(arr $uname 1)"
+    kernel_version="$(arr $uname 2)"
+    machine_arch="$(arr $uname 3)"
 }
 
 convert_time() {
@@ -3824,7 +3826,7 @@ convert_time() {
     # Get leap year.
     # Source: http://stackoverflow.com/questions/725098/leap-year-calculation
     [ "$((year % 4))" = 0 && "$((year % 100))" != 0 || "$((year % 400))" = 0 ] && \
-    [ echo "$month" | grep -qE '(Jan|Feb)' ] && \
+    echo "$month" | grep -qE '(Jan|Feb)' && \
         leap_code=1
 
     # Calculate day of week.
@@ -4171,7 +4173,7 @@ get_args() {
                     case "$arg" in
                         "--disk_show") ;;
                         "-"*) break ;;
-                        *) disk_show+=($arg)
+                        *) disk_show="$disk_show $arg"
                     esac
                 done
             ;;
@@ -4195,10 +4197,10 @@ get_args() {
                 for arg in "$2" "$3" "$4" "$5" "$6" "$7"; do
                     case "$arg" in
                         "-"*) break ;;
-                        *) colors=(${colors} $arg)
+                        *) colors="$colors $arg"
                     esac
                 done
-                colors=(${colors} 7 7 7 7 7 7)
+                colors="$colors 7 7 7 7 7 7"
             ;;
 
             # Text Formatting
@@ -4208,7 +4210,7 @@ get_args() {
 
             # Color Blocks
             "--color_blocks") color_blocks="$2" ;;
-            "--block_range") block_range=("$2" "$3") ;;
+            "--block_range") block_range="\"$2\" \"$3\"" ;;
             "--block_width") block_width="$2" ;;
             "--block_height") block_height="$2" ;;
 
@@ -4262,10 +4264,10 @@ get_args() {
                 for arg in "$2" "$3" "$4" "$5" "$6" "$7"; do
                     case "$arg" in
                         "-"*) break ;;
-                        *) ascii_colors+=($arg)
+                        *) ascii_colors="$ascii_colors $arg"
                     esac
                 done
-                ascii_colors=($ascii_colors 7 7 7 7 7 7)
+                ascii_colors="$ascii_colors 7 7 7 7 7 7"
             ;;
 
             "--ascii_distro")

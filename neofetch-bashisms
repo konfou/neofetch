@@ -1,366 +1,346 @@
-possible bashism in neofetch line 138 ('command' with option other than -p):
+possible bashism in neofetch line 136 ($RANDOM):
+    scrot_name="neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png"
+possible bashism in neofetch line 194 ('command' with option other than -p):
             elif command -v lsb_release >/dev/null; then
-possible bashism in neofetch line 146 ('command' with option other than -p):
+possible bashism in neofetch line 202 ('command' with option other than -p):
             elif command -v guix >/dev/null; then
-possible bashism in neofetch line 152 ('command' with option other than -p):
+possible bashism in neofetch line 208 ('command' with option other than -p):
             elif command -v crux >/dev/null; then
-possible bashism in neofetch line 155 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 211 (${parm/?/pat[/str]}):
                     "on")   distro="${distro//version}" ;;
-possible bashism in neofetch line 156 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 212 (${parm/?/pat[/str]}):
                     "tiny") distro="${distro//version*}" ;;
-possible bashism in neofetch line 159 ('command' with option other than -p):
+possible bashism in neofetch line 215 ('command' with option other than -p):
             elif command -v tazpkg >/dev/null; then
-possible bashism in neofetch line 222 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 278 (${parm/?/pat[/str]}):
                 "on") distro="${distro/ ${osx_build}}" ;;
-possible bashism in neofetch line 225 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 281 (${parm/?/pat[/str]}):
                         "10."[4-7]*) distro="${distro/${codename}/Mac OS X}" ;;
-possible bashism in neofetch line 226 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 282 (${parm/?/pat[/str]}):
                         "10."[8-9]* | "10.1"[0-1]*) distro="${distro/${codename}/OS X}" ;;
-possible bashism in neofetch line 227 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 283 (${parm/?/pat[/str]}):
                         "10.12"*) distro="${distro/${codename}/macOS}" ;;
-possible bashism in neofetch line 229 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 285 (${parm/?/pat[/str]}):
                     distro="${distro/ ${osx_build}}"
-possible bashism in neofetch line 254 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 310 (${parm/?/pat[/str]}):
             distro="${distro/\(*}"
-possible bashism in neofetch line 369 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 425 (${parm/?/pat[/str]}):
     user="${USER:-$(whoami || printf "%s" "${HOME/*\/}")}"
-possible bashism in neofetch line 370 ($HOST(TYPE|NAME)):
+possible bashism in neofetch line 426 ($HOST(TYPE|NAME)):
     hostname="${HOSTNAME:-$(hostname)}"
-possible bashism in neofetch line 407 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 463 (${parm/?/pat[/str]}):
                     seconds="${seconds/.*}"
-possible bashism in neofetch line 412 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 468 (${parm/?/pat[/str]}):
                     boot="${boot/'{ sec = '}"
-possible bashism in neofetch line 413 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 469 (${parm/?/pat[/str]}):
                     boot="${boot/,*}"
-possible bashism in neofetch line 422 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 478 (${parm/?/pat[/str]}):
                     seconds="${seconds/.*}"
-possible bashism in neofetch line 441 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 497 (${parm/?/pat[/str]}):
                     "0 "*) unset "${1/* }" ;;
-possible bashism in neofetch line 473 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 529 (${parm/?/pat[/str]}):
             uptime="${uptime//,}"
-possible bashism in neofetch line 482 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 538 (${parm/?/pat[/str]}):
     local PATH="${PATH/':/usr/games:'/:}"
-possible bashism in neofetch line 489 ('command' with option other than -p):
+possible bashism in neofetch line 545 ('command' with option other than -p):
             command -v pacman >/dev/null && \
                 packages="$(pacman -Qq --color never | wc -l)"
-possible bashism in neofetch line 492 ('command' with option other than -p):
+possible bashism in neofetch line 548 ('command' with option other than -p):
             command -v dpkg >/dev/null && \
                 packages="$((packages+$(dpkg --get-selections | grep -cv deinstall$)))"
-possible bashism in neofetch line 495 ('command' with option other than -p):
+possible bashism in neofetch line 551 ('command' with option other than -p):
             command -v pkgtool >/dev/null && \
                 packages="$((packages+$(ls -1 /var/log/packages | wc -l)))"
-possible bashism in neofetch line 498 ('command' with option other than -p):
+possible bashism in neofetch line 554 ('command' with option other than -p):
             command -v rpm >/dev/null && \
                 packages="$((packages+$(rpm -qa | wc -l)))"
-possible bashism in neofetch line 501 ('command' with option other than -p):
+possible bashism in neofetch line 557 ('command' with option other than -p):
             command -v xbps-query >/dev/null && \
                 packages="$((packages+$(xbps-query -l | wc -l)))"
-possible bashism in neofetch line 504 ('command' with option other than -p):
+possible bashism in neofetch line 560 ('command' with option other than -p):
             command -v pkginfo >/dev/null && \
                 packages="$((packages+$(pkginfo -i | wc -l)))"
-possible bashism in neofetch line 507 ('command' with option other than -p):
+possible bashism in neofetch line 563 ('command' with option other than -p):
             command -v emerge >/dev/null && \
                 packages="$((packages+$(ls -d /var/db/pkg/*/* | wc -l)))"
-possible bashism in neofetch line 510 ('command' with option other than -p):
+possible bashism in neofetch line 566 ('command' with option other than -p):
             command -v nix-env >/dev/null && \
                 packages="$((packages+$(ls -d -1 /nix/store/*/ | wc -l)))"
-possible bashism in neofetch line 513 ('command' with option other than -p):
+possible bashism in neofetch line 569 ('command' with option other than -p):
             command -v guix >/dev/null && \
                 packages="$((packages+$(ls -d -1 /gnu/store/*/ | wc -l)))"
-possible bashism in neofetch line 516 ('command' with option other than -p):
+possible bashism in neofetch line 572 ('command' with option other than -p):
             command -v apk >/dev/null && \
                 packages="$((packages+$(apk info | wc -l)))"
-possible bashism in neofetch line 519 ('command' with option other than -p):
+possible bashism in neofetch line 575 ('command' with option other than -p):
             command -v opkg >/dev/null && \
                 packages="$((packages+$(opkg list-installed | wc -l)))"
-possible bashism in neofetch line 522 ('command' with option other than -p):
+possible bashism in neofetch line 578 ('command' with option other than -p):
             command -v pacman-g2 >/dev/null && \
                 packages="$((packages+$(pacman-g2 -Q | wc -l)))"
-possible bashism in neofetch line 525 ('command' with option other than -p):
+possible bashism in neofetch line 581 ('command' with option other than -p):
             command -v cave >/dev/null && \
                 packages="$((packages+$(ls -d -1 /var/db/paludis/repositories/cross-installed/*/data/* /var/db/paludis/repositories/installed/data/* | wc -l)))"
-possible bashism in neofetch line 528 ('command' with option other than -p):
+possible bashism in neofetch line 584 ('command' with option other than -p):
             command -v lvu >/dev/null && \
                 packages="$((packages+$(lvu installed | wc -l)))"
-possible bashism in neofetch line 531 ('command' with option other than -p):
+possible bashism in neofetch line 587 ('command' with option other than -p):
             command -v tce-status >/dev/null && \
                 packages="$((packages+$(tce-status -i | wc -l)))"
-possible bashism in neofetch line 534 ('command' with option other than -p):
+possible bashism in neofetch line 590 ('command' with option other than -p):
             command -v Compile >/dev/null && \
                 packages="$((packages+$(ls -d -1 /Programs/*/ | wc -l)))"
-possible bashism in neofetch line 537 ('command' with option other than -p):
+possible bashism in neofetch line 593 ('command' with option other than -p):
             command -v eopkg >/dev/null && \
                 packages="$((packages+$(ls -1 /var/lib/eopkg/package | wc -l)))"
-possible bashism in neofetch line 540 ('command' with option other than -p):
+possible bashism in neofetch line 596 ('command' with option other than -p):
             command -v pkg_info >/dev/null && \
                 packages="$((packages+$(pkg_info | wc -l)))"
-possible bashism in neofetch line 543 ('command' with option other than -p):
+possible bashism in neofetch line 599 ('command' with option other than -p):
             command -v crew >/dev/null && \
                 packages="$((packages+$(ls -l /usr/local/etc/crew/meta/*.filelist | wc -l)))"
-possible bashism in neofetch line 546 ('command' with option other than -p):
+possible bashism in neofetch line 602 ('command' with option other than -p):
             command -v tazpkg >/dev/null && \
                 packages="$((packages+$(tazpkg list | wc -l) - 6))"
-possible bashism in neofetch line 548 ('command' with option other than -p):
+possible bashism in neofetch line 604 ('command' with option other than -p):
             if command -v pkg >/dev/null; then
-possible bashism in neofetch line 563 ('command' with option other than -p):
+possible bashism in neofetch line 619 ('command' with option other than -p):
             command -v port >/dev/null && \
                 packages="$((packages + $(port installed | wc -l) - 1))"
-possible bashism in neofetch line 566 ('command' with option other than -p):
+possible bashism in neofetch line 622 ('command' with option other than -p):
             command -v brew >/dev/null && \
                 packages="$((packages + $(find /usr/local/Cellar -maxdepth 1 | wc -l) - 1))"
-possible bashism in neofetch line 569 ('command' with option other than -p):
+possible bashism in neofetch line 625 ('command' with option other than -p):
             command -v pkgin >/dev/null && \
                 packages="$((packages + $(pkgin list | wc -l)))"
-possible bashism in neofetch line 604 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 660 (${parm/?/pat[/str]}):
             "bash") shell+="${BASH_VERSION/-*}" ;;
-possible bashism in neofetch line 604 ($BASH_SOMETHING):
+possible bashism in neofetch line 660 ($BASH_SOMETHING):
             "bash") shell+="${BASH_VERSION/-*}" ;;
-possible bashism in neofetch line 608 (should be VAR="${VAR}foo"):
-                shell+="$("$SHELL" -c 'printf "%s" "$KSH_VERSION"')"
-possible bashism in neofetch line 609 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 665 (${parm/?/pat[/str]}):
                 shell="${shell/ * KSH}"
-possible bashism in neofetch line 614 (should be VAR="${VAR}foo"):
+possible bashism in neofetch line 670 (should be VAR="${VAR}foo"):
                 shell+="$("$SHELL" --version 2>&1)"
-possible bashism in neofetch line 615 (${parm/?/pat[/str]}):
-                shell="${shell/ "${shell_name}"}"
-possible bashism in neofetch line 620 (${parm/?/pat[/str]}):
-        shell="${shell/, version}"
-possible bashism in neofetch line 621 (${parm/?/pat[/str]}):
-        shell="${shell/xonsh\//xonsh }"
-possible bashism in neofetch line 622 (${parm/?/pat[/str]}):
-        shell="${shell/options*}"
-possible bashism in neofetch line 623 (${parm/?/pat[/str]}):
-        shell="${shell/\(*\)}"
-possible bashism in neofetch line 644 (${parm/?/pat[/str]}):
-                de="${XDG_CURRENT_DESKTOP/'X-'}"
-possible bashism in neofetch line 645 (${parm/?/pat[/str]}):
-                de="${de/Budgie:GNOME/Budgie}"
-possible bashism in neofetch line 648 (${parm/?/pat[/str]}):
-                de="${DESKTOP_SESSION/ *}"
 possible bashism in neofetch line 671 (${parm/?/pat[/str]}):
+                shell="${shell/ "${shell_name}"}"
+possible bashism in neofetch line 676 (${parm/?/pat[/str]}):
+        shell="${shell/, version}"
+possible bashism in neofetch line 677 (${parm/?/pat[/str]}):
+        shell="${shell/xonsh\//xonsh }"
+possible bashism in neofetch line 678 (${parm/?/pat[/str]}):
+        shell="${shell/options*}"
+possible bashism in neofetch line 679 (${parm/?/pat[/str]}):
+        shell="${shell/\(*\)}"
+possible bashism in neofetch line 700 (${parm/?/pat[/str]}):
+                de="${XDG_CURRENT_DESKTOP/'X-'}"
+possible bashism in neofetch line 701 (${parm/?/pat[/str]}):
+                de="${de/Budgie:GNOME/Budgie}"
+possible bashism in neofetch line 704 (${parm/?/pat[/str]}):
+                de="${DESKTOP_SESSION/ *}"
+possible bashism in neofetch line 727 (${parm/?/pat[/str]}):
         "KDE_SESSION_VERSION"*) de="KDE${de/* = }" ;;
-possible bashism in neofetch line 691 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 747 (${parm/?/pat[/str]}):
         wm="${wm/*_NET_WM_NAME = }"
-possible bashism in neofetch line 692 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 748 (${parm/?/pat[/str]}):
         wm="${wm/\"}"
-possible bashism in neofetch line 693 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 749 (${parm/?/pat[/str]}):
         wm="${wm/\"*}"
-possible bashism in neofetch line 739 ('command' with option other than -p):
+possible bashism in neofetch line 795 ('command' with option other than -p):
             if command -v gsettings >/dev/null; then
-possible bashism in neofetch line 743 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 799 (${parm/?/pat[/str]}):
                 [ -z "${wm_theme//\'}" ] && \
                     wm_theme="$(gsettings get org.gnome.desktop.wm.preferences theme)"
-possible bashism in neofetch line 745 ('command' with option other than -p):
+possible bashism in neofetch line 801 ('command' with option other than -p):
             elif command -v gconftool-2 >/dev/null; then
-possible bashism in neofetch line 763 ('command' with option other than -p):
+possible bashism in neofetch line 819 ('command' with option other than -p):
             if command -v eet >/dev/null; then
-possible bashism in neofetch line 834 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 890 (${parm/?/pat[/str]}):
             path="${path//\\/\/}"
-possible bashism in neofetch line 836 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 892 (${parm/?/pat[/str]}):
             wm_theme="$(grep "^session\.styleFile:" "${path/\.exe/.rc}")"
-possible bashism in neofetch line 837 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 893 (${parm/?/pat[/str]}):
             wm_theme="${wm_theme/'session.styleFile: '}"
-possible bashism in neofetch line 902 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 958 (${parm/?/pat[/str]}):
                 temp="[${temp/${temp: -1}}.${temp: -1}°${cpu_temp:-C}]"
-possible bashism in neofetch line 952 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1008 (${parm/?/pat[/str]}):
             cpu="${cpu/[0-9]\.*}"
-possible bashism in neofetch line 953 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1009 (${parm/?/pat[/str]}):
             cpu="${cpu/ @*}"
-possible bashism in neofetch line 967 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1023 (${parm/?/pat[/str]}):
                         temp="${temp/C}"
-possible bashism in neofetch line 971 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1027 (${parm/?/pat[/str]}):
                         temp="${temp/ degC}"
-possible bashism in neofetch line 977 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1033 (${parm/?/pat[/str]}):
                     temp="${temp//.}"
-possible bashism in neofetch line 979 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1035 (${parm/?/pat[/str]}):
                     temp="[${temp/${temp: -1}}.${temp: -1}°F]"
-possible bashism in neofetch line 989 ($'...' should be "$(printf '...')"):
+possible bashism in neofetch line 1045 ($'...' should be "$(printf '...')"):
             cpu="${cpu//*$'\n'}"
-possible bashism in neofetch line 989 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1045 (${parm/?/pat[/str]}):
             cpu="${cpu//*$'\n'}"
-possible bashism in neofetch line 990 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1046 (${parm/?/pat[/str]}):
             cpu="${cpu/[0-9]\.*}"
-possible bashism in neofetch line 991 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 1047 (${parm/?/pat[/str]}):
             cpu="${cpu/ @*}"
-possible bashism in neofetch line 2373 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 2430 (bash arrays, ${name[0|*|@]}):
     IFS=";" read -s -t 1 "${read_flags[@]}" -r -a term_size
-possible bashism in neofetch line 2381 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 2438 (bash arrays, ${name[0|*|@]}):
         term_height="${term_size[1]}"
-possible bashism in neofetch line 2382 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 2439 (bash arrays, ${name[0|*|@]}):
         term_width="${term_size[2]/t*}"
-possible bashism in neofetch line 2387 ('command' with option other than -p):
+possible bashism in neofetch line 2444 ('command' with option other than -p):
         if command -v xdotool >/dev/null 2>&1; then
-possible bashism in neofetch line 2393 ('command' with option other than -p):
+possible bashism in neofetch line 2450 ('command' with option other than -p):
         elif command -v xwininfo >/dev/null 2>&1; then
-possible bashism in neofetch line 2395 ('command' with option other than -p):
+possible bashism in neofetch line 2452 ('command' with option other than -p):
             if command -v xdpyinfo >/dev/null 2>&1; then
-possible bashism in neofetch line 2397 (${parm/?/pat[/str]}):
-                current_window="${current_window/*window }"
-possible bashism in neofetch line 2398 ('command' with option other than -p):
-            elif command -v xprop >/dev/null 2>&1; then
-possible bashism in neofetch line 2405 (${parm/?/pat[/str]}):
-                term_width="${term_size/ *}"
-possible bashism in neofetch line 2406 (${parm/?/pat[/str]}):
-                term_height="${term_size/${term_width}}"
-possible bashism in neofetch line 2422 (${parm/?/pat[/str]}):
-    columns="${term_blocks/* }"
-possible bashism in neofetch line 2423 (${parm/?/pat[/str]}):
-    lines="${term_blocks/ *}"
-possible bashism in neofetch line 2439 (${parm/?/pat[/str]}):
-            percent="${image_size/\%}"
 possible bashism in neofetch line 2454 (${parm/?/pat[/str]}):
+                current_window="${current_window/*window }"
+possible bashism in neofetch line 2455 ('command' with option other than -p):
+            elif command -v xprop >/dev/null 2>&1; then
+possible bashism in neofetch line 2462 (${parm/?/pat[/str]}):
+                term_width="${term_size/ *}"
+possible bashism in neofetch line 2463 (${parm/?/pat[/str]}):
+                term_height="${term_size/${term_width}}"
+possible bashism in neofetch line 2479 (${parm/?/pat[/str]}):
+    columns="${term_blocks/* }"
+possible bashism in neofetch line 2480 (${parm/?/pat[/str]}):
+    lines="${term_blocks/ *}"
+possible bashism in neofetch line 2496 (${parm/?/pat[/str]}):
+            percent="${image_size/\%}"
+possible bashism in neofetch line 2511 (${parm/?/pat[/str]}):
         *) image_size="${image_size/px}" ;;
-possible bashism in neofetch line 2496 (brace expansion):
+possible bashism in neofetch line 2553 (brace expansion):
                 c="$(convert "$image" \
                     -colorspace srgb \
                     -format "%[pixel:p{0,0}]" info:)"
-possible bashism in neofetch line 2574 (sleep only takes one integer):
+possible bashism in neofetch line 2631 (sleep only takes one integer):
             sleep 0.05
-possible bashism in neofetch line 2615 ('command' with option other than -p):
+possible bashism in neofetch line 2672 ('command' with option other than -p):
     if ! command -v curl >/dev/null 2>&1; then
-possible bashism in neofetch line 2635 (<<< here string):
-            image_url="$(awk -F 'url:|,' '{printf $2}' <<< "${image_url//\"}")"
-possible bashism in neofetch line 2635 (${parm/?/pat[/str]}):
-            image_url="$(awk -F 'url:|,' '{printf $2}' <<< "${image_url//\"}")"
-possible bashism in neofetch line 2640 (<<< here string):
-            image_url="$(awk -F 'id:|,' '{printf $2}' <<< "${image_url//\"}")"
-possible bashism in neofetch line 2640 (${parm/?/pat[/str]}):
-            image_url="$(awk -F 'id:|,' '{printf $2}' <<< "${image_url//\"}")"
-possible bashism in neofetch line 2653 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 2692 (${parm/?/pat[/str]}):
+            image_url="$(echo "${image_url//\"}" | awk -F 'url:|,' '{printf $2}')"
+possible bashism in neofetch line 2697 (${parm/?/pat[/str]}):
+            image_url="$(echo "${image_url//\"}" | awk -F 'id:|,' '{printf $2}')"
+possible bashism in neofetch line 2710 (${parm/?/pat[/str]}):
         scrot_dir="${2/$scrot_name}"
-possible bashism in neofetch line 2668 ('command' with option other than -p):
+possible bashism in neofetch line 2725 ('command' with option other than -p):
         if [ "$scrot_cmd" != "auto" ] && command -v "$scrot_cmd" >/dev/null; then
-possible bashism in neofetch line 2671 ('command' with option other than -p):
+possible bashism in neofetch line 2728 ('command' with option other than -p):
         elif command -v scrot >/dev/null; then
-possible bashism in neofetch line 2674 ('command' with option other than -p):
+possible bashism in neofetch line 2731 ('command' with option other than -p):
         elif command -v maim >/dev/null; then
-possible bashism in neofetch line 2677 ('command' with option other than -p):
+possible bashism in neofetch line 2734 ('command' with option other than -p):
         elif command -v import >/dev/null; then
-possible bashism in neofetch line 2680 ('command' with option other than -p):
+possible bashism in neofetch line 2737 ('command' with option other than -p):
         elif command -v imlib2_grab >/dev/null; then
-possible bashism in neofetch line 2683 ('command' with option other than -p):
+possible bashism in neofetch line 2740 ('command' with option other than -p):
         elif command -v gnome-screenshot >/dev/null; then
-possible bashism in neofetch line 2708 (bash arrays, ${name[0|*|@]}):
-    "${scrot_program[@]}" "$1"
-possible bashism in neofetch line 2710 (bash arrays, ${name[0|*|@]}):
-    err "Scrot: Screen captured using ${scrot_program[0]}"
-possible bashism in neofetch line 2729 (${!name}):
+possible bashism in neofetch line 2786 (${!name}):
     output="$(trim "${!2:-${!1}}")"
-possible bashism in neofetch line 2731 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 2788 (${parm/?/pat[/str]}):
     if [ "$2" && "${output// }" ]; then
-possible bashism in neofetch line 2734 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 2791 (${parm/?/pat[/str]}):
     elif [ "${output// }" ]; then
-possible bashism in neofetch line 2752 ($'...' should be "$(printf '...')"):
+possible bashism in neofetch line 2809 ($'...' should be "$(printf '...')"):
     string="$(trim "${string//$'\033[0m'}")"
-possible bashism in neofetch line 2752 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 2809 (${parm/?/pat[/str]}):
     string="$(trim "${string//$'\033[0m'}")"
-possible bashism in neofetch line 2761 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 2818 (${parm/?/pat[/str]}):
     string="${string/:/${reset}${colon_color}:${info_color}}"
-possible bashism in neofetch line 2776 ('printf -v var ...' should be var='$(printf ...)'):
+possible bashism in neofetch line 2833 ('printf -v var ...' should be var='$(printf ...)'):
         printf -v underline "%${length}s"
-possible bashism in neofetch line 2777 (${parm/?/pat[/str]}):
-        printf "%b\n" "${text_padding:+\033[${text_padding}C}${zws}${underline_color}${underline// /$underline_char}${reset} "
-possible bashism in neofetch line 2820 (${parm/?/pat[/str]}):
-    builtin echo -E ${1//[[:space:]]/ }
-possible bashism in neofetch line 2820 (builtin):
-    builtin echo -E ${1//[[:space:]]/ }
-possible bashism in neofetch line 2825 (${parm/?/pat[/str]}):
-    trim_output="${1//\'}"
-possible bashism in neofetch line 2826 (${parm/?/pat[/str]}):
-    trim_output="${trim_output//\"}"
-possible bashism in neofetch line 2831 ($'...' should be "$(printf '...')"):
-    strip="${1//$'\033['3[0-9]m}"
-possible bashism in neofetch line 2831 (${parm/?/pat[/str]}):
-    strip="${1//$'\033['3[0-9]m}"
-possible bashism in neofetch line 2832 ($'...' should be "$(printf '...')"):
-    strip="${strip//$'\033['38\;5\;[0-9]m}"
-possible bashism in neofetch line 2832 (${parm/?/pat[/str]}):
-    strip="${strip//$'\033['38\;5\;[0-9]m}"
-possible bashism in neofetch line 2833 ($'...' should be "$(printf '...')"):
-    strip="${strip//$'\033['38\;5\;[0-9][0-9]m}"
-possible bashism in neofetch line 2833 (${parm/?/pat[/str]}):
-    strip="${strip//$'\033['38\;5\;[0-9][0-9]m}"
-possible bashism in neofetch line 2834 ($'...' should be "$(printf '...')"):
-    strip="${strip//$'\033['38\;5\;[0-9][0-9][0-9]m}"
 possible bashism in neofetch line 2834 (${parm/?/pat[/str]}):
+        printf "%b\n" "${text_padding:+\033[${text_padding}C}${zws}${underline_color}${underline// /$underline_char}${reset} "
+possible bashism in neofetch line 2877 (${parm/?/pat[/str]}):
+    builtin echo -E ${1//[[:space:]]/ }
+possible bashism in neofetch line 2877 (builtin):
+    builtin echo -E ${1//[[:space:]]/ }
+possible bashism in neofetch line 2882 (${parm/?/pat[/str]}):
+    trim_output="${1//\'}"
+possible bashism in neofetch line 2883 (${parm/?/pat[/str]}):
+    trim_output="${trim_output//\"}"
+possible bashism in neofetch line 2888 ($'...' should be "$(printf '...')"):
+    strip="${1//$'\033['3[0-9]m}"
+possible bashism in neofetch line 2888 (${parm/?/pat[/str]}):
+    strip="${1//$'\033['3[0-9]m}"
+possible bashism in neofetch line 2889 ($'...' should be "$(printf '...')"):
+    strip="${strip//$'\033['38\;5\;[0-9]m}"
+possible bashism in neofetch line 2889 (${parm/?/pat[/str]}):
+    strip="${strip//$'\033['38\;5\;[0-9]m}"
+possible bashism in neofetch line 2890 ($'...' should be "$(printf '...')"):
+    strip="${strip//$'\033['38\;5\;[0-9][0-9]m}"
+possible bashism in neofetch line 2890 (${parm/?/pat[/str]}):
+    strip="${strip//$'\033['38\;5\;[0-9][0-9]m}"
+possible bashism in neofetch line 2891 ($'...' should be "$(printf '...')"):
     strip="${strip//$'\033['38\;5\;[0-9][0-9][0-9]m}"
-possible bashism in neofetch line 2840 (${parm,[,][pat]} or ${parm^[^][pat]}):
+possible bashism in neofetch line 2891 (${parm/?/pat[/str]}):
+    strip="${strip//$'\033['38\;5\;[0-9][0-9][0-9]m}"
+possible bashism in neofetch line 2897 (${parm,[,][pat]} or ${parm^[^][pat]}):
     [ $bash_version -ge 4 ] && printf "%s" "${1^}" # todo: bash-specific / should be rm'ed
-possible bashism in neofetch line 3469 (bash arrays, ${name[0|*|@]}):
-    if [ "${ascii_colors[0]}" != "distro" ]; then
-possible bashism in neofetch line 3471 (bash arrays, ${name[0|*|@]}):
-        set_colors "${ascii_colors[@]}"
-possible bashism in neofetch line 3487 (bash arrays, ${name[0|*|@]}):
-    if [ "${colors[0]}" = "distro" ]; then
-possible bashism in neofetch line 3503 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 3560 (bash arrays, ${name[0|*|@]}):
         title_color="$(color "${colors[0]}")"
-possible bashism in neofetch line 3504 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 3561 (bash arrays, ${name[0|*|@]}):
         at_color="$(color "${colors[1]}")"
-possible bashism in neofetch line 3505 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 3562 (bash arrays, ${name[0|*|@]}):
         underline_color="$(color "${colors[2]}")"
-possible bashism in neofetch line 3506 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 3563 (bash arrays, ${name[0|*|@]}):
         subtitle_color="$(color "${colors[3]}")"
-possible bashism in neofetch line 3507 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 3564 (bash arrays, ${name[0|*|@]}):
         colon_color="$(color "${colors[4]}")"
-possible bashism in neofetch line 3508 (bash arrays, ${name[0|*|@]}):
+possible bashism in neofetch line 3565 (bash arrays, ${name[0|*|@]}):
         info_color="$(color "${colors[5]}")"
-possible bashism in neofetch line 3544 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3601 (${parm/?/pat[/str]}):
     [ -f "${PWD}/${1/*\/}" ] && { printf "%s\n" "${PWD}/${1/*\/}"; return; }
-possible bashism in neofetch line 3562 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3619 (${parm/?/pat[/str]}):
     full_dir="$(pwd -P)/${1/*\/}"
-possible bashism in neofetch line 3572 ('printf -v var ...' should be var='$(printf ...)'):
+possible bashism in neofetch line 3637 ('printf -v var ...' should be var='$(printf ...)'):
     printf -v prog  "%${elapsed}s"
-possible bashism in neofetch line 3573 ('printf -v var ...' should be var='$(printf ...)'):
+possible bashism in neofetch line 3638 ('printf -v var ...' should be var='$(printf ...)'):
     printf -v total "%$((bar_length - elapsed))s"
-possible bashism in neofetch line 3576 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3641 (${parm/?/pat[/str]}):
     bar+="${bar_color_elapsed}${prog// /${bar_char_elapsed}}"
-possible bashism in neofetch line 3576 (should be VAR="${VAR}foo"):
+possible bashism in neofetch line 3641 (should be VAR="${VAR}foo"):
     bar+="${bar_color_elapsed}${prog// /${bar_char_elapsed}}"
-possible bashism in neofetch line 3577 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3642 (${parm/?/pat[/str]}):
     bar+="${bar_color_total}${total// /${bar_char_total}}"
-possible bashism in neofetch line 3577 (should be VAR="${VAR}foo"):
+possible bashism in neofetch line 3642 (should be VAR="${VAR}foo"):
     bar+="${bar_color_total}${total// /${bar_char_total}}"
-possible bashism in neofetch line 3589 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3654 (${parm/?/pat[/str]}):
         printf "%s" "${1/*-}=\"$2\"" > "${cache_dir}/neofetch/${1/*-}"
-possible bashism in neofetch line 3606 ('command' with option other than -p):
+possible bashism in neofetch line 3671 ('command' with option other than -p):
     elif command -v kf5-config >/dev/null 2>&1; then
-possible bashism in neofetch line 3609 ('command' with option other than -p):
+possible bashism in neofetch line 3674 ('command' with option other than -p):
     elif command -v kde4-config >/dev/null 2>&1; then
-possible bashism in neofetch line 3612 ('command' with option other than -p):
+possible bashism in neofetch line 3677 ('command' with option other than -p):
     elif command -v kde-config >/dev/null 2>&1; then
-possible bashism in neofetch line 3622 ($'...' should be "$(printf '...')"):
+possible bashism in neofetch line 3687 ($'...' should be "$(printf '...')"):
     kde_config_dir="${kde_config_dir/$'/:'*}"
-possible bashism in neofetch line 3622 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3687 (${parm/?/pat[/str]}):
     kde_config_dir="${kde_config_dir/$'/:'*}"
-possible bashism in neofetch line 3678 ('command' with option other than -p):
+possible bashism in neofetch line 3743 ('command' with option other than -p):
     if command -v printinfo >/dev/null 2>&1; then
-possible bashism in neofetch line 3730 (bash arrays, ${name[0|*|@]}):
-    kernel_name="${uname[0]}"
-possible bashism in neofetch line 3731 (bash arrays, ${name[0|*|@]}):
-    kernel_version="${uname[1]}"
-possible bashism in neofetch line 3732 (bash arrays, ${name[0|*|@]}):
-    machine_arch="${uname[2]}"
-possible bashism in neofetch line 3741 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3806 (${parm/?/pat[/str]}):
     hour="${4/:*}"
-possible bashism in neofetch line 3742 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3807 (${parm/?/pat[/str]}):
     min="${4/${hour}}"
-possible bashism in neofetch line 3769 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3834 (${parm/?/pat[/str]}):
     year_code="$((${year/??} + (${year/??} / 4) % 7))"
-possible bashism in neofetch line 3786 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3851 (${parm/?/pat[/str]}):
                 [0-9] | 0[0-9] | 1[0-1]) time="${hour/00/12}${min} AM" ;;
-possible bashism in neofetch line 3805 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3870 (${parm/?/pat[/str]}):
             ppid="${ppid/'PPID'}"
-possible bashism in neofetch line 3810 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3875 (${parm/?/pat[/str]}):
             ppid="$(trim "${ppid/PPid:}")"
-possible bashism in neofetch line 3826 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3891 (${parm/?/pat[/str]}):
             name="${name/'COMMAND'}"
-possible bashism in neofetch line 3827 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3892 (${parm/?/pat[/str]}):
             name="${name/*\/}"
-possible bashism in neofetch line 3843 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3908 (${parm/?/pat[/str]}):
     decode="${1//+/ }"
-possible bashism in neofetch line 3844 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 3909 (${parm/?/pat[/str]}):
     printf "%b" "${decode//%/\\x}"
-possible bashism in neofetch line 4121 (${parm,[,][pat]} or ${parm^[^][pat]}):
+possible bashism in neofetch line 4187 (${parm,[,][pat]} or ${parm^[^][pat]}):
                             [ $bash_version -gt 4 ] && func="${func,,}" # todo: bash-specific / should be rm'ed
-possible bashism in neofetch line 4173 (${parm/?/pat[/str]}):
+possible bashism in neofetch line 4239 (${parm/?/pat[/str]}):
                 image_backend="${1/--}"
