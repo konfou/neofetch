@@ -1,3 +1,18 @@
+# Neofetch-Sh extra
+
+References:
+* [Ubuntu Wiki / DashAsBinSh](https://wiki.ubuntu.com/DashAsBinSh)
+* [man dash](http://man7.org/linux/man-pages/man1/dash.1.html)
+* [shell standard spec](http://pubs.opengroup.org/onlinepubs/9699919799/idx/shell.html)
+* [Greg's Wiki / Bashism](http://mywiki.wooledge.org/Bashism)
+* [D. Jones' tips](https://drj11.wordpress.com/2014/09/26/10-tips-for-turning-bash-scripts-into-portable-posix-scripts/)
+* [autoconf's Portable Shell Programming](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/html_node/Portable-Shell.html)
+
+Tools of trade:
+* [dash]()
+* [checkbashisms](https://packages.qa.debian.org/d/devscripts.html)
+* [ShellCheck](https://github.com/koalaman/shellcheck)
+
 # Neofetch
 
 [![Gitter](https://badges.gitter.im/dylanaraps/fetch.svg)](https://gitter.im/dylanaraps/fetch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
