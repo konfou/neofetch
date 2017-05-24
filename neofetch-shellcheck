@@ -1,2070 +1,2076 @@
 
-In neofetch line 18:
+In ./neofetch line 18:
 arr() { echo $1 | awk -v i=$2 '{ print $i }' ;}
              ^-- SC2086: Double quote to prevent globbing and word splitting.
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 136:
+In ./neofetch line 136:
     scrot_name="neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png"
                                              ^-- SC2039: In POSIX sh, RANDOM is undefined.
 
 
-In neofetch line 138:
+In ./neofetch line 138:
     config_version="3.1.0-git"
     ^-- SC2034: config_version appears unused. Verify it or export it.
 
 
-In neofetch line 168:
+In ./neofetch line 168:
             if cat /proc/version | grep -qE '*"Microsoft"*' || echo "$kernel_version" | grep -qE '*"Microsoft"*'; then
                    ^-- SC2002: Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.
                                             ^-- SC2063: Grep uses regex, but this looks like a glob.
                                                                                                  ^-- SC2063: Grep uses regex, but this looks like a glob.
 
 
-In neofetch line 175:
+In ./neofetch line 175:
             elif cat /proc/version | grep -qE '*"cros"*' || -f "/dev/cros_ec"; then
                      ^-- SC2002: Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.
                                               ^-- SC2063: Grep uses regex, but this looks like a glob.
 
 
-In neofetch line 211:
+In ./neofetch line 211:
                     "on")   distro="${distro//version}" ;;
                                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 212:
+In ./neofetch line 212:
                     "tiny") distro="${distro//version*}" ;;
                                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 218:
+In ./neofetch line 218:
             elif [ -d "/system/app/" && -d "/system/priv-app" ]; then
                                      ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 221:
+In ./neofetch line 221:
             elif [ -f "/etc/os-release" || -f "/usr/lib/os-release" ]; then
                                         ^-- SC2109: Instead of [ a || b ], use [ a ] || [ b ].
 
 
-In neofetch line 224:
+In ./neofetch line 224:
                     . "$file" 2>/dev/null && break
                     ^-- SC1090: Can't follow non-constant source. Use a directive to specify location.
 
 
-In neofetch line 235:
+In ./neofetch line 235:
                 [ -z "$(echo $distro | tr -d \ )" ] && distro="$(awk '/BLAG/ {print $1; exit}' /etc/os-release /usr/lib/os-release)"
                              ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 236:
+In ./neofetch line 236:
                 [ -z "$(echo $distro | tr -d \ )" ] && distro="$(awk -F'=' '{print $2; exit}' /etc/os-release /usr/lib/os-release)"
                              ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 248:
+In ./neofetch line 248:
                     distro="$(echo $distro | sed 's/DragonFly/DragonFlyBSD/')"
                                    ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 278:
+In ./neofetch line 278:
                 "on") distro="${distro/ ${osx_build}}" ;;
                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 281:
+In ./neofetch line 281:
                         "10."[4-7]*) distro="${distro/${codename}/Mac OS X}" ;;
                                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 282:
+In ./neofetch line 282:
                         "10."[8-9]* | "10.1"[0-1]*) distro="${distro/${codename}/OS X}" ;;
                                                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 283:
+In ./neofetch line 283:
                         "10.12"*) distro="${distro/${codename}/macOS}" ;;
                                           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 285:
+In ./neofetch line 285:
                     distro="${distro/ ${osx_build}}"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 301:
+In ./neofetch line 301:
             distro="$(echo $distro | sed 's/Caption//')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 302:
+In ./neofetch line 302:
             distro="$(echo $distro | sed 's/Microsoft//')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 310:
+In ./neofetch line 310:
             distro="${distro/\(*}"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 335:
+In ./neofetch line 335:
             if [ -d "/system/app/" && -d "/system/priv-app" ]; then
                                    ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 338:
+In ./neofetch line 338:
             elif [ -f /sys/devices/virtual/dmi/id/product_name ||
                                                                ^-- SC2109: Instead of [ a || b ], use [ a ] || [ b ].
                                                                  ^-- SC1080: When breaking lines in [ ], you need \ before the linefeed.
 
 
-In neofetch line 398:
+In ./neofetch line 398:
             model="$(echo $model | sed 's/Manufacturer//')"
                           ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 399:
+In ./neofetch line 399:
             model="$(echo $model | sed 's/Model//')"
                           ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 412:
+In ./neofetch line 412:
     model="$(echo $model | sed 's/To be filled by O.E.M.//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 413:
+In ./neofetch line 413:
     model="$(echo $model | sed 's/To Be Filled*//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 414:
+In ./neofetch line 414:
     model="$(echo $model | sed 's/OEM*//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 415:
+In ./neofetch line 415:
     model="$(echo $model | sed 's/Not Applicable//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 416:
+In ./neofetch line 416:
     model="$(echo $model | sed 's/System Product Name//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 417:
+In ./neofetch line 417:
     model="$(echo $model | sed 's/System Version//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 418:
+In ./neofetch line 418:
     model="$(echo $model | sed 's/Undefined//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 419:
+In ./neofetch line 419:
     model="$(echo $model | sed 's/Default string//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 420:
+In ./neofetch line 420:
     model="$(echo $model | sed 's/Not Specified//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 421:
+In ./neofetch line 421:
     model="$(echo $model | sed 's/Type1ProductConfigId//')"
                   ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 425:
+In ./neofetch line 425:
     user="${USER:-$(whoami || printf "%s" "${HOME/*\/}")}"
                                            ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 426:
+In ./neofetch line 426:
     hostname="${HOSTNAME:-$(hostname)}"
               ^-- SC2039: In POSIX sh, HOSTNAME is undefined.
 
 
-In neofetch line 427:
+In ./neofetch line 427:
     title="${title_color}${bold}${user}${at_color}@${title_color}${bold}${hostname}"
     ^-- SC2034: title appears unused. Verify it or export it.
 
 
-In neofetch line 441:
+In ./neofetch line 441:
     if echo "$os" | grep -qE '(BSD|MINIX)' && echo "$distro" | grep -qE '*"$kernel_name"*'; then
                                                                         ^-- SC2063: Grep uses regex, but this looks like a glob.
                                                                         ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 443:
+In ./neofetch line 443:
             "on" | "tiny") kernel="$kernel_version" ;;
                            ^-- SC2034: kernel appears unused. Verify it or export it.
 
 
-In neofetch line 455:
+In ./neofetch line 455:
             uptime="$(echo $uptime | sed 's/up //')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 463:
+In ./neofetch line 463:
                     seconds="${seconds/.*}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 468:
+In ./neofetch line 468:
                     boot="${boot/'{ sec = '}"
                           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 469:
+In ./neofetch line 469:
                     boot="${boot/,*}"
                           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 478:
+In ./neofetch line 478:
                     seconds="${seconds/.*}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 497:
+In ./neofetch line 497:
                     "0 "*) unset "${1/* }" ;;
                                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 498:
+In ./neofetch line 498:
                     "1 "*) printf "%s" "$(echo $1 | tr -d s)" ;;
                                                ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 516:
+In ./neofetch line 516:
             uptime="$(echo $uptime | sed 's/minutes/mins/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 517:
+In ./neofetch line 517:
             uptime="$(echo $uptime | sed 's/minute/min/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 518:
+In ./neofetch line 518:
             uptime="$(echo $uptime | sed 's/seconds/secs/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 522:
+In ./neofetch line 522:
             uptime="$(echo $uptime | sed 's/ days/d/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 523:
+In ./neofetch line 523:
             uptime="$(echo $uptime | sed 's/ day/d/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 524:
+In ./neofetch line 524:
             uptime="$(echo $uptime | sed 's/ hours/h/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 525:
+In ./neofetch line 525:
             uptime="$(echo $uptime | sed 's/ hour/h/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 526:
+In ./neofetch line 526:
             uptime="$(echo $uptime | sed 's/ minutes/m/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 527:
+In ./neofetch line 527:
             uptime="$(echo $uptime | sed 's/ minute/m/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 528:
+In ./neofetch line 528:
             uptime="$(echo $uptime | sed 's/ seconds/s/')"
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 529:
+In ./neofetch line 529:
             uptime="${uptime//,}"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 537:
+In ./neofetch line 537:
     local PATH=":${PATH}:"
     ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 538:
+In ./neofetch line 538:
     local PATH="${PATH/':/usr/games:'/:}"
     ^-- SC2039: In POSIX sh, 'local' is undefined.
                 ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 539:
+In ./neofetch line 539:
     local PATH="${PATH%:}"
     ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 540:
+In ./neofetch line 540:
     local PATH="${PATH#:}"
     ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 551:
+In ./neofetch line 551:
                 packages="$((packages+$(ls -1 /var/log/packages | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 563:
+In ./neofetch line 563:
                 packages="$((packages+$(ls -d /var/db/pkg/*/* | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 566:
+In ./neofetch line 566:
                 packages="$((packages+$(ls -d -1 /nix/store/*/ | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 569:
+In ./neofetch line 569:
                 packages="$((packages+$(ls -d -1 /gnu/store/*/ | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 581:
+In ./neofetch line 581:
                 packages="$((packages+$(ls -d -1 /var/db/paludis/repositories/cross-installed/*/data/* /var/db/paludis/repositories/installed/data/* | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 590:
+In ./neofetch line 590:
                 packages="$((packages+$(ls -d -1 /Programs/*/ | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 593:
+In ./neofetch line 593:
                 packages="$((packages+$(ls -1 /var/lib/eopkg/package | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 599:
+In ./neofetch line 599:
                 packages="$((packages+$(ls -l /usr/local/etc/crew/meta/*.filelist | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 608:
+In ./neofetch line 608:
                         packages="$((packages+$(ls -1 /var/db/pkg | wc -l)))"
                                                 ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 616:
+In ./neofetch line 616:
                 packages="$(($(ls -l /usr/local/bin/ | grep -cv "\(../Cellar/\|brew\)") - 1))"
                                ^-- SC2010: Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.
 
 
-In neofetch line 636:
+In ./neofetch line 636:
                 packages="$((packages+$(ls -1 /cygdrive/c/ProgramData/chocolatey/lib | wc -l)))"
                                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 640:
+In ./neofetch line 640:
             packages="$(ls -1 /boot/system/package-links | wc -l)"
                         ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 660:
+In ./neofetch line 660:
             "bash") shell+="${BASH_VERSION/-*}" ;;
                     ^-- SC2039: In POSIX sh, += is undefined.
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 664:
+In ./neofetch line 664:
                 shell="$shell $(\"$SHELL\" -c 'printf \"%s\" \"$KSH_VERSION\"')"
                                   ^-- SC2086: Double quote to prevent globbing and word splitting.
                                               ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 665:
+In ./neofetch line 665:
                 shell="${shell/ * KSH}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 666:
+In ./neofetch line 666:
                 shell="$(echo $shell | sed 's/version//')"
                               ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 670:
+In ./neofetch line 670:
                 shell+="$("$SHELL" --version 2>&1)"
                 ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 671:
+In ./neofetch line 671:
                 shell="${shell/ "${shell_name}"}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 676:
+In ./neofetch line 676:
         shell="${shell/, version}"
                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 677:
+In ./neofetch line 677:
         shell="${shell/xonsh\//xonsh }"
                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 678:
+In ./neofetch line 678:
         shell="${shell/options*}"
                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 679:
+In ./neofetch line 679:
         shell="${shell/\(*\)}"
                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 685:
+In ./neofetch line 685:
     [ $de_run = 1 ] && return
       ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 697:
+In ./neofetch line 697:
             [ $wm_run != 1 ] && get_wm
               ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 700:
+In ./neofetch line 700:
                 de="${XDG_CURRENT_DESKTOP/'X-'}"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 701:
+In ./neofetch line 701:
                 de="${de/Budgie:GNOME/Budgie}"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 704:
+In ./neofetch line 704:
                 de="${DESKTOP_SESSION/ *}"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 717:
+In ./neofetch line 717:
             [ "$wm" ] && echo "$de" | grep -qE '^$wm$' && { unset -v de; return; }
                                                ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 722:
+In ./neofetch line 722:
     [ -n "$DISPLAY" && -z "$de" ] && \
                     ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 727:
+In ./neofetch line 727:
         "KDE_SESSION_VERSION"*) de="KDE${de/* = }" ;;
                                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 742:
+In ./neofetch line 742:
     [ $wm_run = 1 ] && return
       ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 744:
+In ./neofetch line 744:
     if [ -n "$DISPLAY" && "$os" != "Mac OS X" ]; then
                        ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 747:
+In ./neofetch line 747:
         wm="${wm/*_NET_WM_NAME = }"
             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 748:
+In ./neofetch line 748:
         wm="${wm/\"}"
             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 749:
+In ./neofetch line 749:
         wm="${wm/\"*}"
             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 753:
+In ./neofetch line 753:
             wm="$(ps -e | grep -m 1 -o -F -e "sway" -e "orbment" -e "velox" -e "orbital")"
                   ^-- SC2009: Consider using pgrep instead of grepping ps output.
 
 
-In neofetch line 758:
+In ./neofetch line 758:
                 ps_line="$(ps -e | grep -o '[S]pectacle\|[A]methyst\|[k]wm')"
                            ^-- SC2009: Consider using pgrep instead of grepping ps output.
 
 
-In neofetch line 798:
+In ./neofetch line 798:
                 [ -z "${wm_theme//\'}" ] && \
                       ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 837:
+In ./neofetch line 837:
             if [ "$de" = "LXDE" && -f "${HOME}/.config/openbox/lxde-rc.xml" ]; then
                                 ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 872:
+In ./neofetch line 872:
             if [ -z "$wm_theme" ] || $((wm_theme = 1)); then
                                      ^-- SC2084: Remove '$' or use '_=$((expr))' to avoid executing output.
 
 
-In neofetch line 890:
+In ./neofetch line 890:
             path="${path//\\/\/}"
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 892:
+In ./neofetch line 892:
             wm_theme="$(grep "^session\.styleFile:" "${path/\.exe/.rc}")"
                                                      ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 893:
+In ./neofetch line 893:
             wm_theme="${wm_theme/'session.styleFile: '}"
                       ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 907:
+In ./neofetch line 907:
     [ "$distro" = "NetBSD"* ] && local os="Linux"
                   ^-- SC2081: [ .. ] can't match globs. Use [[ .. ]] or case statement.
                                  ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 950:
+In ./neofetch line 950:
             if [ "$cpu_temp" != "off" && -f "$temp_dir" ]; then
                                       ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 958:
+In ./neofetch line 958:
                 temp="[${temp/${temp: -1}}.${temp: -1}°${cpu_temp:-C}]"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
                               ^-- SC2039: In POSIX sh, string indexing is undefined.
                                            ^-- SC2039: In POSIX sh, string indexing is undefined.
 
 
-In neofetch line 1008:
+In ./neofetch line 1008:
             cpu="${cpu/[0-9]\.*}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1009:
+In ./neofetch line 1009:
             cpu="${cpu/ @*}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1023:
+In ./neofetch line 1023:
                         temp="${temp/C}"
                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1027:
+In ./neofetch line 1027:
                         temp="${temp/ degC}"
                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1033:
+In ./neofetch line 1033:
                     temp="${temp//.}"
                           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1035:
+In ./neofetch line 1035:
                     temp="[${temp/${temp: -1}}.${temp: -1}°F]"
                            ^-- SC2039: In POSIX sh, string replacement is undefined.
                                   ^-- SC2039: In POSIX sh, string indexing is undefined.
                                                ^-- SC2039: In POSIX sh, string indexing is undefined.
 
 
-In neofetch line 1045:
+In ./neofetch line 1045:
             cpu="${cpu//*$'\n'}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
                          ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 1046:
+In ./neofetch line 1046:
             cpu="${cpu/[0-9]\.*}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1047:
+In ./neofetch line 1047:
             cpu="${cpu/ @*}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1062:
+In ./neofetch line 1062:
             cpu="${cpu/@*}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1066:
+In ./neofetch line 1066:
             speed="${speed/MHz}"
                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1078:
+In ./neofetch line 1078:
             speed="${speed/MHz}"
                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1094:
+In ./neofetch line 1094:
         if [ -z "${speed:1}" ]; then
                  ^-- SC2039: In POSIX sh, string indexing is undefined.
 
 
-In neofetch line 1097:
+In ./neofetch line 1097:
             speed="${speed:0:1}.${speed:1}"
                    ^-- SC2039: In POSIX sh, string indexing is undefined.
                                 ^-- SC2039: In POSIX sh, string indexing is undefined.
 
 
-In neofetch line 1104:
+In ./neofetch line 1104:
     cpu="${cpu//(TM)}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1105:
+In ./neofetch line 1105:
     cpu="${cpu//(tm)}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1106:
+In ./neofetch line 1106:
     cpu="${cpu//(R)}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1107:
+In ./neofetch line 1107:
     cpu="${cpu//(r)}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1108:
+In ./neofetch line 1108:
     cpu="${cpu//CPU}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1109:
+In ./neofetch line 1109:
     cpu="${cpu//Processor}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1110:
+In ./neofetch line 1110:
     cpu="${cpu//Dual-Core}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1111:
+In ./neofetch line 1111:
     cpu="${cpu//Quad-Core}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1112:
+In ./neofetch line 1112:
     cpu="${cpu//Six-Core}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1113:
+In ./neofetch line 1113:
     cpu="${cpu//Eight-Core}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1114:
+In ./neofetch line 1114:
     cpu="${cpu//Core}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1115:
+In ./neofetch line 1115:
     cpu="${cpu//with Radeon * Graphics}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1116:
+In ./neofetch line 1116:
     cpu="${cpu//, altivec supported}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1117:
+In ./neofetch line 1117:
     cpu="${cpu//FPU*}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1120:
+In ./neofetch line 1120:
     cores="${cores//[[:space:]]}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1123:
+In ./neofetch line 1123:
     [ "$cpu_cores" != "off" && "$cores" ] && \
                             ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 1124:
+In ./neofetch line 1124:
         cpu="${cpu/@/(${cores}) @}"
              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1128:
+In ./neofetch line 1128:
         cpu="${cpu/@ *GHz}"
              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1132:
+In ./neofetch line 1132:
         "name")  cpu="${cpu/@*}" ;;
                       ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1136:
+In ./neofetch line 1136:
             cpu="${cpu/AMD }"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1137:
+In ./neofetch line 1137:
             cpu="${cpu/Intel }"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1138:
+In ./neofetch line 1138:
             cpu="${cpu/Core? Duo }"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1140:
+In ./neofetch line 1140:
             [ "$cpu_shorthand" = "tiny" ] && cpu="${cpu/@*}"
                                                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1149:
+In ./neofetch line 1149:
             cpu_usage="${cpu_usage/LoadPercentage}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1150:
+In ./neofetch line 1150:
             cpu_usage="${cpu_usage//[[:space:]]}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1162:
+In ./neofetch line 1162:
                     "iPhone OS") cores="${cpu/*\(}"; cores="${cores/\)*}" ;;
                                         ^-- SC2039: In POSIX sh, string replacement is undefined.
                                                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1168:
+In ./neofetch line 1168:
             cpu_usage="$((${cpu_usage/\.*} / ${cores:-1}))"
                           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1185:
+In ./neofetch line 1185:
             IFS=$'\n'
                 ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 1192:
+In ./neofetch line 1192:
             for gpu in "${gpus[@]}"; do
                         ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 1200:
+In ./neofetch line 1200:
                         gpu="${gpu/'[AMD/ATI]' }"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1201:
+In ./neofetch line 1201:
                         gpu="${gpu/'[AMD]' }"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1202:
+In ./neofetch line 1202:
                         gpu="${gpu/OEM }"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1203:
+In ./neofetch line 1203:
                         gpu="${gpu/Advanced Micro Devices, Inc.}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1204:
+In ./neofetch line 1204:
                         gpu="${gpu/ \/ *}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1205:
+In ./neofetch line 1205:
                         gpu="${gpu/*\[}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1206:
+In ./neofetch line 1206:
                         gpu="${gpu/\]*}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1211:
+In ./neofetch line 1211:
                         gpu="${gpu/*\[}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1212:
+In ./neofetch line 1212:
                         gpu="${gpu/\]*}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1218:
+In ./neofetch line 1218:
                         gpu="${gpu/*Intel/Intel}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1219:
+In ./neofetch line 1219:
                         gpu="${gpu/'(R)'}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1220:
+In ./neofetch line 1220:
                         gpu="${gpu/ \(*}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1231:
+In ./neofetch line 1231:
                     gpu="${gpu/AMD }"
                          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1232:
+In ./neofetch line 1232:
                     gpu="${gpu/NVIDIA }"
                          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1233:
+In ./neofetch line 1233:
                     gpu="${gpu/Intel }"
                          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1245:
+In ./neofetch line 1245:
                 source "${cache_dir}/neofetch/gpu"
                 ^-- SC1090: Can't follow non-constant source. Use a directive to specify location.
                 ^-- SC2039: In POSIX sh, 'source' in place of '.' is undefined.
 
 
-In neofetch line 1249:
+In ./neofetch line 1249:
                 gpu="${gpu//'/ $'}"
                      ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1290:
+In ./neofetch line 1290:
             gpu="${gpu//Caption}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1301:
+In ./neofetch line 1301:
                     gpu="${gpu/*device*= }"
                          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1307:
+In ./neofetch line 1307:
                     gpu="${gpu/'OpenGL renderer string: '}"
                          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1314:
+In ./neofetch line 1314:
         gpu="$(echo $gpu | sed -s 's/AMD//')"
                     ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 1315:
+In ./neofetch line 1315:
         gpu="$(echo $gpu | sed -s 's/NVIDIA//')"
                     ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 1316:
+In ./neofetch line 1316:
         gpu="$(echo $gpu | sed -s 's/Intel//')"
                     ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 1327:
+In ./neofetch line 1327:
                     "MemTotal") mem_used="$((mem_used+${b/kB}))"; mem_total="${b/kB}" ;;
                                                       ^-- SC2039: In POSIX sh, string replacement is undefined.
                                                                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1328:
+In ./neofetch line 1328:
                     "Shmem") mem_used="$((mem_used+${b/kB}))"  ;;
                                                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1329:
+In ./neofetch line 1329:
                     "MemFree" | "Buffers" | "Cached" | "SReclaimable") mem_used="$((mem_used-=${b/kB}))" ;;
                                                                                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1342:
+In ./neofetch line 1342:
             mem_used="$(((${mem_wired//.} + ${mem_active//.} + ${mem_compressed//.}) * 4 / 1024))"
                           ^-- SC2039: In POSIX sh, string replacement is undefined.
                                             ^-- SC2039: In POSIX sh, string replacement is undefined.
                                                                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1357:
+In ./neofetch line 1357:
                     mem_free="${mem_free/M Free}"
                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1361:
+In ./neofetch line 1361:
                     mem_free="${mem_free/M Free}"
                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1383:
+In ./neofetch line 1383:
             mem_used="$((${mem_used/max} / 1024 / 1024))"
                          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1388:
+In ./neofetch line 1388:
             mem_total="${mem_stat[11]/.*}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1389:
+In ./neofetch line 1389:
             mem_free="${mem_stat[16]/.*}"
                       ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1419:
+In ./neofetch line 1419:
     case "${player/*\/}" in
           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1425:
+In ./neofetch line 1425:
         "xmms2d"*)       song="$(xmms2 current -f '${artist} - ${title}')" ;;
                                                   ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 1441:
+In ./neofetch line 1441:
             song="${song/-* -/-}"
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1494:
+In ./neofetch line 1494:
     if [ "$song_shorthand" = "on" && "$song" ]; then
                                   ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 1495:
+In ./neofetch line 1495:
         artist="${song/ -*}"
                 ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1496:
+In ./neofetch line 1496:
         song="${song/*-}"
               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1512:
+In ./neofetch line 1512:
                 resolution="${resolution//x??@/ @ }"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1521:
+In ./neofetch line 1521:
             [ "$resolution" = *"@ Hz"* ] && \
                               ^-- SC2081: [ .. ] can't match globs. Use [[ .. ]] or case statement.
 
 
-In neofetch line 1522:
+In ./neofetch line 1522:
                 resolution="${resolution//@ Hz}"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1524:
+In ./neofetch line 1524:
             [ ${scale_factor%.*} = 2 ] && \
               ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 1525:
+In ./neofetch line 1525:
                 resolution="${resolution// @/@2x @}"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1528:
+In ./neofetch line 1528:
                 resolution="${resolution// @ [0-9][0-9]Hz}"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1529:
+In ./neofetch line 1529:
                 resolution="${resolution// @ [0-9][0-9][0-9]Hz}"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1532:
+In ./neofetch line 1532:
             [ "$resolution" = *"0Hz"* ] && \
                               ^-- SC2081: [ .. ] can't match globs. Use [[ .. ]] or case statement.
 
 
-In neofetch line 1533:
+In ./neofetch line 1533:
                 resolution="${resolution// @ 0Hz}"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1537:
+In ./neofetch line 1537:
             local width=""
             ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 1539:
+In ./neofetch line 1539:
             width="${width//CurrentHorizontalResolution/}"
                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1541:
+In ./neofetch line 1541:
             local height=""
             ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 1543:
+In ./neofetch line 1543:
             height="${height//CurrentVerticalResolution/}"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1545:
+In ./neofetch line 1545:
             [ "$(trim "$width")" ] && resolution="${width//[[:space:]]}x${height//[[:space:]]}"
                                                   ^-- SC2039: In POSIX sh, string replacement is undefined.
                                                                         ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1551:
+In ./neofetch line 1551:
             [ "$refresh_rate" = "off" ] && resolution="${resolution/ @*}"
                                                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1560:
+In ./neofetch line 1560:
                 resolution="${resolution//\*}"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1575:
+In ./neofetch line 1575:
     if [ -n "$DISPLAY" && "$os" != "Mac OS X" ]; then
                        ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 1588:
+In ./neofetch line 1588:
                     theme="${theme/${kde}*=}"
                            ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1638:
+In ./neofetch line 1638:
             gtk2_theme="${gtk2_theme/${name}*=}"
                         ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1656:
+In ./neofetch line 1656:
             gtk3_theme="${gtk3_theme/${name}*=}"
                         ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1676:
+In ./neofetch line 1676:
         if  [ "$gtk2_theme" && "$gtk2_theme" = "$gtk3_theme" ]; then
                             ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 1677:
+In ./neofetch line 1677:
             gtk3_theme+=" [GTK2/3]"
             ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 1680:
+In ./neofetch line 1680:
         elif [ "$gtk2_theme" && "$gtk3_theme" ]; then
                              ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 1681:
+In ./neofetch line 1681:
             gtk2_theme+=" [GTK2], "
             ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 1682:
+In ./neofetch line 1682:
             gtk3_theme+=" [GTK3] "
             ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 1685:
+In ./neofetch line 1685:
             [ "$gtk2_theme" ] && gtk2_theme+=" [GTK2] "
                                  ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 1686:
+In ./neofetch line 1686:
             [ "$gtk3_theme" ] && gtk3_theme+=" [GTK3] "
                                  ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 1694:
+In ./neofetch line 1694:
             theme="${theme// '[GTK'[0-9]']'}"
                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1695:
+In ./neofetch line 1695:
             theme="${theme/ '[GTK2/3]'}"
                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1718:
+In ./neofetch line 1718:
     icons="$theme"
     ^-- SC2034: icons appears unused. Verify it or export it.
 
 
-In neofetch line 1729:
+In ./neofetch line 1729:
     font="$theme"
     ^-- SC2034: font appears unused. Verify it or export it.
 
 
-In neofetch line 1734:
+In ./neofetch line 1734:
     [ $term_run = 1 ] && return
       ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 1742:
+In ./neofetch line 1742:
         *) term="${TERM_PROGRAM/\.app}" ;;
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1750:
+In ./neofetch line 1750:
         case "${name// }" in
               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1751:
+In ./neofetch line 1751:
             "${SHELL/*\/}" | *"sh" | "tmux"* | "screen" | "su"*) ;;
              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1769:
+In ./neofetch line 1769:
             term_font="${term_font/*family:}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1770:
+In ./neofetch line 1770:
             term_font="${term_font/$'\n'*}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
                                    ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 1771:
+In ./neofetch line 1771:
             term_font="${term_font/\#*}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1784:
+In ./neofetch line 1784:
             local current_profile_name
             ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 1791:
+In ./neofetch line 1791:
             local profiles_count
             ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 1794:
+In ./neofetch line 1794:
             i = 0
               ^-- SC1068: Don't put spaces around the = in assignments.
 
 
-In neofetch line 1795:
+In ./neofetch line 1795:
             while [ i -le $profiles_count ]; do
                     ^-- SC2170: Numerical -le does not dereference in [..]. Expand or use string operator.
                           ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 1796:
+In ./neofetch line 1796:
                 local profile_name
                 ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 1805:
+In ./neofetch line 1805:
                     local use_different_font
                     ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 1809:
+In ./neofetch line 1809:
                         local non_ascii_font
                         ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 1834:
+In ./neofetch line 1834:
             for i in "${konsole_instances[@]}"; do
                       ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 1836:
+In ./neofetch line 1836:
                 for session in "${konsole_sessions[@]}"; do
                                 ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 1837:
+In ./neofetch line 1837:
                     if [ $child = "$(qdbus "${i}" "${session}" processId)" ]; then
                          ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 1847:
+In ./neofetch line 1847:
             profile_filename="${profile_filename/$'\n'*}"
                               ^-- SC2039: In POSIX sh, string replacement is undefined.
                                                  ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 1856:
+In ./neofetch line 1856:
             if [ -d /tmp && ! -f "$mateterm_config" ]; then
                          ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 1862:
+In ./neofetch line 1862:
                 term_id="$(grep -A1 "${role//\"}" "$mateterm_config")"
                                      ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1885:
+In ./neofetch line 1885:
             [ -z "${term_font//\'}" ] && term_font="$(gsettings get org.gnome.desktop.interface monospace-font-name)"
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1895:
+In ./neofetch line 1895:
             term_font="${term_font/.pcf}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1896:
+In ./neofetch line 1896:
             term_font="${term_font/:*}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1905:
+In ./neofetch line 1905:
             term_font="$(echo $(xrdb -query) | grep -i -F "${term/d}*font")"
                               ^-- SC2046: Quote this to prevent word splitting.
                               ^-- SC2005: Useless echo? Instead of 'echo $(cmd)', just use 'cmd'.
                                                            ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1906:
+In ./neofetch line 1906:
             term_font="${term_font/*font:}"
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1913:
+In ./neofetch line 1913:
                     term_font="${term_font/xft:}"
                                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1914:
+In ./neofetch line 1914:
                     term_font="${term_font/:*}"
                                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1941:
+In ./neofetch line 1941:
     IFS=$'\n'
         ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 1947:
+In ./neofetch line 1947:
     [ -z "$(arr $disks 0)" ] && \
                 ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 1950:
+In ./neofetch line 1950:
     for disk in "${disks[@]}"; do
                  ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 1953:
+In ./neofetch line 1953:
         disk_perc="${disk_info[4]/'%'}"
                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1955:
+In ./neofetch line 1955:
         disk="${disk_info[2]/i} / ${disk_info[1]/i} (${disk_perc}%)"
               ^-- SC2039: In POSIX sh, string replacement is undefined.
                                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1959:
+In ./neofetch line 1959:
             "name") disk_sub="${disk_info[0]}" ;;
                               ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 1961:
+In ./neofetch line 1961:
                 disk_sub="${disk_info[5]/*\/}"
                           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 1962:
+In ./neofetch line 1962:
                 [ -z "$disk_sub" ] && disk_sub="${disk_info[5]}"
                                                 ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 1964:
+In ./neofetch line 1964:
             *) disk_sub="${disk_info[5]}" ;;
                          ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 1970:
+In ./neofetch line 1970:
             "infobar") disk+=" $(bar "$disk_perc" "100")" ;;
                        ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 1989:
+In ./neofetch line 1989:
             for bat in "/sys/class/power_supply/"{BAT,axp288_fuel_gauge}*; do
                                                  ^-- SC2039: In POSIX sh, brace expansion is undefined.
 
 
-In neofetch line 1998:
+In ./neofetch line 1998:
                         "infobar") battery+=" $(bar "$capacity" 100)" ;;
                                    ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2002:
+In ./neofetch line 2002:
                     bat="${bat/*axp288_fuel_gauge}"
                          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2003:
+In ./neofetch line 2003:
                     prin "${subtitle:+${subtitle}${bat: -1}}" "$battery"
                                                  ^-- SC2039: In POSIX sh, string indexing is undefined.
 
 
-In neofetch line 2018:
+In ./neofetch line 2018:
                     battery="${battery/\.*/%}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2023:
+In ./neofetch line 2023:
                     battery0full="${battery0full/ Wh*}"
                                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2026:
+In ./neofetch line 2026:
                     battery0now="${battery0now/ Wh*}"
                                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2029:
+In ./neofetch line 2029:
                     battery="$((100 * ${battery0now/\.} / ${battery0full/\.}))%"
                                       ^-- SC2039: In POSIX sh, string replacement is undefined.
                                                           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2042:
+In ./neofetch line 2042:
             battery="${battery/EstimatedChargeRemaining}"
                      ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2053:
+In ./neofetch line 2053:
     [ "$battery_state" ] && battery+=" Charging"
                             ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2056:
+In ./neofetch line 2056:
         "bar") battery="$(bar "${battery/'%'*}" 100)" ;;
                                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2057:
+In ./neofetch line 2057:
         "infobar") battery="${battery} $(bar "${battery/'%'*}" 100)" ;;
                                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2058:
+In ./neofetch line 2058:
         "barinfo") battery="$(bar "${battery/'%'*}" 100)${info_color} ${battery}" ;;
                                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2066:
+In ./neofetch line 2066:
             local_ip="${local_ip/uid*}"
                       ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2086:
+In ./neofetch line 2086:
             local_ip="${local_ip/', Bcast'}"
                       ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2135:
+In ./neofetch line 2135:
         *"BusyBox"*) install_date="$(ls -tdce "$install_file" | awk '{printf $10 " " $7 " " $8 " " $9}')" ;;
                                      ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 2136:
+In ./neofetch line 2136:
         *"crtime"*) install_date="$(ls -tdcE "$install_file" | awk '{printf $6 " " $7}')" ;; # xpg4 (Solaris)
                                     ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 2137:
+In ./neofetch line 2137:
         *"ACFHLRSZ"*) install_date="$(ls -dl "$install_file" | awk '{printf $6 " " $7}')" ;; # Toybox
                                       ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 2138:
+In ./neofetch line 2138:
         *"GNU coreutils"*) install_date="$(ls -tcd --full-time "$install_file" | awk '{printf $6 " " $7}')" ;;
                                            ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 2140:
+In ./neofetch line 2140:
         *) install_date="$(ls -dlctT "$install_file" | awk '{printf $9 " " $6 " "$7 " " $8}')" ;;
                            ^-- SC2012: Use find instead of ls to better handle non-alphanumeric filenames.
 
 
-In neofetch line 2143:
+In ./neofetch line 2143:
     install_date="${install_date//-/ }"
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2146:
+In ./neofetch line 2146:
     install_date="$(convert_time "${install_date[@]}")"
                                   ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 2150:
+In ./neofetch line 2150:
     locale="$sys_locale"
     ^-- SC2034: locale appears unused. Verify it or export it.
 
 
-In neofetch line 2156:
+In ./neofetch line 2156:
         printf -v block_width "%${block_width}s"
                ^-- SC2039: In POSIX sh, printf -v is undefined.
 
 
-In neofetch line 2159:
+In ./neofetch line 2159:
         start="$(arr $block_range 1)"
                      ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 2160:
+In ./neofetch line 2160:
         end="$(arr $block_range 2)"
                    ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 2163:
+In ./neofetch line 2163:
         while [ $start -le $end ]; do
                 ^-- SC2086: Double quote to prevent globbing and word splitting.
                            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 2165:
+In ./neofetch line 2165:
                 [0-6]) blocks+="${reset}\033[3${start}m\033[4${start}m${block_width}" ;;
                        ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2166:
+In ./neofetch line 2166:
                 7) blocks+="${reset}\033[3${start}m\033[4${start}m${block_width}" ;;
                    ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2167:
+In ./neofetch line 2167:
                 *) blocks2+="\033[38;5;${start}m\033[48;5;${start}m${block_width}" ;;
                    ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2173:
+In ./neofetch line 2173:
         printf -v block_spaces "%${block_height}s"
                ^-- SC2039: In POSIX sh, printf -v is undefined.
 
 
-In neofetch line 2176:
+In ./neofetch line 2176:
         [ "$blocks" ] &&  cols="${cols}${block_spaces// /${blocks}${reset}nl}"
                                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2177:
+In ./neofetch line 2177:
         [ "$blocks2" ] && cols="${cols}${block_spaces// /${blocks2}${reset}nl}"
                                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2181:
+In ./neofetch line 2181:
         cols="${cols//nl/\\n\\033[${text_padding}C${zws}}"
               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2219:
+In ./neofetch line 2219:
             if [ "$term_width" ] && [ $term_width -ge 1 ]; then
                                       ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 2258:
-        image_source="${ascii_dir}/${ascii_file}"
-                      ^-- SC2154: ascii_dir is referenced but not assigned.
-
-
-In neofetch line 2269:
+In ./neofetch line 2269:
     while IFS=$'\n' read -r line 2>/dev/null; do
               ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 2270:
+In ./neofetch line 2270:
         print+="$line \n"
         ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2273:
+In ./neofetch line 2273:
         line="${line//\$\{??\}}"
               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2274:
+In ./neofetch line 2274:
         line="${line//\\\\/\\}"
               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2275:
+In ./neofetch line 2275:
         [ ${#line} -gt $ascii_length ] && ascii_length="${#line}"
                        ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 2280:
+In ./neofetch line 2277:
+    done <<< $(printf "%b" "$ascii_art")
+             ^-- SC2039: In POSIX sh, here-strings are undefined.
+             ^-- SC2046: Quote this to prevent word splitting.
+
+
+In ./neofetch line 2280:
     print="${print//'${c1}'/$c1}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 2281:
+In ./neofetch line 2281:
     print="${print//'${c2}'/$c2}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 2282:
+In ./neofetch line 2282:
     print="${print//'${c3}'/$c3}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 2283:
+In ./neofetch line 2283:
     print="${print//'${c4}'/$c4}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 2284:
+In ./neofetch line 2284:
     print="${print//'${c5}'/$c5}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 2285:
+In ./neofetch line 2285:
     print="${print//'${c6}'/$c6}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2016: Expressions don't expand in single quotes, use double quotes for that.
 
 
-In neofetch line 2306:
+In ./neofetch line 2306:
                 shopt -s nullglob # todo: bash-specific / should be rm'ed
                 ^-- SC2039: In POSIX sh, 'shopt' is undefined.
 
 
-In neofetch line 2308:
+In ./neofetch line 2308:
                 shopt -u nullglob # todo: bash-specific / should be rm'ed
                 ^-- SC2039: In POSIX sh, 'shopt' is undefined.
 
 
-In neofetch line 2309:
+In ./neofetch line 2309:
                 image="${files[RANDOM % ${#files[@]}]}"
                        ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 2333:
+In ./neofetch line 2333:
                     image+="/Local Settings/Application Data/Microsoft"
                     ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2334:
+In ./neofetch line 2334:
                     image+="/Wallpaper1.bmp"
                     ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2339:
+In ./neofetch line 2339:
                     image+="/TranscodedWallpaper.jpg"
                     ^-- SC2039: In POSIX sh, += is undefined.
 
 
-In neofetch line 2372:
+In ./neofetch line 2372:
             image="${image/'file://'}"
                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2378:
+In ./neofetch line 2378:
     [ "${image/*\./}" = "xml" ] && image=""
        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2430:
+In ./neofetch line 2430:
     IFS=";" read -s -t 1 "${read_flags[@]}" -r -a term_size
                  ^-- SC2039: In POSIX sh, read -s is undefined.
                           ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 2438:
+In ./neofetch line 2438:
         term_height="${term_size[1]}"
                      ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 2439:
+In ./neofetch line 2439:
         term_width="${term_size[2]/t*}"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2447:
+In ./neofetch line 2447:
             term_height="$HEIGHT"
                          ^-- SC2153: Possible misspelling: HEIGHT may not be assigned, but height is.
 
 
-In neofetch line 2448:
+In ./neofetch line 2448:
             term_width="$WIDTH"
                         ^-- SC2153: Possible misspelling: WIDTH may not be assigned, but width is.
 
 
-In neofetch line 2454:
+In ./neofetch line 2454:
                 current_window="${current_window/*window }"
                                 ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2462:
+In ./neofetch line 2462:
                 term_width="${term_size/ *}"
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2463:
+In ./neofetch line 2463:
                 term_height="${term_size/${term_width}}"
                              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2479:
+In ./neofetch line 2479:
     columns="${term_blocks/* }"
              ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2480:
+In ./neofetch line 2480:
     lines="${term_blocks/ *}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2496:
+In ./neofetch line 2496:
             percent="${image_size/\%}"
                      ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2511:
+In ./neofetch line 2511:
         *) image_size="${image_size/px}" ;;
                        ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2546:
-            [ $og_height -gt og_width ] && size="$og_width"
+In ./neofetch line 2546:
+            [ $og_height -gt $og_width ] && size="$og_width"
               ^-- SC2086: Double quote to prevent globbing and word splitting.
-                             ^-- SC2170: Numerical -gt does not dereference in [..]. Expand or use string operator.
+                             ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 2633:
+In ./neofetch line 2633:
             "${w3m_img_path:-false}" -bg "$background_color" >/dev/null & 2>&1 || to_off "Image: w3m-img failed to display the image."
                                                                           ^-- SC2188: This redirection doesn't have a command. Move to its command (or use 'true' as no-op).
 
 
-In neofetch line 2692:
+In ./neofetch line 2692:
             image_url="$(echo "${image_url//\"}" | awk -F 'url:|,' '{printf $2}')"
                                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2697:
+In ./neofetch line 2697:
             image_url="$(echo "${image_url//\"}" | awk -F 'id:|,' '{printf $2}')"
                                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2710:
+In ./neofetch line 2710:
         scrot_dir="${2/$scrot_name}"
                    ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2765:
+In ./neofetch line 2765:
     "$(arr $scrot_program 0)" "$1"
            ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 2767:
+In ./neofetch line 2767:
     err "Scrot: Screen captured using $(arr $scrot_program 1)"
                                             ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 2786:
+In ./neofetch line 2786:
     output="$(trim "${!2:-${!1}}")"
                     ^-- SC2039: In POSIX sh, indirect expansion is undefined.
                           ^-- SC2039: In POSIX sh, indirect expansion is undefined.
 
 
-In neofetch line 2788:
+In ./neofetch line 2788:
     if [ "$2" && "${output// }" ]; then
               ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2791:
+In ./neofetch line 2791:
     elif [ "${output// }" ]; then
             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2803:
+In ./neofetch line 2803:
     if [ "$(trim "$1")" && "$2" ]; then
                         ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 2807:
+In ./neofetch line 2807:
         local subtitle_color="$info_color"
         ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 2809:
+In ./neofetch line 2809:
     string="$(trim "${string//$'\033[0m'}")"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
                               ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 2818:
+In ./neofetch line 2818:
     string="${string/:/${reset}${colon_color}:${info_color}}"
             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2833:
+In ./neofetch line 2833:
         printf -v underline "%${length}s"
                ^-- SC2039: In POSIX sh, printf -v is undefined.
 
 
-In neofetch line 2834:
+In ./neofetch line 2834:
         printf "%b\n" "${text_padding:+\033[${text_padding}C}${zws}${underline_color}${underline// /$underline_char}${reset} "
                                                                                      ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2877:
+In ./neofetch line 2877:
     builtin echo -E ${1//[[:space:]]/ }
     ^-- SC2039: In POSIX sh, 'builtin' is undefined.
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2882:
+In ./neofetch line 2882:
     trim_output="${1//\'}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2883:
+In ./neofetch line 2883:
     trim_output="${trim_output//\"}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 2888:
+In ./neofetch line 2888:
     strip="${1//$'\033['3[0-9]m}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                 ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 2889:
+In ./neofetch line 2889:
     strip="${strip//$'\033['38\;5\;[0-9]m}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 2890:
+In ./neofetch line 2890:
     strip="${strip//$'\033['38\;5\;[0-9][0-9]m}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 2891:
+In ./neofetch line 2891:
     strip="${strip//$'\033['38\;5\;[0-9][0-9][0-9]m}"
            ^-- SC2039: In POSIX sh, string replacement is undefined.
                     ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 2897:
+In ./neofetch line 2897:
     [ $bash_version -ge 4 ] && printf "%s" "${1^}" # todo: bash-specific / should be rm'ed
       ^-- SC2154: bash_version is referenced but not assigned.
       ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 3553:
+In ./neofetch line 3589:
+END
+^-- SC1039: Use <<- instead of << if you want to indent the end token.
+
+
+In ./neofetch line 6051:
         [ ${1:-1} = 8 ] && title_color="$reset"
           ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 3554:
+In ./neofetch line 6052:
         [ ${2:-7} = 8 ] && subtitle_color="$reset"
           ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 3557:
+In ./neofetch line 6055:
         [ ${2:-7} = 7 ] && subtitle_color="$(color "$1")"
           ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 3558:
+In ./neofetch line 6056:
         [ ${1:-1} = 7 ] && title_color="$reset"
           ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 3560:
+In ./neofetch line 6058:
         title_color="$(color "${colors[0]}")"
                               ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 3561:
+In ./neofetch line 6059:
         at_color="$(color "${colors[1]}")"
                            ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 3562:
+In ./neofetch line 6060:
         underline_color="$(color "${colors[2]}")"
                                   ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 3563:
+In ./neofetch line 6061:
         subtitle_color="$(color "${colors[3]}")"
                                  ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 3564:
+In ./neofetch line 6062:
         colon_color="$(color "${colors[4]}")"
                               ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 3565:
+In ./neofetch line 6063:
         info_color="$(color "${colors[5]}")"
                              ^-- SC2039: In POSIX sh, array references are undefined.
 
 
-In neofetch line 3601:
+In ./neofetch line 6099:
     [ -f "${PWD}/${1/*\/}" ] && { printf "%s\n" "${PWD}/${1/*\/}"; return; }
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
                                                         ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3609:
+In ./neofetch line 6107:
     local full_dir="${1##*/}"
     ^-- SC2039: In POSIX sh, 'local' is undefined.
 
 
-In neofetch line 3619:
+In ./neofetch line 6117:
     full_dir="$(pwd -P)/${1/*\/}"
                         ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3626:
+In ./neofetch line 6124:
         . "$config_file"
         ^-- SC1090: Can't follow non-constant source. Use a directive to specify location.
 
 
-In neofetch line 3637:
+In ./neofetch line 6136:
     printf -v prog  "%${elapsed}s"
            ^-- SC2039: In POSIX sh, printf -v is undefined.
 
 
-In neofetch line 3638:
+In ./neofetch line 6137:
     printf -v total "%$((bar_length - elapsed))s"
            ^-- SC2039: In POSIX sh, printf -v is undefined.
 
 
-In neofetch line 3641:
+In ./neofetch line 6140:
     bar+="${bar_color_elapsed}${prog// /${bar_char_elapsed}}"
     ^-- SC2039: In POSIX sh, += is undefined.
                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3642:
+In ./neofetch line 6141:
     bar+="${bar_color_total}${total// /${bar_char_total}}"
     ^-- SC2039: In POSIX sh, += is undefined.
                             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3654:
+In ./neofetch line 6153:
         printf "%s" "${1/*-}=\"$2\"" > "${cache_dir}/neofetch/${1/*-}"
                      ^-- SC2039: In POSIX sh, string replacement is undefined.
                                                               ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3687:
+In ./neofetch line 6186:
     kde_config_dir="${kde_config_dir/$'/:'*}"
                     ^-- SC2039: In POSIX sh, string replacement is undefined.
                                      ^-- SC2039: In POSIX sh, $'..' is undefined.
 
 
-In neofetch line 3723:
+In ./neofetch line 6222:
     if [ $lines -lt info_height ]; then
                     ^-- SC2170: Numerical -lt does not dereference in [..]. Expand or use string operator.
 
 
-In neofetch line 3745:
+In ./neofetch line 6244:
         get_wmtheme() { get_wm_theme; wmtheme="$wm_theme"; }
                                       ^-- SC2034: wmtheme appears unused. Verify it or export it.
 
 
-In neofetch line 3746:
+In ./neofetch line 6245:
         get_termfont() { get_term_font; termfont="$term_font"; }
                                         ^-- SC2034: termfont appears unused. Verify it or export it.
 
 
-In neofetch line 3747:
+In ./neofetch line 6246:
         get_localip() { get_local_ip; localip="$local_ip"; }
                                       ^-- SC2034: localip appears unused. Verify it or export it.
 
 
-In neofetch line 3748:
+In ./neofetch line 6247:
         get_publicip() { get_public_ip; publicip="$public_ip"; }
                                         ^-- SC2034: publicip appears unused. Verify it or export it.
 
 
-In neofetch line 3749:
+In ./neofetch line 6248:
         get_linebreak() { get_line_break; linebreak="$line_break"; }
                                           ^-- SC2034: linebreak appears unused. Verify it or export it.
                                                      ^-- SC2154: line_break is referenced but not assigned (did you mean 'line_breaks'?).
 
 
-In neofetch line 3752:
+In ./neofetch line 6251:
     get_birthday() { get_install_date; birthday="$install_date"; }
                                        ^-- SC2034: birthday appears unused. Verify it or export it.
 
 
-In neofetch line 3756:
+In ./neofetch line 6255:
     [ -n "$osx_buildversion" ] && err "Config: \$osx_buildversion is deprecated, use \$distro_shorthand instead."
           ^-- SC2154: osx_buildversion is referenced but not assigned.
 
 
-In neofetch line 3757:
+In ./neofetch line 6256:
     [ -n "$osx_codename" ]     && err "Config: \$osx_codename is deprecated, use \$distro_shorthand instead."
           ^-- SC2154: osx_codename is referenced but not assigned.
 
 
-In neofetch line 3762:
+In ./neofetch line 6261:
     [ -n "$progress_char" ] && err "Config: \$progress_char is deprecated, use \$bar_char_elapsed and \$bar_char_total instead."
           ^-- SC2154: progress_char is referenced but not assigned.
 
 
-In neofetch line 3763:
+In ./neofetch line 6262:
     [ -n "$progress_border" ] && { err "Config: \$progress_border is deprecated, use \$bar_border instead."; bar_border="$progress_border"; }
           ^-- SC2154: progress_border is referenced but not assigned.
 
 
-In neofetch line 3764:
+In ./neofetch line 6263:
     [ -n "$progress_length" ] && { err "Config: \$progress_length is deprecated, use \$bar_length instead."; bar_length="$progress_length"; }
           ^-- SC2154: progress_length is referenced but not assigned.
 
 
-In neofetch line 3765:
+In ./neofetch line 6264:
     [ -n "$progress_color_elapsed" ] && { err "Config: \$progress_color_elapsed is deprecated, use \$bar_color_elapsed instead."; bar_color_elapsed="$progress_color_elapsed"; }
           ^-- SC2154: progress_color_elapsed is referenced but not assigned.
 
 
-In neofetch line 3766:
+In ./neofetch line 6265:
     [ -n "$progress_color_total" ] && { err "Config: \$progress_color_total is deprecated, use \$bar_color_total instead."; bar_color_total="$progress_color_total"; }
           ^-- SC2154: progress_color_total is referenced but not assigned.
 
 
-In neofetch line 3775:
+In ./neofetch line 6274:
     [ "$ascii_logo_size" ] && err "Config: ascii_logo_size is deprecated, use ascii_distro='{alpine,arch,crux,gentoo,openbsd,void}_small' instead."
        ^-- SC2154: ascii_logo_size is referenced but not assigned.
 
 
-In neofetch line 3778:
+In ./neofetch line 6277:
     [ "$start" && "$end" ] && { err "Config: \$start and \$end are deprecated, use block_range='0 7' instead."; block_range="\"$start\" \"$end\""; }
                ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
 
 
-In neofetch line 3784:
+In ./neofetch line 6283:
     [ -n "$birthday_time" ] && { err "Config: \$birthday_time is deprecated, use \3install_time instead."; install_time="$birthday_time"; }
           ^-- SC2154: birthday_time is referenced but not assigned.
 
 
-In neofetch line 3795:
+In ./neofetch line 6294:
     kernel_name="$(arr $uname 1)"
                        ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 3796:
+In ./neofetch line 6295:
     kernel_version="$(arr $uname 2)"
                           ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 3797:
+In ./neofetch line 6296:
     machine_arch="$(arr $uname 3)"
                         ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 3806:
+In ./neofetch line 6305:
     hour="${4/:*}"
           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3807:
+In ./neofetch line 6306:
     min="${4/${hour}}"
          ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3828:
+In ./neofetch line 6327:
     [ "$((year % 4))" = 0 && "$((year % 100))" != 0 || "$((year % 400))" = 0 ] && \
                           ^-- SC2107: Instead of [ a && b ], use [ a ] && [ b ].
                                                     ^-- SC2109: Instead of [ a || b ], use [ a ] || [ b ].
 
 
-In neofetch line 3834:
+In ./neofetch line 6333:
     year_code="$((${year/??} + (${year/??} / 4) % 7))"
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
                                 ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3851:
+In ./neofetch line 6350:
                 [0-9] | 0[0-9] | 1[0-1]) time="${hour/00/12}${min} AM" ;;
                                                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3870:
+In ./neofetch line 6369:
             ppid="${ppid/'PPID'}"
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3875:
+In ./neofetch line 6374:
             ppid="$(trim "${ppid/PPid:}")"
                           ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3891:
+In ./neofetch line 6390:
             name="${name/'COMMAND'}"
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3892:
+In ./neofetch line 6391:
             name="${name/*\/}"
                   ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3908:
+In ./neofetch line 6407:
     decode="${1//+/ }"
             ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 3909:
+In ./neofetch line 6408:
     printf "%b" "${decode//%/\\x}"
                  ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 4138:
+In ./neofetch line 6637:
     echo "$@" | grep -qE '*--config*' && get_user_config 2>/dev/null
                          ^-- SC2063: Grep uses regex, but this looks like a glob.
 
 
-In neofetch line 4187:
+In ./neofetch line 6686:
                             [ $bash_version -gt 4 ] && func="${func,,}" # todo: bash-specific / should be rm'ed
                               ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
-In neofetch line 4239:
+In ./neofetch line 6738:
                 image_backend="${1/--}"
                                ^-- SC2039: In POSIX sh, string replacement is undefined.
 
 
-In neofetch line 4343:
+In ./neofetch line 6843:
     [ "$image_backend" = *w3m* ] && display_image 2>/dev/null
                          ^-- SC2081: [ .. ] can't match globs. Use [[ .. ]] or case statement.
 

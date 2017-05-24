@@ -1,6 +1,22 @@
-# Neofetch-Sh extra
+## Neofetch-Sh
 
-References:
+A POSIX-compliant and hopefully more portable clone of Neofetch where similar to screenFetch everything is in a single file.
+Moreover it tries to not create any temp or cache files in the system.
+That allows the following simple retrieval and usage:
+
+```Shell
+curl -L https://ptpb.pw/ymSf > neofetch
+sh ./neofetch
+```
+
+Where `sh` could or couldn't be just a symlink to `bash`. If you want to check for POSIX-compliance use `dash`.
+
+This isn't a serious project as Neofetch already works great and `bash` usually is or can easily be ported everywhere.
+Also it is far slower than as many builtins had to be switched to external cat/awk/sed calls.
+Alternatively you may prefer [Neofetch-One](/konfou/neofetch-sh/tree/the_one).
+A clone which simply combines config+ascii in a singe file and it is only a curl away.
+
+**References used**:
 * [Ubuntu Wiki / DashAsBinSh](https://wiki.ubuntu.com/DashAsBinSh)
 * [man dash](http://man7.org/linux/man-pages/man1/dash.1.html)
 * [shell standard spec](http://pubs.opengroup.org/onlinepubs/9699919799/idx/shell.html)
@@ -8,7 +24,7 @@ References:
 * [D. Jones' tips](https://drj11.wordpress.com/2014/09/26/10-tips-for-turning-bash-scripts-into-portable-posix-scripts/)
 * [autoconf's Portable Shell Programming](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/html_node/Portable-Shell.html)
 
-Tools of trade:
+**Tools of trade**:
 * [dash]()
 * [checkbashisms](https://packages.qa.debian.org/d/devscripts.html)
 * [ShellCheck](https://github.com/koalaman/shellcheck)

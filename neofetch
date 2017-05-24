@@ -8,7 +8,7 @@
 # https://github.com/dylanaraps/
 #
 # Neofetch-Sh: Neofetch simplfied.
-# https://github.com/konfou/neofetch-pure
+# https://github.com/konfou/neofetch-sh
 
 # Neofetch version.
 version="3.1.0-git"
@@ -2044,8 +2044,8 @@ get_battery() {
         ;;
 
         "Haiku")
-            battery0full="$(awk -F '[^0-9]*' 'NR=2 {print $4}' /dev/power/acpi_battery/0)"
-            battery0now="$(awk -F '[^0-9]*' 'NR=5 {print $4}' /dev/power/acpi_battery/0)"
+            battery0full="$(awk -F '[^0-9]*' 'NR==2 {print $4}' /dev/power/acpi_battery/0)"
+            battery0now="$(awk -F '[^0-9]*' 'NR==5 {print $4}' /dev/power/acpi_battery/0)"
             battery="$((battery0full * 100 / battery0now))%"
         ;;
     esac
@@ -2247,19 +2247,19 @@ get_ascii() {
           echo "$image_source" | grep -qE '\.(png|jpg|jpe|jpeg|gif)$'; then
 
         # Fallback to distro ascii mode if custom ascii isn't found.
-        echo "$image_source" | grep -qE '^(auto|ascii)$' ||  \
-            err "Ascii: Ascii file not found, using distro ascii."
+        #if ! echo "$image_source" | grep -qE '^(auto|ascii)$'; then
+        #    err "Ascii: Ascii file not found, using distro ascii."
+        #else
+        #    ascii_art="$(cat "$image_source")"
+        #fi
 
         # Fallback to distro ascii mode if source is an image.
         echo "$image_source" | grep -qE '\.(png|jpg|jpe|jpeg|gif)$' && \
             err "Image: Source is image file but ascii backend was selected. Using distro ascii."
 
-	# todo: integrate all ascii arts in this file
-        image_source="${ascii_dir}/${ascii_file}"
-
         # Fallback to no ascii mode if distro ascii isn't found.
-        [ ! -f "$image_source" ] && \
-            { to_off "Ascii: Failed to find distro ascii, falling back to no ascii mode."; return; }
+        #[ ! -f "$image_source" ] && \
+        #    { to_off "Ascii: Failed to find distro ascii, falling back to no ascii mode."; return; }
     fi
 
     # Set locale to get correct padding.
@@ -2274,7 +2274,7 @@ get_ascii() {
         line="${line//\\\\/\\}"
         [ ${#line} -gt $ascii_length ] && ascii_length="${#line}"
         lines=$((lines+1))
-    done < "$image_source"
+    done <<< $(printf "%b" "$ascii_art")
 
     # Colors.
     print="${print//'${c1}'/$c1}"
@@ -2543,7 +2543,7 @@ make_thumbnail() {
             # This checks to see if height is greater than width
             # so we can do a better crop of portrait images.
             size="$og_height"
-            [ $og_height -gt og_width ] && size="$og_width"
+            [ $og_height -gt $og_width ] && size="$og_width"
         fi
 
         case "$crop_mode" in
@@ -3529,6 +3529,2504 @@ get_distro_colors() {
     fi
 }
 
+get_distro_art() {
+    case "$ascii_file" in
+        "aix") ascii_art="$(cat <<'END'
+${c1}           `:+ssssossossss+-`
+        .oys///oyhddddhyo///sy+.
+      /yo:+hNNNNNNNNNNNNNNNNh+:oy/
+    :h/:yNNNNNNNNNNNNNNNNNNNNNNy-+h:
+  `ys.yNNNNNNNNNNNNNNNNNNNNNNNNNNy.ys
+ `h+-mNNNNNNNNNNNNNNNNNNNNNNNNNNNNm-oh
+ h+-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN.oy
+/d`mNNNNNNN/::mNNNd::m+:/dNNNo::dNNNd`m:
+h//NNNNNNN: . .NNNh  mNo  od. -dNNNNN:+y
+N.sNNNNNN+ -N/ -NNh  mNNd.   sNNNNNNNo-m
+N.sNNNNNs  +oo  /Nh  mNNs` ` /mNNNNNNo-m
+h//NNNNh  ossss` +h  md- .hm/ `sNNNNN:+y
+:d`mNNN+/yNNNNNd//y//h//oNNNNy//sNNNd`m-
+ yo-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNm.ss
+ `h+-mNNNNNNNNNNNNNNNNNNNNNNNNNNNNm-oy
+   sy.yNNNNNNNNNNNNNNNNNNNNNNNNNNs.yo
+    :h+-yNNNNNNNNNNNNNNNNNNNNNNs-oh-
+      :ys:/yNNNNNNNNNNNNNNNmy/:sy:
+        .+ys///osyhhhhys+///sy+.
+            -/osssossossso/-
+END
+        )";;
+
+        "alpine") ascii_art="$(cat <<'END'
+${c1}       .hddddddddddddddddddddddh.
+      :dddddddddddddddddddddddddd:
+     /dddddddddddddddddddddddddddd/
+    +dddddddddddddddddddddddddddddd+
+  `sdddddddddddddddddddddddddddddddds`
+ `ydddddddddddd++hdddddddddddddddddddy`
+.hddddddddddd+`  `+ddddh:-sdddddddddddh.
+hdddddddddd+`      `+y:    .sddddddddddh
+ddddddddh+`   `//`   `.`     -sddddddddd
+ddddddh+`   `/hddh/`   `:s-    -sddddddd
+ddddh+`   `/+/dddddh/`   `+s-    -sddddd
+ddd+`   `/o` :dddddddh/`   `oy-    .yddd
+hdddyo+ohddyosdddddddddho+oydddy++ohdddh
+.hddddddddddddddddddddddddddddddddddddh.
+ `yddddddddddddddddddddddddddddddddddy`
+  `sdddddddddddddddddddddddddddddddds`
+    +dddddddddddddddddddddddddddddd+
+     /dddddddddddddddddddddddddddd/
+      :dddddddddddddddddddddddddd:
+       .hddddddddddddddddddddddh.
+END
+        )";;
+
+        "alpine_small") ascii_art="$(cat <<'END'
+${c1}   /\ /\
+  /${c2}/ ${c1}\  \
+ /${c2}/   ${c1}\  \
+/${c2}//    ${c1}\  \
+${c2}//      ${c1}\  \
+         \
+END
+        )";;
+
+        "android") ascii_art="$(cat <<'END'
+${c1}     ╲ ▁▂▂▂▁ ╱
+     ▄███████▄
+    ▄██${c2} ${c1}███${c2} ${c1}██▄
+   ▄███████████▄
+▄█ ▄▄▄▄▄▄▄▄▄▄▄▄▄ █▄
+██ █████████████ ██
+██ █████████████ ██
+██ █████████████ ██
+██ █████████████ ██
+   █████████████
+    ███████████
+     ██     ██
+     ██     ██
+END
+        )";;
+
+        "antergos") ascii_art="$(cat <<'END'
+${c2}              `.-/::/-``
+            .-/osssssssso/.
+           :osyysssssssyyys+-
+        `.+yyyysssssssssyyyyy+.
+       `/syyyyyssssssssssyyyyys-`
+      `/yhyyyyysss${c1}++${c2}ssosyyyyhhy/`
+     .ohhhyyyys${c1}o++/+o${c2}so${c1}+${c2}syy${c1}+${c2}shhhho.
+    .shhhhys${c1}oo++//+${c2}sss${c1}+++${c2}yyy${c1}+s${c2}hhhhs.
+   -yhhhhs${c1}+++++++o${c2}ssso${c1}+++${c2}yyy${c1}s+o${c2}hhddy:
+  -yddhhy${c1}o+++++o${c2}syyss${c1}++++${c2}yyy${c1}yooy${c2}hdddy-
+ .yddddhs${c1}o++o${c2}syyyyys${c1}+++++${c2}yyhh${c1}sos${c2}hddddy`
+`odddddhyosyhyyyyyy${c1}++++++${c2}yhhhyosddddddo
+.dmdddddhhhhhhhyyyo${c1}+++++${c2}shhhhhohddddmmh.
+ddmmdddddhhhhhhhso${c1}++++++${c2}yhhhhhhdddddmmdy
+dmmmdddddddhhhyso${c1}++++++${c2}shhhhhddddddmmmmh
+-dmmmdddddddhhys${c1}o++++o${c2}shhhhdddddddmmmmd-
+.smmmmddddddddhhhhhhhhhdddddddddmmmms.
+   `+ydmmmdddddddddddddddddddmmmmdy/.
+      `.:+ooyyddddddddddddyyso+:.`
+END
+        )";;
+
+        "antix") ascii_art="$(cat <<'END'
+${c1}
+                    \
+         , - ~ ^ ~ - \        /
+     , '              \ ' ,  /
+   ,                   \   '/
+  ,                     \  / ,
+ ,___,                   \/   ,
+ /   |   _  _  _|_ o     /\   ,
+|,   |  / |/ |  |  |    /  \  ,
+ \,_/\_/  |  |_/|_/|_/_/    \,
+   ,                  /     ,\
+     ,               /  , '   \
+      ' - , _ _ _ ,  '
+END
+        )";;
+
+        "aosc") ascii_art="$(cat <<'END'
+${c2}             .:+syhhhhys+:.
+         .ohNMMMMMMMMMMMMMMNho.
+      `+mMMMMMMMMMMmdmNMMMMMMMMm+`
+     +NMMMMMMMMMMMM/   `./smMMMMMN+
+   .mMMMMMMMMMMMMMMo        -yMMMMMm.
+  :NMMMMMMMMMMMMMMMs          .hMMMMN:
+ .NMMMMhmMMMMMMMMMMm+/-         oMMMMN.
+ dMMMMs  ./ymMMMMMMMMMMNy.       sMMMMd
+-MMMMN`      oMMMMMMMMMMMN:      `NMMMM-
+/MMMMh       NMMMMMMMMMMMMm       hMMMM/
+/MMMMh       NMMMMMMMMMMMMm       hMMMM/
+-MMMMN`      :MMMMMMMMMMMMy.     `NMMMM-
+ dMMMMs       .yNMMMMMMMMMMMNy/. sMMMMd
+ .NMMMMo         -/+sMMMMMMMMMMMmMMMMN.
+  :NMMMMh.          .MMMMMMMMMMMMMMMN:
+   .mMMMMMy-         NMMMMMMMMMMMMMm.
+     +NMMMMMms/.`    mMMMMMMMMMMMN+
+      `+mMMMMMMMMNmddMMMMMMMMMMm+`
+         .ohNMMMMMMMMMMMMMMNho.
+             .:+syhhhhys+:.
+END
+        )";;
+
+        "apricity") ascii_art="$(cat <<'END'
+${c2}                                    ./o-
+          ``...``              `:. -/:
+     `-+ymNMMMMMNmho-`      :sdNNm/
+   `+dMMMMMMMMMMMMMMMmo` sh:.:::-
+  /mMMMMMMMMMMMMMMMMMMMm/`sNd/
+ oMMMMMMMMMMMMMMMMMMMMMMMs -`
+:MMMMMMMMMMMMMMMMMMMMMMMMM/
+NMMMMMMMMMMMMMMMMMMMMMMMMMd
+MMMMMMMmdmMMMMMMMMMMMMMMMMd
+MMMMMMy` .mMMMMMMMMMMMmho:`
+MMMMMMNo/sMMMMMMMNdy+-.`-/
+MMMMMMMMMMMMNdy+:.`.:ohmm:
+MMMMMMMmhs+-.`.:+ymNMMMy.
+MMMMMM/`.-/ohmNMMMMMMy-
+MMMMMMNmNNMMMMMMMMmo.
+MMMMMMMMMMMMMMMms:`
+MMMMMMMMMMNds/.
+dhhyys+/-`
+END
+        )";;
+
+        "arch") ascii_art="$(cat <<'END'
+${c1}                   -`
+                  .o+`
+                 `ooo/
+                `+oooo:
+               `+oooooo:
+               -+oooooo+:
+             `/:-:++oooo+:
+            `/++++/+++++++:
+           `/++++++++++++++:
+          `/+++o${c2}oooooooo${c1}oooo/`
+${c2}         ${c1}./${c2}ooosssso++osssssso${c1}+`
+${c2}        .oossssso-````/ossssss+`
+       -osssssso.      :ssssssso.
+      :osssssss/        osssso+++.
+     /ossssssss/        +ssssooo/-
+   `/ossssso+/:-        -:/+osssso+-
+  `+sso+:-`                 `.-/+oso:
+ `++:.                           `-/+/
+ .`                                 `/
+END
+        )";;
+
+        "arch_old") ascii_art="$(cat <<'END'
+${c1}             __
+         _=(SDGJT=_
+       _GTDJHGGFCVS)
+      ,GTDJGGDTDFBGX0
+${c1}     JDJDIJHRORVFSBSVL${c2}-=+=,_
+${c1}    IJFDUFHJNXIXCDXDSV,${c2}  "DEBL
+${c1}   [LKDSDJTDU=OUSCSBFLD.${c2}   '?ZWX,
+${c1}  ,LMDSDSWH'     `DCBOSI${c2}     DRDS],
+${c1}  SDDFDFH'         !YEWD,${c2}   )HDROD
+${c1} !KMDOCG            &GSU|${c2}\_GFHRGO\'
+${c1} HKLSGP'${c2}           __${c1}\TKM0${c2}\GHRBV)'
+${c1}JSNRVW'${c2}       __+MNAEC${c1}\IOI,${c2}\BN'
+${c1}HELK['${c2}    __,=OFFXCBGHC${c1}\FD)
+${c1}?KGHE ${c2}\_-#DASDFLSV='${c1}    'EF
+'EHTI                    !H
+ `0F'                    '!
+END
+        )";;
+
+        "arch_small") ascii_art="$(cat <<'END'
+${c1}      /\
+     /^^\
+    /\   \
+   /${c2}  __  \
+  /  (  )  \
+ / __|  |__\\
+///        \\\nEND
+        )";;
+
+        "arch_xferience") ascii_art="$(cat <<'END'
+${c1}           ``--:::::::-.`
+        .-/+++ooooooooo+++:-`
+     `-/+oooooooooooooooooo++:.
+    -/+oooooo/+ooooooooo+/ooo++:`
+  `/+oo++oo.   .+oooooo+.-: +:-o+-
+ `/+o/.  -o.    :oooooo+ ```:.+oo+-
+`:+oo-    -/`   :oooooo+ .`-`+oooo/.
+.+ooo+.    .`   `://///+-+..oooooo+:`
+-+ooo:`                ``.-+oooooo+/`
+-+oo/`                       :+oooo/.
+.+oo:            ..-/. .      -+oo+/`
+`/++-         -:::++::/.      -+oo+-
+ ./o:          `:///+-     `./ooo+:`
+  .++-         `` /-`   -:/+oooo+:`
+   .:+/:``          `-:ooooooo++-
+     ./+o+//:...../+oooooooo++:`
+       `:/++ooooooooooooo++/-`
+          `.-//++++++//:-.`
+               ``````
+END
+        )";;
+
+        "archbox") ascii_art="$(cat <<'END'
+${c1}              ...:+oh/:::..
+         ..-/oshhhhhh`   `::::-.
+     .:/ohhhhhhhhhhhh`        `-::::.
+ .+shhhhhhhhhhhhhhhhh`             `.::-.
+ /`-:+shhhhhhhhhhhhhh`            .-/+shh
+ /      .:/ohhhhhhhhh`       .:/ohhhhhhhh
+ /           `-:+shhh`  ..:+shhhhhhhhhhhh
+ /                 .:ohhhhhhhhhhhhhhhhhhh
+ /                  `hhhhhhhhhhhhhhhhhhhh
+ /                  `hhhhhhhhhhhhhhhhhhhh
+ /                  `hhhhhhhhhhhhhhhhhhhh
+ /                  `hhhhhhhhhhhhhhhhhhhh
+ /      .+o+        `hhhhhhhhhhhhhhhhhhhh
+ /     -hhhhh       `hhhhhhhhhhhhhhhhhhhh
+ /     ohhhhho      `hhhhhhhhhhhhhhhhhhhh
+ /:::+`hhhhoos`     `hhhhhhhhhhhhhhhhhs+`
+    `--/:`   /:     `hhhhhhhhhhhho/-
+             -/:.   `hhhhhhs+:-`
+                ::::/ho/-`
+END
+        )";;
+
+        "archlabs") ascii_art="$(cat <<'END'
+${c1}                 sy
+                h--d
+               d---:
+               :----/N
+              :------/N
+            N/----:---+
+           N/---+/ :--:o
+          N/--:/    ::::s
+          +---       ::::s
+        N+---+        ::::s
+       N+----o  +:o   s::::s
+      N/----:: s:::s  h:::::s
+     N/----:::y::::+  o::::::o
+    N/---::::::::::s d::::::::+N
+    /--::::::::::::dd::::::::::+N
+   :-:::/+syhd  NNN N  dhys+/:::/
+ d::+ydN                      /s+/d
+arc                               y\.
+END
+        )";;
+
+        "bitrig") ascii_art="$(cat <<'END'
+${c1}   `hMMMMN+
+   -MMo-dMd`
+   oMN- oMN`
+   yMd  /NM:
+  .mMmyyhMMs
+  :NMMMhsmMh
+  +MNhNNoyMm-
+  hMd.-hMNMN:
+  mMmsssmMMMo
+ .MMdyyhNMMMd
+ oMN.`/dMddMN`
+ yMm/hNm+./MM/
+.dMMMmo.``.NMo
+:NMMMNmmmmmMMh
+/MN/-------oNN:
+hMd.       .dMh
+sm/         /ms
+END
+        )";;
+
+        "blag") ascii_art="$(cat <<'END'
+${c1}             d
+            ,MK:
+            xMMMX:
+           .NMMMMMX;
+           lMMMMMMMM0clodkO0KXWW:
+           KMMMMMMMMMMMMMMMMMMX'
+      .;d0NMMMMMMMMMMMMMMMMMMK.
+ .;dONMMMMMMMMMMMMMMMMMMMMMMx
+'dKMMMMMMMMMMMMMMMMMMMMMMMMl
+   .:xKWMMMMMMMMMMMMMMMMMMM0.
+       .:xNMMMMMMMMMMMMMMMMMK.
+          lMMMMMMMMMMMMMMMMMMK.
+          ,MMMMMMMMWkOXWMMMMMM0
+          .NMMMMMNd.     `':ldko
+           OMMMK:
+           oWk,
+           ;:
+END
+        )";;
+
+        "blankon") ascii_art="$(cat <<'END'
+${c2}        `./ohdNMMMMNmho+.` ${c1}       .+oo:`
+${c2}      -smMMMMMMMMMMMMMMMMmy-`    ${c1}`yyyyy+
+${c2}   `:dMMMMMMMMMMMMMMMMMMMMMMd/`  ${c1}`yyyyys
+${c2}  .hMMMMMMMNmhso/++symNMMMMMMMh- ${c1}`yyyyys
+${c2} -mMMMMMMms-`         -omMMMMMMN-${c1}.yyyyys
+${c2}.mMMMMMMy.              .yMMMMMMm:${c1}yyyyys
+${c2}sMMMMMMy                 `sMMMMMMh${c1}yyyyys
+${c2}NMMMMMN:                  .NMMMMMN${c1}yyyyys
+${c2}MMMMMMm.                   NMMMMMN${c1}yyyyys
+${c2}hMMMMMM+                  /MMMMMMN${c1}yyyyys
+${c2}:NMMMMMN:                :mMMMMMM+${c1}yyyyys
+${c2} oMMMMMMNs-            .sNMMMMMMs.${c1}yyyyys
+${c2}  +MMMMMMMNho:.`  `.:ohNMMMMMMNo ${c1}`yyyyys
+${c2}   -hMMMMMMMMNNNmmNNNMMMMMMMMh-  ${c1}`yyyyys
+${c2}     :yNMMMMMMMMMMMMMMMMMMNy:`   ${c1}`yyyyys
+${c2}       .:sdNMMMMMMMMMMNds/.      ${c1}`yyyyyo
+${c2}           `.:/++++/:.`           ${c1}:oys+.
+END
+        )";;
+
+        "bsd") ascii_art="$(cat <<'END'
+${c1}             ,        ,
+            /(        )`
+            \ \___   / |
+            /- _  `-/  '
+           (${c2}/\/ \ ${c1}\   /\
+           ${c2}/ /   | `    ${c1}\
+           ${c3}O O   ${c2}) ${c1}/    |
+           ${c2}`-^--'${c1}`<     '
+          (_.)  _  )   /
+           `.___/`    /
+             `-----' /
+${c4}<----.     __ / __   \
+${c4}<----|====${c1}O)))${c4}==${c1}) \) /${c4}====|
+<----'    ${c1}`--' `.__,' \
+             |        |
+              \       /       /\
+         ${c5}______${c1}( (_  / \______/
+       ${c5},'  ,-----'   |
+       `--{__________)
+END
+        )";;
+
+        "bunsenlabs") ascii_art="$(cat <<'END'
+${c1}        `++
+      -yMMs
+    `yMMMMN`
+   -NMMMMMMm.
+  :MMMMMMMMMN-
+ .NMMMMMMMMMMM/
+ yMMMMMMMMMMMMM/
+`MMMMMMNMMMMMMMN.
+-MMMMN+ /mMMMMMMy
+-MMMm`   `dMMMMMM
+`MMN.     .NMMMMM.
+ hMy       yMMMMM`
+ -Mo       +MMMMN
+  /o       +MMMMs
+           +MMMN`
+           hMMM:
+          `NMM/
+          +MN:
+          mh.
+         -/
+END
+        )";;
+
+        "centos") ascii_art="$(cat <<'END'
+${c1}                 ..
+               .PLTJ.
+              <><><><>
+     ${c2}KKSSV' 4KKK ${c1}LJ${c4} KKKL.'VSSKK
+     ${c2}KKV' 4KKKKK ${c1}LJ${c4} KKKKAL 'VKK
+     ${c2}V' ' 'VKKKK ${c1}LJ${c4} KKKKV' ' 'V
+     ${c2}.4MA.' 'VKK ${c1}LJ${c4} KKV' '.4Mb.
+${c4}   . ${c2}KKKKKA.' 'V ${c1}LJ${c4} V' '.4KKKKK ${c3}.
+${c4} .4D ${c2}KKKKKKKA.'' ${c1}LJ${c4} ''.4KKKKKKK ${c3}FA.
+${c4}<QDD ++++++++++++  ${c3}++++++++++++ GFD>
+${c4} 'VD ${c3}KKKKKKKK'.. ${c2}LJ ${c1}..'KKKKKKKK ${c3}FV
+${c4}   ' ${c3}VKKKKK'. .4 ${c2}LJ ${c1}K. .'KKKKKV ${c3}'
+     ${c3} 'VK'. .4KK ${c2}LJ ${c1}KKA. .'KV'
+     ${c3}A. . .4KKKK ${c2}LJ ${c1}KKKKA. . .4
+     ${c3}KKA. 'KKKKK ${c2}LJ ${c1}KKKKK' .4KK
+     ${c3}KKSSA. VKKK ${c2}LJ ${c1}KKKV .4SSKK
+${c2}              <><><><>
+               'MKKM'
+                 ''
+END
+        )";;
+
+        "chakra") ascii_art="$(cat <<'END'
+${c1}     _ _ _        "kkkkkkkk.
+   ,kkkkkkkk.,    'kkkkkkkkk,
+   ,kkkkkkkkkkkk., 'kkkkkkkkk.
+  ,kkkkkkkkkkkkkkkk,'kkkkkkkk,
+ ,kkkkkkkkkkkkkkkkkkk'kkkkkkk.
+  "''"''',;::,,"''kkk''kkkkk;   __
+      ,kkkkkkkkkk, "k''kkkkk' ,kkkk
+    ,kkkkkkk' ., ' .: 'kkkk',kkkkkk
+  ,kkkkkkkk'.k'   ,  ,kkkk;kkkkkkkkk
+ ,kkkkkkkk';kk 'k  "'k',kkkkkkkkkkkk
+.kkkkkkkkk.kkkk.'kkkkkkkkkkkkkkkkkk'
+;kkkkkkkk''kkkkkk;'kkkkkkkkkkkkk''
+'kkkkkkk; 'kkkkkkkk.,""''"''""
+  ''kkkk;  'kkkkkkkkkk.,
+     ';'    'kkkkkkkkkkkk.,
+             ';kkkkkkkkkk'
+               ';kkkkkk'
+                  "''"
+END
+        )";;
+
+        "chaletos") ascii_art="$(cat <<'END'
+${c1}             `.//+osso+/:``
+         `/sdNNmhyssssydmNNdo:`
+       :hNmy+-`          .-+hNNs-
+     /mMh/`       `+:`       `+dMd:
+   .hMd-        -sNNMNo.  /yyy  /mMs`
+  -NM+       `/dMd/--omNh::dMM   `yMd`
+ .NN+      .sNNs:/dMNy:/hNmo/s     yMd`
+ hMs    `/hNd+-smMMMMMMd+:omNy-    `dMo
+:NM.  .omMy:/hNMMMMMMMMMMNy:/hMd+`  :Md`
+/Md` `sm+.omMMMMMMMMMMMMMMMMd/-sm+  .MN:
+/Md`      MMMMMMMMMMMMMMMMMMMN      .MN:
+:NN.      MMMMMMm....--NMMMMMN      -Mm.
+`dMo      MMMMMMd      mMMMMMN      hMs
+ -MN:     MMMMMMd      mMMMMMN     oMm`
+  :NM:    MMMMMMd      mMMMMMN    +Mm-
+   -mMy.  mmmmmmh      dmmmmmh  -hMh.
+     oNNs-                    :yMm/
+      .+mMdo:`            `:smMd/`
+         -ohNNmhsoo++osshmNNh+.
+            `./+syyhhyys+:``
+END
+        )";;
+
+        "chapeau") ascii_art="$(cat <<'END'
+${c1}               .-/-.
+            ////////.
+          ////////${c2}y+${c1}//.
+        ////////${c2}mMN${c1}/////.
+      ////////${c2}mMN+${c1}////////.
+    ////////////////////////.
+  /////////+${c2}shhddhyo${c1}+////////.
+ ////////${c2}ymMNmdhhdmNNdo${c1}///////.
+///////+${c2}mMms${c1}////////${c2}hNMh${c1}///////.
+///////${c2}NMm+${c1}//////////${c2}sMMh${c1}///////
+//////${c2}oMMNmmmmmmmmmmmmMMm${c1}///////
+//////${c2}+MMmssssssssssssss+${c1}///////
+`//////${c2}yMMy${c1}////////////////////
+ `//////${c2}smMNhso++oydNm${c1}////////
+  `///////${c2}ohmNMMMNNdy+${c1}///////
+    `//////////${c2}++${c1}//////////
+       `////////////////.
+           -////////-
+END
+        )";;
+
+        "chrome") ascii_art="$(cat <<'END'
+${c2}            .,:loool:,.
+        .,coooooooooooooc,.
+     .,lllllllllllllllllllll,.
+    ;ccccccccccccccccccccccccc;
+${c1}  '${c2}ccccccccccccccccccccccccccccc.
+${c1} ,oo${c2}c::::::::okO${c5}000${c3}0OOkkkkkkkkkkk:
+${c1}.ooool${c2};;;;:x${c5}K0${c4}kxxxxxk${c5}0X${c3}K0000000000.
+${c1}:oooool${c2};,;O${c5}K${c4}ddddddddddd${c5}KX${c3}000000000d
+${c1}lllllool${c2};l${c5}N${c4}dllllllllllld${c5}N${c3}K000000000
+${c1}lllllllll${c2}o${c5}M${c4}dccccccccccco${c5}W${c3}K000000000
+${c1};cllllllllX${c5}X${c4}c:::::::::c${c5}0X${c3}000000000d
+${c1}.ccccllllllO${c5}Nk${c4}c;,,,;cx${c5}KK${c3}0000000000.
+${c1} .cccccclllllxOO${c5}OOO${c1}Okx${c3}O0000000000;
+${c1}  .:ccccccccllllllllo${c3}O0000000OOO,
+${c1}    ,:ccccccccclllcd${c3}0000OOOOOOl.
+${c1}      '::ccccccccc${c3}dOOOOOOOkx:.
+${c1}        ..,::cccc${c3}xOOOkkko;.
+${c1}            ..,:${c3}dOkxl:.
+END
+        )";;
+
+        "crux") ascii_art="$(cat <<'END'
+${c1}         odddd
+      oddxkkkxxdoo
+     ddcoddxxxdoool
+     xdclodod  olol
+     xoc  xdd  olol
+     xdc  ${c2}k00${c1}Okdlol
+     xxd${c2}kOKKKOkd${c1}ldd
+     xdco${c2}xOkdlo${c1}dldd
+     ddc:cl${c2}lll${c1}oooodo
+   odxxdd${c3}xkO000kx${c1}ooxdo
+  oxdd${c3}x0NMMMMMMWW0od${c1}kkxo
+ oooxd${c3}0WMMMMMMMMMW0o${c1}dxkx
+docldkXW${c3}MMMMMMMWWN${c1}Odolco
+xx${c2}dx${c1}kxxOKN${c3}WMMWN${c1}0xdoxo::c
+${c2}xOkkO${c1}0oo${c3}odOW${c2}WW${c1}XkdodOxc:l
+${c2}dkkkxkkk${c3}OKX${c2}NNNX0Oxx${c1}xc:cd
+${c2} odxxdx${c3}xllod${c2}ddooxx${c1}dc:ldo
+${c2}   lodd${c1}dolccc${c2}ccox${c1}xoloo
+END
+        )";;
+
+        "crux_small") ascii_art="$(cat <<'END'
+${c1}    ___
+   (${c3}.· ${c1}|
+   (${c2}<> ${c1}|
+  / ${c3}__  ${c1}\
+ ( ${c3}/  \ ${c1}/|
+${c2}_${c1}/\ ${c3}__)${c1}/${c2}_${c1})
+${c2}\/${c1}-____${c2}\/
+END
+        )";;
+
+        "debian") ascii_art="$(cat <<'END'
+${c2}       _,met$$$$$gg.
+    ,g$$$$$$$$$$$$$$$P.
+  ,g$$P"     """Y$$.".
+ ,$$P'              `$$$.
+',$$P       ,ggs.     `$$b:
+`d$$'     ,$P"'   ${c1}.${c2}    $$$
+ $$P      d$'     ${c1},${c2}    $$P
+ $$:      $$.   ${c1}-${c2}    ,d$$'
+ $$;      Y$b._   _,d$P'
+ Y$$.    ${c1}`.${c2}`"Y$$$$P"'
+${c2} `$$b      ${c1}"-.__
+${c2}  `Y$$
+   `Y$$.
+     `$$b.
+       `Y$$b.
+          `"Y$b._
+              `"""
+END
+        )";;
+
+        "deepin") ascii_art="$(cat <<'END'
+${c1}             ............
+         .';;;;;.       .,;,.
+      .,;;;;;;;.       ';;;;;;;.
+    .;::::::::'     .,::;;,''''',.
+   ,'.::::::::    .;;'.          ';
+  ;'  'cccccc,   ,' :: '..        .:
+ ,,    :ccccc.  ;: .c, '' :.       ,;
+.l.     cllll' ., .lc  :; .l'       l.
+.c       :lllc  ;cl:  .l' .ll.      :'
+.l        'looc. .   ,o:  'oo'      c,
+.o.         .:ool::coc'  .ooo'      o.
+ ::            .....   .;dddo      ;c
+  l:...            .';lddddo.     ,o
+   lxxxxxdoolllodxxxxxxxxxc      :l
+    ,dxxxxxxxxxxxxxxxxxxl.     'o,
+      ,dkkkkkkkkkkkkko;.    .;o;
+        .;okkkkkdl;.    .,cl:.
+            .,:cccccccc:,.
+END
+        )";;
+
+        "desaos") ascii_art="$(cat <<'END'
+${c1}███████████████████████
+███████████████████████
+███████████████████████
+███████████████████████
+████████               ███████
+████████               ███████
+████████               ███████
+████████               ███████
+████████               ███████
+████████               ███████
+████████               ███████
+██████████████████████████████
+██████████████████████████████
+████████████████████████
+████████████████████████
+████████████████████████
+END
+        )";;
+
+        "devuan") ascii_art="$(cat <<'END'
+${c1}   ..,,;;;::;,..
+           `':ddd;:,.
+                 `'dPPd:,.
+                     `:b$$b`.
+                        'P$$$d`
+                         .$$$$$`
+                         ;$$$$$P
+                      .:P$$$$$$`
+                  .,:b$$$$$$$;'
+             .,:dP$$$$$$$$b:'
+      .,:;db$$$$$$$$$$Pd'`
+ ,db$$$$$$$$$$$$$$b:'`
+:$$$$$$$$$$$$b:'`
+ `$$$$$bd:''`
+   `'''`
+END
+        )";;
+
+        "dracos") ascii_art="$(cat <<'END'
+${c1}       `-:/-
+          -os:
+            -os/`
+              :sy+-`
+               `/yyyy+.
+                 `+yyyyo-
+                   `/yyyys:
+`:osssoooo++-        +yyyyyy/`
+   ./yyyyyyo         yo`:syyyy+.
+      -oyyy+         +-   :yyyyyo-
+        `:sy:        `.    `/yyyyys:
+           ./o/.`           .oyyso+oo:`
+              :+oo+//::::///:-.`     `.`
+END
+        )";;
+
+        "dragonflybsd") ascii_art="$(cat <<'END'
+                   ${c1} |
+                   .-.
+                 ${c3} ()${c1}I${c3}()
+            ${c1} "==.__:-:__.=="
+            "==.__/~|~\__.=="
+            "==._(  Y  )_.=="
+ ${c2}.-'~~""~=--...,__${c1}\/|\/${c2}__,...--=~""~~'-.
+(               ..=${c1}\=${c1}/${c2}=..               )
+ `'-.        ,.-"`;${c1}/=\${c2};"-.,_        .-'`
+     `~"-=-~` .-~` ${c1}|=|${c2} `~-. `~-=-"~`
+          .-~`    /${c1}|=|${c2}\    `~-.
+       .~`       / ${c1}|=|${c2} \       `~.
+   .-~`        .'  ${c1}|=|${c2}  `.        `~-.
+ (`     _,.-="`  ${c1}  |=|${c2}    `"=-.,_     `)
+  `~"~"`        ${c1}   |=|${c2}           `"~"~`
+                 ${c1}  /=\
+                   \=/
+                    ^
+END
+        )";;
+
+        "elementary") ascii_art="$(cat <<'END'
+${c2}         eeeeeeeeeeeeeeeee
+      eeeeeeeeeeeeeeeeeeeeeee
+    eeeee  eeeeeeeeeeee   eeeee
+  eeee   eeeee       eee     eeee
+ eeee   eeee          eee     eeee
+eee    eee            eee       eee
+eee   eee            eee        eee
+ee    eee           eeee       eeee
+ee    eee         eeeee      eeeeee
+ee    eee       eeeee      eeeee ee
+eee   eeee   eeeeee      eeeee  eee
+eee    eeeeeeeeee     eeeeee    eee
+ eeeeeeeeeeeeeeeeeeeeeeee    eeeee
+  eeeeeeee eeeeeeeeeeee      eeee
+    eeeee                 eeeee
+      eeeeeee         eeeeeee
+         eeeeeeeeeeeeeeeee
+END
+        )";;
+
+        "exherbo") ascii_art="$(cat <<'END'
+${c2} ,
+OXo.
+NXdX0:    .cok0KXNNXXK0ko:.
+KX  '0XdKMMK;.xMMMk, .0MMMMMXx;  ...
+'NO..xWkMMx   kMMM    cMMMMMX,NMWOxOXd.
+  cNMk  NK    .oXM.   OMMMMO. 0MMNo  kW.
+  lMc   o:       .,   .oKNk;   ;NMMWlxW'
+ ;Mc    ..   .,,'    .0M${c1}g;${c2}WMN'dWMMMMMMO
+ XX        ,WMMMMW.  cM${c1}cfli${c2}WMKlo.   .kMk
+.Mo        .WM${c1}GD${c2}MW.   XM${c1}WO0${c2}MMk        oMl
+,M:         ,XMMWx::,''oOK0x;          NM.
+'Ml      ,kNKOxxxxxkkO0XXKOd:.         oMk
+ NK    .0Nxc${c3}:::::::::::::::${c2}fkKNk,      .MW
+ ,Mo  .NXc${c3}::${c2}qXWXb${c3}::::::::::${c2}oo${c3}::${c2}lNK.    .MW
+  ;Wo oMd${c3}:::${c2}oNMNP${c3}::::::::${c2}oWMMMx${c3}:${c2}c0M;   lMO
+   'NO;W0c${c3}:::::::::::::::${c2}dMMMMO${c3}::${c2}lMk  .WM'
+     xWONXdc${c3}::::::::::::::${c2}oOOo${c3}::${c2}lXN. ,WMd
+      'KWWNXXK0Okxxo,${c3}:::::::${c2},lkKNo  xMMO
+        :XMNxl,';:lodxkOO000Oxc. .oWMMo
+          'dXMMXkl;,.        .,o0MMNo'
+             ':d0XWMMMMWNNNNMMMNOl'
+                   ':okKXWNKkl'
+END
+        )";;
+
+        "fedora") ascii_art="$(cat <<'END'
+${c1}          /:-------------:\
+       :-------------------::
+     :-----------${c2}/shhOHbmp${c1}---:\
+   /-----------${c2}omMMMNNNMMD  ${c1}---:
+  :-----------${c2}sMMMMNMNMP${c1}.    ---:
+ :-----------${c2}:MMMdP${c1}-------    ---\
+,------------${c2}:MMMd${c1}--------    ---:
+:------------${c2}:MMMd${c1}-------    .---:
+:----    ${c2}oNMMMMMMMMMNho${c1}     .----:
+:--     .${c2}+shhhMMMmhhy++${c1}   .------/
+:-    -------${c2}:MMMd${c1}--------------:
+:-   --------${c2}/MMMd${c1}-------------;
+:-    ------${c2}/hMMMy${c1}------------:
+:--${c2} :dMNdhhdNMMNo${c1}------------;
+:---${c2}:sdNMMMMNds:${c1}------------:
+:------${c2}:://:${c1}-------------::
+:---------------------://
+END
+        )";;
+
+        "freebsd") ascii_art="$(cat <<'END'
+   ${c2}```                        ${c1}`
+  ${c2}` `.....---...${c1}....--.```   -/
+  ${c2}+o   .--`         ${c1}/y:`      +.
+  ${c2} yo`:.            ${c1}:o      `+-
+    ${c2}y/               ${c1}-/`   -o/
+   ${c2}.-                  ${c1}::/sy+:.
+   ${c2}/                     ${c1}`--  /
+  ${c2}`:                          ${c1}:`
+  ${c2}`:                          ${c1}:`
+   ${c2}/                          ${c1}/
+   ${c2}.-                        ${c1}-.
+    ${c2}--                      ${c1}-.
+     ${c2}`:`                  ${c1}`:`
+       .--             `--.
+          .---.....----.
+END
+        )";;
+
+        "frugalware") ascii_art="$(cat <<'END'
+${c1}          `++/::-.`
+         /o+++++++++/::-.`
+        `o+++++++++++++++o++/::-.`
+        /+++++++++++++++++++++++oo++/:-.``
+       .o+ooooooooooooooooooosssssssso++oo++/:-`
+       ++osoooooooooooosssssssssssssyyo+++++++o:
+      -o+ssoooooooooooosssssssssssssyyo+++++++s`
+      o++ssoooooo++++++++++++++sssyyyyo++++++o:
+     :o++ssoooooo${c2}/-------------${c1}+syyyyyo+++++oo
+    `o+++ssoooooo${c2}/-----${c1}+++++ooosyyyyyyo++++os:
+    /o+++ssoooooo${c2}/-----${c1}ooooooosyyyyyyyo+oooss
+   .o++++ssooooos${c2}/------------${c1}syyyyyyhsosssy-
+   ++++++ssooooss${c2}/-----${c1}+++++ooyyhhhhhdssssso
+  -s+++++syssssss${c2}/-----${c1}yyhhhhhhhhhhhddssssy.
+  sooooooyhyyyyyh${c2}/-----${c1}hhhhhhhhhhhddddyssy+
+ :yooooooyhyyyhhhyyyyyyhhhhhhhhhhdddddyssy`
+ yoooooooyhyyhhhhhhhhhhhhhhhhhhhddddddysy/
+-ysooooooydhhhhhhhhhhhddddddddddddddddssy
+ .-:/+osssyyyysyyyyyyyyyyyyyyyyyyyyyyssy:
+       ``.-/+oosysssssssssssssssssssssss
+               ``.:/+osyysssssssssssssh.
+                        `-:/+osyyssssyo
+                                .-:+++`
+END
+        )";;
+
+        "funtoo") ascii_art="$(cat <<'END'
+${c2}     _______               ____
+    /MMMMMMM/             /MMMM| _____  _____
+ __/M${c1}.MMM.${c2}M/_____________|M${c1}.M${c2}MM|/MMMMM\/MMMMM\
+|MMMM${c1}MM'${c2}MMMMMMMMMMMMMMMMMMM${c1}MM${c2}MMMM${c1}.MMMM..MMMM.${c2}MM\
+|MM${c1}MMMMMMM${c2}/m${c1}MMMMMMMMMMMMMMMMMMMMMM${c2}MMMM${c1}MM${c2}MMMM${c1}MM${c2}MM|
+|MMMM${c1}MM${c2}MMM${c1}MM${c2}MM${c1}MM${c2}MM${c1}MM${c2}MMMMM${c1}\MMM${c2}MMM${c1}MM${c2}MMMM${c1}MM${c2}MMMM${c1}MM${c2}MM|
+  |MM${c1}MM${c2}MMM${c1}MM${c2}MM${c1}MM${c2}MM${c1}MM${c2}MM${c1}MM${c2}MM${c1}MMM${c2}MMMM${c1}'MMMM''MMMM'${c2}MM/
+  |MM${c1}MM${c2}MMM${c1}MM${c2}MM${c1}MM${c2}MM${c1}MM${c2}MM${c1}MM${c2}MM${c1}MMM${c2}MMM\MMMMM/\MMMMM/
+  |MM${c1}MM${c2}MMM${c1}MM${c2}MMMMMM${c1}MM${c2}MM${c1}MM${c2}MM${c1}MMMMM'${c2}M|
+  |MM${c1}MM${c2}MMM${c1}MMMMMMMMMMMMMMMMM MM'${c2}M/
+  |MMMMMMMMMMMMMMMMMMMMMMMMMMMM/
+END
+        )";;
+
+        "galliumos") ascii_art="$(cat <<'END'
+${c1}sooooooooooooooooooooooooooooooooooooo+:
+yyooooooooooooooooooooooooooooooooo+/:::
+yyysoooooooooooooooooooooooooooo+/::::::
+yyyyyoooooooooooooooooooooooo+/:::::::::
+yyyyyysoooooooooooooooooo++/::::::::::::
+yyyyyyysoooooooooooooo++/:::::::::::::::
+yyyyyyyyysoooooo${c2}sydddys${c1}+/:::::::::::::::
+yyyyyyyyyysooo${c2}smMMMMMMMNd${c1}+::::::::::::::
+yyyyyyyyyyyyo${c2}sMMMMMMMMMMMN${c1}/:::::::::::::
+yyyyyyyyyyyyy${c2}dMMMMMMMMMMMM${c1}o//:::::::::::
+yyyyyyyyyyyyy${c2}hMMMMMMMMMMMm${c1}--//::::::::::
+yyyyyyyyyyyyyy${c2}hmMMMMMMMNy${c1}:..-://::::::::
+yyyyyyyyyyyyyyy${c2}yyhhyys+:${c1}......://:::::::
+yyyyyyyyyyyyyyys+:--...........-///:::::
+yyyyyyyyyyyys+:--................://::::
+yyyyyyyyyo+:-.....................-//:::
+yyyyyyo+:-..........................://:
+yyyo+:-..............................-//
+o/:-...................................:
+END
+        )";;
+
+        "gentoo") ascii_art="$(cat <<'END'
+${c1}         -/oyddmdhs+:.
+     -o${c2}dNMMMMMMMMNNmhy+${c1}-`
+   -y${c2}NMMMMMMMMMMMNNNmmdhy${c1}+-
+ `o${c2}mMMMMMMMMMMMMNmdmmmmddhhy${c1}/`
+ om${c2}MMMMMMMMMMMN${c1}hhyyyo${c2}hmdddhhhd${c1}o`
+.y${c2}dMMMMMMMMMMd${c1}hs++so/s${c2}mdddhhhhdm${c1}+`
+ oy${c2}hdmNMMMMMMMN${c1}dyooy${c2}dmddddhhhhyhN${c1}d.
+  :o${c2}yhhdNNMMMMMMMNNNmmdddhhhhhyym${c1}Mh
+    .:${c2}+sydNMMMMMNNNmmmdddhhhhhhmM${c1}my
+       /m${c2}MMMMMMNNNmmmdddhhhhhmMNh${c1}s:
+    `o${c2}NMMMMMMMNNNmmmddddhhdmMNhs${c1}+`
+  `s${c2}NMMMMMMMMNNNmmmdddddmNMmhs${c1}/.
+ /N${c2}MMMMMMMMNNNNmmmdddmNMNdso${c1}:`
++M${c2}MMMMMMNNNNNmmmmdmNMNdso${c1}/-
+yM${c2}MNNNNNNNmmmmmNNMmhs+/${c1}-`
+/h${c2}MMNNNNNNNNMNdhs++/${c1}-`
+`/${c2}ohdmmddhys+++/:${c1}.`
+  `-//////:--.
+END
+        )";;
+
+        "gentoo_small") ascii_art="$(cat <<'END'
+${c1} _-----_
+(       \
+\    0   \
+${c2} \        )
+ /      _/
+(     _-
+\____-
+END
+        )";;
+
+        "gnewsense") ascii_art="$(cat <<'END'
+${c1}                     ..,,,,..
+               .oocchhhhhhhhhhccoo.
+        .ochhlllllllc hhhhhh ollllllhhco.
+    ochlllllllllll hhhllllllhhh lllllllllllhco
+ .cllllllllllllll hlllllo  +hllh llllllllllllllc.
+ollllllllllhco''  hlllllo  +hllh  ``ochllllllllllo
+hllllllllc'       hllllllllllllh       `cllllllllh
+ollllllh          +llllllllllll+          hllllllo
+ `cllllh.           ohllllllho           .hllllc'
+    ochllc.            ++++            .cllhco
+       `+occooo+.                .+ooocco+'
+              `+oo++++      ++++oo+'
+END
+        )";;
+
+        "gnu") ascii_art="$(cat <<'END'
+${c1}    _-`````-,           ,- '- .
+  .'   .- - |          | - -.  `.
+ /.'  /                     `.   \
+:/   :      _...   ..._      ``   :
+::   :     /._ .`:'_.._\.    ||   :
+::    `._ ./  ,`  :    \ . _.''   .
+`:.      /   |  -.  \-. \_      /
+  \:._ _/  .'   .@)  \@) ` `\ ,.'
+     _/,--'       .- .\,-.`--`.
+       ,'/''     (( \ `  )
+        /'/'  \    `-'  (
+         '/''  `._,-----'
+          ''/'    .,---'
+           ''/'      ;:
+             ''/''  ''/
+               ''/''/''
+                 '/'/'
+                  `;
+END
+        )";;
+
+        "gobolinux") ascii_art="$(cat <<'END'
+${c1}_____       _           
+/ ____|     | |          
+| |  __  ___ | |__   ___  
+| | |_ |/ _ \| '_ \ / _ \ 
+| |__| | (_) | |_) | (_) |
+ \_____|\___/|_.__/ \___/        
+END
+        )";;
+
+        "grombyang") ascii_art="$(cat <<'END'
+${c1}            eeeeeeeeeeee
+         eeeeeeeeeeeeeeeee
+      eeeeeeeeeeeeeeeeeeeeeee
+    eeeee       ${c2}.o+       ${c1}eeee
+  eeee         ${c2}`ooo/         ${c1}eeee
+ eeee         ${c2}`+oooo:         ${c1}eeee
+eee          ${c2}`+oooooo:          ${c1}eee
+eee          ${c2}-+oooooo+:         ${c1}eee
+ee         ${c2}`/:oooooooo+:         ${c1}ee
+ee        ${c2}`/+   +++    +:        ${c1}ee
+ee              ${c2}+o+\             ${c1}ee
+eee             ${c2}+o+\            ${c1}eee
+eee        ${c2}//  \ooo/  \\        ${c1}eee
+ eee      ${c2}//++++oooo++++\\     ${c1}eee
+  eeee    ${c2}::::++oooo+:::::   ${c1}eeee
+    eeeee   ${c3}Grombyang OS ${c1}  eeee
+      eeeeeeeeeeeeeeeeeeeeeee
+         eeeeeeeeeeeeeeeee
+END
+        )";;
+
+        "guixsd") ascii_art="$(cat <<'END'
+${c1} ..                             `.
+ `--..```..`           `..```..--`
+   .-:///-:::.       `-:::///:-.
+      ````.:::`     `:::.````
+           -//:`    -::-
+            ://:   -::-
+            `///- .:::`
+             -+++-:::.
+              :+/:::-
+              `-....`
+END
+        )";;
+
+        "haiku") ascii_art="$(cat <<'END'
+${c2}          :dc'
+       'l:;'${c1},${c2}'ck.    .;dc:.
+       co    ${c1}..${c2}k.  .;;   ':o.
+       co    ${c1}..${c2}k. ol      ${c1}.${c2}0.
+       co    ${c1}..${c2}k. oc     ${c1}..${c2}0.
+       co    ${c1}..${c2}k. oc     ${c1}..${c2}0.
+.Ol,.  co ${c1}...''${c2}Oc;kkodxOdddOoc,.
+ ';lxxlxOdxkxk0kd${c1}oooll${c2}dl${c1}ccc:${c2}clxd;
+     ..${c1}oOolllllccccccc:::::${c2}od;
+       cx:ooc${c1}:::::::;${c2}cooolcX.
+       cd${c1}.${c2}''cloxdoollc' ${c1}...${c2}0.
+       cd${c1}......${c2}k;${c1}.${c2}xl${c1}....  .${c2}0.
+       .::c${c1};..${c2}cx;${c1}.${c2}xo${c1}..... .${c2}0.
+          '::c'${c1}...${c2}do${c1}..... .${c2}K,
+                  cd,.${c1}....:${c2}O,${c1}
+                    ':clod:'${c1}
+                        ${c1}
+END
+        )";;
+
+        "kali") ascii_art="$(cat <<'END'
+${c1}..............
+            ..,;:ccc,.
+          ......''';lxO.
+.....''''..........,:ld;
+           .';;;:::;,,.x,
+      ..'''.            0Xxoc:,.  ...
+  ....                ,ONkc;,;cokOdc',.
+ .                   OMo           ':${c2}dd${c1}o.
+                    dMc               :OO;
+                    0M.                 .:o.
+                    ;Wd
+                     ;XO,
+                       ,d0Odlc;,..
+                           ..',;:cdOOd::,.
+                                    .:d;.':;.
+                                       'd,  .'
+                                         ;l   ..
+                                          .o
+                                            c
+                                            .'
+                                             .
+END
+        )";;
+
+        "kaos") ascii_art="$(cat <<'END'
+${c1}                     ..
+  .....         ..OSSAAAAAAA..
+ .KKKKSS.     .SSAAAAAAAAAAA.
+.KKKKKSO.    .SAAAAAAAAAA...
+KKKKKKS.   .OAAAAAAAA.
+KKKKKKS.  .OAAAAAA.
+KKKKKKS. .SSAA..
+.KKKKKS..OAAAAAAAAAAAA........
+ DKKKKO.=AA=========A===AASSSO..
+  AKKKS.==========AASSSSAAAAAASS.
+  .=KKO..========ASS.....SSSSASSSS.
+    .KK.       .ASS..O.. =SSSSAOSS:
+     .OK.      .ASSSSSSSO...=A.SSA.
+       .K      ..SSSASSSS.. ..SSA.
+                 .SSS.AAKAKSSKA.
+                    .SSS....S..
+END
+        )";;
+
+        "kde") ascii_art="$(cat <<'END'
+${c1}             `..---+/---..`
+         `---.``   ``   `.---.`
+      .--.`        ``        `-:-.
+    `:/:     `.----//----.`     :/-
+   .:.    `---`          `--.`    .:`
+  .:`   `--`                .:-    `:.
+ `/    `:.      `.-::-.`      -:`   `/`
+ /.    /.     `:++++++++:`     .:    .:
+`/    .:     `+++++++++++/      /`   `+`
+/+`   --     .++++++++++++`     :.   .+:
+`/    .:     `+++++++++++/      /`   `+`
+ /`    /.     `:++++++++:`     .:    .:
+ ./    `:.      `.:::-.`      -:`   `/`
+  .:`   `--`                .:-    `:.
+   .:.    `---`          `--.`    .:`
+    `:/:     `.----//----.`     :/-
+      .-:.`        ``        `-:-.
+         `---.``   ``   `.---.`
+             `..---+/---..`
+END
+        )";;
+
+        "kogaion") ascii_art="$(cat <<'END'
+${c1}            ;;      ,;
+           ;;;     ,;;
+         ,;;;;     ;;;;
+      ,;;;;;;;;    ;;;;
+     ;;;;;;;;;;;   ;;;;;
+    ,;;;;;;;;;;;;  ';;;;;,
+    ;;;;;;;;;;;;;;, ';;;;;;;
+    ;;;;;;;;;;;;;;;;;, ';;;;;
+;    ';;;;;;;;;;;;;;;;;;, ;;;
+;;;,  ';;;;;;;;;;;;;;;;;;;,;;
+;;;;;,  ';;;;;;;;;;;;;;;;;;,
+;;;;;;;;,  ';;;;;;;;;;;;;;;;,
+;;;;;;;;;;;;, ';;;;;;;;;;;;;;
+';;;;;;;;;;;;; ';;;;;;;;;;;;;
+ ';;;;;;;;;;;;;, ';;;;;;;;;;;
+  ';;;;;;;;;;;;;  ;;;;;;;;;;
+    ';;;;;;;;;;;; ;;;;;;;;
+        ';;;;;;;; ;;;;;;
+           ';;;;; ;;;;
+             ';;; ;;
+END
+        )";;
+
+        "korora") ascii_art="$(cat <<'END'
+${c2}                ____________
+             _add55555555554${c1}:
+           _w?'${c1}``````````'${c2})k${c1}:
+          _Z'${c1}`${c2}            ]k${c1}:
+          m(${c1}`${c2}             )k${c1}:
+     _.ss${c1}`${c2}m[${c1}`${c2},            ]e${c1}:
+   .uY"^`${c1}`${c2}Xc${c1}`${c2}?Ss.         d(${c1}`
+  jF'${c1}`${c2}    `@.  ${c1}`${c2}Sc      .jr${c1}`
+ jr${c1}`${c2}       `?n_ ${c1}`${c2}$;   _a2"${c1}`
+.m${c1}:${c2}          `~M${c1}`${c2}1k${c1}`${c2}5?!`${c1}`
+:#${c1}:${c2}             ${c1}`${c2})e${c1}```
+:m${c1}:${c2}             ,#'${c1}`
+:#${c1}:${c2}           .s2'${c1}`
+:m,________.aa7^${c1}`
+:#baaaaaaas!J'${c1}`
+ ```````````
+END
+        )";;
+
+        "kubuntu") ascii_art="$(cat <<'END'
+${c1}           `.:/ossyyyysso/:.
+        .:oyyyyyyyyyyyyyyyyyyo:`
+      -oyyyyyyyo-``/yyyyyyysyyyyo-
+    -syyyyyyyyyy`   +yyyy/` `/yyyys-
+   +yyys/./syyyy:    ..-`    /yyyyyy+
+ `oyyyy:   `:syys+oooo+:.   .yyyyyyyyo`
+ +yyyyyy/   `/yyyyyyyyyyys/` /sssssyyy+
+-yyyyyyyy- -syyyyyyyyyyyyyys-      syyy-
+oyyyyso+: .yyyyyyyyyyyyyyyyyy.   `.+yyyo
+yyys      /yyyyyyyyyyyyyyyyyysosyyyyyyyy
+yyys.`    /yyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+oyyyyyso: .yyyyyyyyyyyyyyyyyy.`.-:/syyyo
+-yyyyyyyy. -syyyyyyyyyyyyyys-      syyy-
+ +yyyyyy:   `syyyyyyyyyyys/` /o+++oyyy+
+ `oyyyy.   -syyy++oooo+/.   oyyyyyyyyo
+   +yyys/-oyyyys`   `..`    -yyyyyyy+
+    -syyyyyyyyy:   .syyy/`  `syyyys-
+      -oyyyyyyy:.`-yyyyyys+syyyyo-
+        ./oyyyyyyyyyyyyyyyyyyo/.
+           `.:/oosyyyysso/:.`
+END
+        )";;
+
+        "linux") ascii_art="$(cat <<'END'
+${c2}        #####
+${c2}       #######
+${c2}       ##${c1}O${c2}#${c1}O${c2}##
+${c2}       #${c3}#####${c2}#
+${c2}     ##${c1}##${c3}###${c1}##${c2}##
+${c2}    #${c1}##########${c2}##
+${c2}   #${c1}############${c2}##
+${c2}   #${c1}############${c2}###
+${c3}  ##${c2}#${c1}###########${c2}##${c3}#
+${c3}######${c2}#${c1}#######${c2}#${c3}######
+${c3}#######${c2}#${c1}#####${c2}#${c3}#######
+${c3}  #####${c2}#######${c3}#####
+END
+        )";;
+
+        "lmde") ascii_art="$(cat <<'END'
+         ${c2}`.-::---..
+${c1}      .:++++ooooosssoo:.
+    .+o++::.      `.:oos+.
+${c1}   :oo:.`             -+oo${c2}:
+${c1} ${c2}`${c1}+o/`    .${c2}::::::${c1}-.    .++-${c2}`
+${c1}${c2}`${c1}/s/    .yyyyyyyyyyo:   +o-${c2}`
+${c1}${c2}`${c1}so     .ss       ohyo` :s-${c2}:
+${c1}${c2}`${c1}s/     .ss  h  m  myy/ /s`${c2}`
+${c1}`s:     `oo  s  m  Myy+-o:`
+`oo      :+sdoohyoydyso/.
+ :o.      .:////////++:
+${c1} `/++        ${c2}-:::::-
+${c1}  ${c2}`${c1}++-
+${c1}   ${c2}`${c1}/+-
+${c1}     ${c2}.${c1}+/.
+${c1}       ${c2}.${c1}:+-.
+          `--.``
+END
+        )";;
+
+        "lubuntu") ascii_art="$(cat <<'END'
+${c1}           `-/+oyyhhhhyyo+/-`
+        ./shhhhhhhhhhhhhhhhhhs/.
+     `:shhhhhhhhhhhhhhhhhhhhhhhhs:`
+    :yhhhhhhhhhhhhhhhs++yhhhhhhhhhy:
+  `ohhhhhhhhhhhhhs+:. .yhhhhhhhhhhhho`
+ `shhhhhhhhhhy+:`     /yhhhhhhhhhhhhhs`
+ shhhhhhhhy+.          .ohhhhhhhhhhhhhs
+:hhhhhhy/.               /hhhhhhhhhhhhh:
+shhhy/.                   :hhhhhhhhhhhhs
+hy+.   `        `+yhs/`    +hhhhhhhhhhhh
+-.:/oshy-  `   :yhhhhhy/    shhhhhhhhhhh
+shhhhhy-`/s. .shhhhhhhhho`  .hhhhhhhhhhs
+:hhhho`:ys` /yhhhhhhhhhhhs`  +hhhhhhhhh:
+ shh/.sh+ `ohhhhhhhhhhhhhhs` .hhhhhhhhs
+ `o-+hh: :yhhhhhhhhhhhhhhhho  ohhhhhhs`
+   +hy-`ohhhhhhhhhhhhhhhhhhh+ -hhhhho`
+    :.-yhhhhhhhhhhhhhhhhhhhhh: yhhy:
+      :shhhhhhhhhhhhhhhhhhhhhy`+s:`
+        .+shhhhhhhhhhhhhhhhhhs:`
+           `-/+oyyhhhhyys+/-`
+END
+        )";;
+
+        "mac") ascii_art="$(cat <<'END'
+${c1}                -/+:.
+               :++++.
+              /+++/.
+      .:-::- .+/:-``.::-
+   .:/++++++/::::/++++++/:`
+${c2} .:///////////////////////:`
+ ////////////////////////`
+${c3}-+++++++++++++++++++++++`
+/++++++++++++++++++++++/
+${c4}/sssssssssssssssssssssss.
+:ssssssssssssssssssssssss-
+${c5} osssssssssssssssssssssssso/`
+ `syyyyyyyyyyyyyyyyyyyyyyyy+`
+${c6}  `ossssssssssssssssssssss/
+    :ooooooooooooooooooo+.
+     `:+oo+/:-..-:/+o+/-
+END
+        )";;
+
+        "mageia") ascii_art="$(cat <<'END'
+${c1}        .°°.
+         °°   .°°.
+         .°°°. °°
+         .   .
+          °°° .°°°.
+      .°°°.   '___'
+${c2}     .${c1}'___'     ${c2}   .
+   :dkxc;'.  ..,cxkd;
+ .dkk. kkkkkkkkkk .kkd.
+.dkk.  ';cloolc;.  .kkd
+ckk.                .kk;
+xO:                  cOd
+xO:                  lOd
+lOO.                .OO:
+.k00.              .00x
+ .k00;            ;00O.
+  .lO0Kc;,,,,,,;c0KOc.
+     ;d00KKKKKK00d;
+        .,KKKK,.
+END
+        )";;
+
+        "manjaro") ascii_art="$(cat <<'END'
+${c1}██████████████████  ████████
+██████████████████  ████████
+██████████████████  ████████
+██████████████████  ████████
+████████            ████████
+████████  ████████  ████████
+████████  ████████  ████████
+████████  ████████  ████████
+████████  ████████  ████████
+████████  ████████  ████████
+████████  ████████  ████████
+████████  ████████  ████████
+████████  ████████  ████████
+████████  ████████  ████████
+END
+        )";;
+
+        "maui") ascii_art="$(cat <<'END'
+${c1}             `.-://////:--`
+         .:/oooooooooooooooo+:.
+      `:+ooooooooooooooooooooooo:`
+    `:oooooooooooooooooooooooooooo/`
+    ..```-oooooo/-`` `:oooooo+:.` `--
+  :.      +oo+-`       /ooo/`       -/
+ -o.     `o+-          +o/`         -o:
+`oo`     ::`  :o/     `+.  .+o`     /oo.
+/o+      .  -+oo-     `   /oo/     `ooo/
++o-        /ooo+`       .+ooo.     :ooo+
+++       .+oooo:       -oooo+     `oooo+
+:.      .oooooo`      :ooooo-     :oooo:
+`      .oooooo:      :ooooo+     `ooo+-`
+      .+oooooo`     -oooooo:     `o/-
+      +oooooo:     .ooooooo.
+     /ooooooo`     /ooooooo/       ..
+    `:oooooooo/:::/ooooooooo+:--:/:`
+      `:+oooooooooooooooooooooo+:`
+         .:+oooooooooooooooo+:.
+             `.-://////:-.`
+END
+        )";;
+
+        "mer") ascii_art="$(cat <<'END'
+${c1}                         dMs
+                         .-`
+                       `y`-o+`
+                        ``NMMy
+                      .--`:++.
+                    .hNNNNs
+                    /MMMMMN
+                    `ommmd/ +/
+                      ````  +/
+                     `:+sssso/-`
+  .-::. `-::-`     `smNMNmdmNMNd/      .://-`
+.ymNMNNdmNMMNm+`  -dMMh:.....+dMMs   `sNNMMNo
+dMN+::NMMy::hMM+  mMMo `ohhy/ `dMM+  yMMy::-
+MMm   yMM-  :MMs  NMN` `:::::--sMMh  dMM`
+MMm   yMM-  -MMs  mMM+ `ymmdsymMMMs  dMM`
+NNd   sNN-  -NNs  -mMNs-.--..:dMMh`  dNN
+---   .--`  `--.   .smMMmdddmMNdo`   .--
+                     ./ohddds+:`
+                     +h- `.:-.
+                     ./`.dMMMN+
+                        +MMMMMd
+                        `+dmmy-
+                      ``` .+`
+                     .dMNo-y.
+                     `hmm/
+                         .:`
+                         dMs
+END
+        )";;
+
+        "minix") ascii_art="$(cat <<'END'
+${c2}   -sdhyo+:-`                -/syymm:
+   sdyooymmNNy.     ``    .smNmmdysNd
+   odyoso+syNNmysoyhhdhsoomNmm+/osdm/
+    :hhy+-/syNNmddhddddddmNMNo:sdNd:
+     `smNNdNmmNmddddddddddmmmmmmmy`
+   `ohhhhdddddmmNNdmddNmNNmdddddmdh-
+   odNNNmdyo/:/-/hNddNy-`..-+ydNNNmd:
+ `+mNho:`   smmd/ sNNh :dmms`   -+ymmo.
+-od/       -m${c1}mm${c2}mo -NN+ +m${c1}mm${c2}m-       yms:
++sms -.`    :so:  .NN+  :os/     .-`mNh:
+.-hyh+:////-     -sNNd:`    .--://ohNs-
+ `:hNNNNNNNMMd/sNMmhsdMMh/ymmNNNmmNNy/
+  -+sNNNNMMNNNsmNMo: :NNmymNNNNMMMms:
+    //oydNMMMMydMMNysNMMmsMMMMMNyo/`
+       ../-yNMMy--/::/-.sMMmos+.`
+           -+oyhNsooo+omy/```
+              `::ohdmds-`
+END
+        )";;
+
+        "mint") ascii_art="$(cat <<'END'
+${c1}MMMMMMMMMMMMMMMMMMMMMMMMMmds+.
+MMm----::-://////////////oymNMd+`
+MMd      ${c2}/++                ${c1}-sNMd:
+MMNso/`  ${c2}dMM    `.::-. .-::.` ${c1}.hMN:
+ddddMMh  ${c2}dMM   :hNMNMNhNMNMNh: ${c1}`NMm
+    NMm  ${c2}dMM  .NMN/-+MMM+-/NMN` ${c1}dMM
+    NMm  ${c2}dMM  -MMm  `MMM   dMM. ${c1}dMM
+    NMm  ${c2}dMM  -MMm  `MMM   dMM. ${c1}dMM
+    NMm  ${c2}dMM  .mmd  `mmm   yMM. ${c1}dMM
+    NMm  ${c2}dMM`  ..`   ...   ydm. ${c1}dMM
+    hMM- ${c2}+MMd/-------...-:sdds  ${c1}dMM
+    -NMm- ${c2}:hNMNNNmdddddddddy/`  ${c1}dMM
+     -dMNs-${c2}``-::::-------.``    ${c1}dMM
+      `/dMNmy+/:-------------:/yMMM
+         ./ydNMMMMMMMMMMMMMMMMMMMMM
+            .MMMMMMMMMMMMMMMMMMM
+END
+        )";;
+
+        "mx") ascii_art="$(cat <<'END'
+${c3}MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNMMMMMMMMM
+MMMMMMMMMMNs..yMMMMMMMMMMMMMm: +NMMMMMMM
+MMMMMMMMMN+    :mMMMMMMMMMNo` -dMMMMMMMM
+MMMMMMMMMMMs.   `oNMMMMMMh- `sNMMMMMMMMM
+MMMMMMMMMMMMN/    -hMMMN+  :dMMMMMMMMMMM
+MMMMMMMMMMMMMMh-    +ms. .sMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMN+`   `  +NMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMNMMd:    .dMMMMMMMMMMMMMMM
+MMMMMMMMMMMMm/-hMd-     `sNMMMMMMMMMMMMM
+MMMMMMMMMMNo`   -` :h/    -dMMMMMMMMMMMM
+MMMMMMMMMd:       /NMMh-   `+NMMMMMMMMMM
+MMMMMMMNo`         :mMMN+`   `-hMMMMMMMM
+MMMMMMh.            `oNMMd:    `/mMMMMMM
+MMMMm/                -hMd-      `sNMMMM
+MMNs`                   -          :dMMM
+Mm:                                 `oMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+END
+        )";;
+
+        "netbsd") ascii_art="$(cat <<'END'
+${c1}                     `-/oshdmNMNdhyo+:-`
+${c2}y${c1}/s+:-``    `.-:+oydNMMMMNhs/-``
+${c2}-m+${c1}NMMMMMMMMMMMMMMMMMMMNdhmNMMMmdhs+/-`
+ ${c2}-m+${c1}NMMMMMMMMMMMMMMMMMMMMmy+:`
+  ${c2}-N/${c1}dMMMMMMMMMMMMMMMds:`
+   ${c2}-N/${c1}hMMMMMMMMMmho:`
+    ${c2}-N/${c1}-:/++/:.`
+${c2}     :M+
+      :Mo
+       :Ms
+        :Ms
+         :Ms
+          :Ms
+           :Ms
+            :Ms
+             :Ms
+              :Ms
+END
+        )";;
+
+        "netrunner") ascii_art="$(cat <<'END'
+${c1}           .:oydmMMMMMMmdyo:`
+        -smMMMMMMMMMMMMMMMMMMds-
+      +mMMMMMMMMMMMMMMMMMMMMMMMMd+
+    /mMMMMMMMMMMMMMMMMMMMMMMMMMMMMm/
+  `hMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMy`
+ .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd`
+ dMMMMMMMMMMMMMMMMMMMMMMNdhmMMMMMMMMMMh
++MMMMMMMMMMMMMNmhyo+/-.   -MMMMMMMMMMMM/
+mMMMMMMMMd+:.`           `mMMMMMMMMMMMMd
+MMMMMMMMMMMdy/.          yMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMNh+`     +MMMMMMMMMMMMMMM
+mMMMMMMMMMMMMMMMMMs    -NMMMMMMMMMMMMMMd
++MMMMMMMMMMMMMMMMMN.  `mMMMMMMMMMMMMMMM/
+ dMMMMMMMMMMMMMMMMMy  hMMMMMMMMMMMMMMMh
+ `dMMMMMMMMMMMMMMMMM-+MMMMMMMMMMMMMMMd`
+  `hMMMMMMMMMMMMMMMMmMMMMMMMMMMMMMMMy
+    /mMMMMMMMMMMMMMMMMMMMMMMMMMMMMm:
+      +dMMMMMMMMMMMMMMMMMMMMMMMMd/
+        -odMMMMMMMMMMMMMMMMMMdo-
+           `:+ydmNMMMMNmhy+-`
+END
+        )";;
+
+        "nitrux") ascii_art="$(cat <<'END'
+${c1}`:/.
+`/yo
+`/yo
+`/yo      .+:.
+`/yo      .sys+:.`
+`/yo       `-/sys+:.`
+`/yo           ./sss+:.`
+`/yo              .:oss+:-`
+`/yo                 ./o///:-`
+`/yo              `.-:///////:`
+`/yo           `.://///++//-``
+`/yo       `.-:////++++/-`
+`/yo    `-://///++o+/-`
+`/yo `-/+o+++ooo+/-`
+`/s+:+oooossso/.`
+`//+sssssso:.
+`+syyyy+:`
+:+s+-
+END
+        )";;
+
+        "nixos") ascii_art="$(cat <<'END'
+${c1}          ::::.    ${c2}':::::     ::::'
+${c1}          ':::::    ${c2}':::::.  ::::'
+${c1}            :::::     ${c2}'::::.:::::
+${c1}      .......:::::..... ${c2}::::::::
+${c1}     ::::::::::::::::::. ${c2}::::::    ${c1}::::.
+    ::::::::::::::::::::: ${c2}:::::.  ${c1}.::::'
+${c2}           .....           ::::' ${c1}:::::'
+${c2}          :::::            '::' ${c1}:::::'
+${c2} ........:::::               ' ${c1}:::::::::::.
+${c2}:::::::::::::                 ${c1}:::::::::::::
+${c2} ::::::::::: ${c1}..              ${c1}:::::
+${c2}     .::::: ${c1}.:::            ${c1}:::::
+${c2}    .:::::  ${c1}:::::          ${c1}'''''    ${c2}.....
+    :::::   ${c1}':::::.  ${c2}......:::::::::::::'
+     :::     ${c1}::::::. ${c2}':::::::::::::::::'
+${c1}            .:::::::: ${c2}'::::::::::
+${c1}           .::::''::::.     ${c2}'::::.
+${c1}          .::::'   ::::.     ${c2}'::::.
+${c1}         .::::      ::::      ${c2}'::::.
+END
+        )";;
+
+        "obrevenge") ascii_art="$(cat <<'END'
+${c1}   __   __
+     _@@@@   @@@g_
+   _@@@@@@   @@@@@@
+  _@@@@@@M   W@@@@@@_
+ j@@@@P        ^W@@@@
+ @@@@L____  _____Q@@@@
+Q@@@@@@@@@@j@@@@@@@@@@
+@@@@@    T@j@    T@@@@@
+@@@@@ ___Q@J@    _@@@@@
+@@@@@fMMM@@j@jggg@@@@@@
+@@@@@    j@j@^MW@P @@@@
+Q@@@@@ggg@@f@   @@@@@@L
+^@@@@WWMMP  ^    Q@@@@
+ @@@@@_         _@@@@l
+  W@@@@@g_____g@@@@@P
+   @@@@@@@@@@@@@@@@l
+    ^W@@@@@@@@@@@P
+       ^TMMMMTll
+END
+        )";;
+
+        "openbsd") ascii_art="$(cat <<'END'
+                                    ${c3} _
+                                    (_)
+${c1}              |    .
+${c1}          .   |L  /|   .         ${c3} _
+${c1}      _ . |\ _| \--+._/| .       ${c3}(_)
+${c1}     / ||\| Y J  )   / |/| ./
+    J  |)'( |        ` F`.'/       ${c3} _
+${c1}  -<|  F         __     .-<        ${c3}(_)
+${c1}    | /       .-'${c3}. ${c1}`.  /${c3}-. ${c1}L___
+    J \      <    ${c3}\ ${c1} | | ${c5}O${c3}\${c1}|.-' ${c3} _
+${c1}  _J \  .-    \${c3}/ ${c5}O ${c3}| ${c1}| \  |${c1}F    ${c3}(_)
+${c1} '-F  -<_.     \   .-'  `-' L__
+__J  _   _.     >-'  ${c1})${c4}._.   ${c1}|-'
+${c1} `-|.'   /_.          ${c4}\_|  ${c1} F
+  /.-   .                _.<
+ /'    /.'             .'  `\
+  /L  /'   |/      _.-'-\
+ /'J       ___.---'\|
+   |\  .--' V  | `. `
+   |/`. `-.     `._)
+      / .-.\
+      \ (  `\
+       `.\nEND
+        )";;
+
+        "openbsd_small") ascii_art="$(cat <<'END'
+${c1}      _____
+    \-     -/
+ \_/         \
+ |        ${c2}O O${c1} |
+ |_  <   )  3 )
+ / \         /
+    /-_____-\
+END
+        )";;
+
+        "openindiana") ascii_art="$(cat <<'END'
+${c2}                         .sy/
+                         .yh+
+
+           ${c1}-+syyyo+-     ${c2} /+.
+         ${c1}+ddo/---/sdh/   ${c2} ym-
+       ${c1}`hm+        `sms${c2}   ym-```````.-.
+       ${c1}sm+           sm/ ${c2} ym-         +s
+       ${c1}hm.           /mo ${c2} ym-         /h
+       ${c1}omo           ym: ${c2} ym-       `os`
+        ${c1}smo`       .ym+ ${c2}  ym-     .os-
+     ``  ${c1}:ymy+///oyms- ${c2}   ym-  .+s+.
+   ..`     ${c1}`:+oo+/-`  ${c2}    -//oyo-
+ -:`                   .:oys/.
++-               `./oyys/.
+h+`      `.-:+oyyyo/-`
+`/ossssysso+/-.`
+END
+        )";;
+
+        "openmandriva") ascii_art="$(cat <<'END'
+${c2}                        ``
+                       `-.
+${c1}      `               ${c2}.---
+${c1}    -/               ${c2}-::--`
+${c1}  `++    ${c2}`----...```-:::::.
+${c1} `os.      ${c2}.::::::::::::::-```     `  `
+${c1} +s+         ${c2}.::::::::::::::::---...--`
+${c1}-ss:          ${c2}`-::::::::::::::::-.``.``
+${c1}/ss-           ${c2}.::::::::::::-.``   `
+${c1}+ss:          ${c2}.::::::::::::-
+${c1}/sso         ${c2}.::::::-::::::-
+${c1}.sss/       ${c2}-:::-.`   .:::::
+${c1} /sss+.    ${c2}..`${c1}  `--`    ${c2}.:::
+${c1}  -ossso+/:://+/-`        ${c2}.:`
+${c1}    -/+ooo+/-.              ${c2}`
+END
+        )";;
+
+        "openwrt") ascii_art="$(cat <<'END'
+${c1} _______
+|       |.-----.-----.-----.
+|   -   ||  _  |  -__|     |
+|_______||   __|_____|__|__|
+         |__|
+ ________        __
+|  |  |  |.----.|  |_
+|  |  |  ||   _||   _|
+|________||__|  |____|
+END
+        )";;
+
+        "oracle") ascii_art="$(cat <<'END'
+${c1}
+      `-/+++++++++++++++++/-.`
+   `/syyyyyyyyyyyyyyyyyyyyyyys/.
+  :yyyyo/-...............-/oyyyy/
+ /yyys-                     .oyyy+
+.yyyy`                       `syyy-
+:yyyo                         /yyy/
+.yyyy`                       `syyy-
+ /yyys.                     .oyyyo
+  /yyyyo:-...............-:oyyyy/`
+   `/syyyyyyyyyyyyyyyyyyyyyyys+.
+     `.:/+ooooooooooooooo+/:.`
+END
+        )";;
+
+        "osmc") ascii_art="$(cat <<'END'
+${c1}            -+shdmNNNNmdhs+-
+        .+hMNho/:..``..:/ohNMh+.
+      :hMdo.                .odMh:
+    -dMy-                      -yMd-
+   sMd-                          -dMs
+  hMy       +.            .+       yMh
+ yMy        dMs.        .sMd        yMy
+:Mm         dMNMs`    `sMNMd        `mM:
+yM+         dM//mNs``sNm//Md         +My
+mM-         dM:  +NNNN+  :Md         -Mm
+mM-         dM: `oNN+    :Md         -Mm
+yM+         dM/+NNo`     :Md         +My
+:Mm`        dMMNs`       :Md        `mM:
+ yMy        dMs`         -ms        yMy
+  hMy       +.                     yMh
+   sMd-                          -dMs
+    -dMy-                      -yMd-
+      :hMdo.                .odMh:
+        .+hMNho/:..``..:/ohNMh+.
+            -+shdmNNNNmdhs+-
+END
+        )";;
+
+        "pacbsd") ascii_art="$(cat <<'END'
+${c1}      :+sMs.
+  `:ddNMd-                         -o--`
+ -sMMMMh:                          `+N+``
+ yMMMMMs`     .....-/-...           `mNh/
+ yMMMMMmh+-`:sdmmmmmmMmmmmddy+-``./ddNMMm
+ yNMMNMMMMNdyyNNMMMMMMMMMMMMMMMhyshNmMMMm
+ :yMMMMMMMMMNdooNMMMMMMMMMMMMMMMMNmy:mMMd
+  +MMMMMMMMMmy:sNMMMMMMMMMMMMMMMMMMMmshs-
+  :hNMMMMMMN+-+MMMMMMMMMMMMMMMMMMMMMMMs.
+ .omysmNNhy/+yNMMMMMMMMMMNMMMMMMMMMNdNNy-
+ /hMM:::::/hNMMMMMMMMMMMm/-yNMMMMMMN.mMNh`
+.hMMMMdhdMMMMMMMMMMMMMMmo  `sMMMMMMN mMMm-
+:dMMMMMMMMMMMMMMMMMMMMMdo+  oMMMMMMN`smMNo`
+/dMMMMMMMMMMMMMMMMMMMMMNd/` :yMMMMMN:-hMMM.
+:dMMMMMMMMMMMMMMMMMMMMMNh`  oMMMMMMNo/dMNN`
+:hMMMMMMMMMMMMMMMMMMMMMMNs--sMMMMMMMNNmy++`
+ sNMMMMMMMMMMMMMMMMMMMMMMMmmNMMMMMMNho::o.
+ :yMMMMMMMMMMMMMNho+sydNNNNNNNmysso/` -//
+  /dMMMMMMMMMMMMMs-  ````````..``
+   .oMMMMMMMMMMMMNs`               ./y:`
+     +dNMMNMMMMMMMmy`          ``./ys.
+      `/hMMMMMMMMMMMNo-``    `.+yy+-`
+        `-/hmNMNMMMMMMmmddddhhy/-`
+            `-+oooyMMMdsoo+/:.
+END
+        )";;
+
+        "parabola") ascii_art="$(cat <<'END'
+${c1}                          `.-.    `.
+                   `.`  `:++.   `-+o+.
+             `` `:+/. `:+/.   `-+oooo+
+        ``-::-.:+/. `:+/.   `-+oooooo+
+    `.-:///-  ..`   .-.   `-+oooooooo-
+ `..-..`                 `+ooooooooo:
+``                        :oooooooo/
+                          `ooooooo:
+                          `oooooo:
+                          -oooo+.
+                          +ooo/`
+                         -ooo-
+                        `+o/.
+                        /+-
+                       //`
+                      -.
+END
+        )";;
+
+        "pardus") ascii_art="$(cat <<'END'
+${c1} .smNdy+-    `.:/osyyso+:.`    -+ydmNs.
+/Md- -/ymMdmNNdhso/::/oshdNNmdMmy/. :dM/
+mN.     oMdyy- -y          `-dMo     .Nm
+.mN+`  sMy hN+ -:             yMs  `+Nm.
+ `yMMddMs.dy `+`               sMddMMy`
+   +MMMo  .`  .                 oMMM+
+   `NM/    `````.`    `.`````    +MN`
+   yM+   `.-:yhomy    ymohy:-.`   +My
+   yM:          yo    oy          :My
+   +Ms         .N`    `N.      +h sM+
+   `MN      -   -::::::-   : :o:+`NM`
+    yM/    sh   -dMMMMd-   ho  +y+My
+    .dNhsohMh-//: /mm/ ://-yMyoshNd`
+      `-ommNMm+:/. oo ./:+mMNmmo:`
+     `/o+.-somNh- :yy: -hNmos-.+o/`
+    ./` .s/`s+sMdd+``+ddMs+s`/s. `/.
+        : -y.  -hNmddmNy.  .y- :
+         -+       `..`       +-
+END
+        )";;
+
+        "parrot") ascii_art="$(cat <<'END'
+${c1}  `:oho/-`
+`mMMMMMMMMMMMNmmdhy-
+ dMMMMMMMMMMMMMMMMMMs`
+ +MMsohNMMMMMMMMMMMMMm/
+ .My   .+dMMMMMMMMMMMMMh.
+  +       :NMMMMMMMMMMMMNo
+           `yMMMMMMMMMMMMMm:
+             /NMMMMMMMMMMMMMy`
+              .hMMMMMMMMMMMMMN+
+                  ``-NMMMMMMMMMd-
+                     /MMMMMMMMMMMs`
+                      mMMMMMMMsyNMN/
+                      +MMMMMMMo  :sNh.
+                      `NMMMMMMm     -o/
+                       oMMMMMMM.
+                       `NMMMMMM+
+                        +MMd/NMh
+                         mMm -mN`
+                         /MM  `h:
+                          dM`   .
+                          :M-
+                           d:
+                           -+
+                            -
+END
+        )";;
+
+        "pclinuxos") ascii_art="$(cat <<'END'
+            ${c1}mhhhyyyyhhhdN
+        dyssyhhhhhhhhhhhssyhN
+     Nysyhhyo/:-.....-/oyhhhssd
+   Nsshhy+.              `/shhysm
+  dohhy/                    -shhsy
+ dohhs`                       /hhys
+N+hho   ${c2}+ssssss+-   .+syhys+   ${c1}/hhsy
+ohhh`   ${c2}ymmo++hmm+`smmy/::+y`   ${c1}shh+
++hho    ${c2}ymm-  /mmy+mms          ${c1}:hhod
+/hh+    ${c2}ymmhhdmmh.smm/          ${c1}.hhsh
++hhs    ${c2}ymm+::-`  /mmy`    `    ${c1}/hh+m
+yyhh-   ${c2}ymm-       /dmdyosyd`  ${c1}`yhh+
+ ohhy`  ${c2}://`         -/+++/-   ${c1}ohhom
+ N+hhy-                      `shhoh
+   sshho.                  `+hhyom
+    dsyhhs/.            `:ohhhoy
+      dysyhhhso///://+syhhhssh
+         dhyssyhhhhhhyssyyhN
+              mddhdhdmN
+END
+        )";;
+
+        "peppermint") ascii_art="$(cat <<'END'
+${c1}          8ZZZZZZ${c2}MMMMM
+${c1}       .ZZZZZZZZZ${c2}MMMMMMM.
+${c2}     MM${c1}ZZZZZZZZZ${c2}MMMMMMM${c1}ZZZZ
+${c2}   MMMMM${c1}ZZZZZZZZ${c2}MMMMM${c1}ZZZZZZZM
+${c2}  MMMMMMM${c1}ZZZZZZZ${c2}MMMM${c1}ZZZZZZZZZ.
+${c2} MMMMMMMMM${c1}ZZZZZZ${c2}MMM${c1}ZZZZZZZZZZZI
+${c2}MMMMMMMMMMM${c1}ZZZZZZ${c2}MM${c1}ZZZZZZZZZZ${c2}MMM
+${c1}.ZZZ${c2}MMMMMMMMMM${c1}IZZ${c2}MM${c1}ZZZZZ${c2}MMMMMMMMM
+${c1}ZZZZZZZ${c2}MMMMMMMM${c1}ZZ${c2}M${c1}ZZZZ${c2}MMMMMMMMMMM
+${c1}ZZZZZZZZZZZZZZZZ${c2}M${c1}Z${c2}MMMMMMMMMMMMMMM
+${c1}.ZZZZZZZZZZZZZ${c2}MMM${c1}Z${c2}M${c1}ZZZZZZZZZZ${c2}MMMM
+${c1}.ZZZZZZZZZZZ${c2}MMM${c1}7ZZ${c2}MM${c1}ZZZZZZZZZZ7${c2}M
+${c1} ZZZZZZZZZ${c2}MMMM${c1}ZZZZ${c2}MMMM${c1}ZZZZZZZ77
+${c2}  MMMMMMMMMMMM${c1}ZZZZZ${c2}MMMM${c1}ZZZZZ77
+${c2}   MMMMMMMMMM${c1}7ZZZZZZ${c2}MMMMM${c1}ZZ77
+${c2}    .MMMMMMM${c1}ZZZZZZZZ${c2}MMMMM${c1}Z7Z
+${c2}      MMMMM${c1}ZZZZZZZZZ${c2}MMMMMMM
+${c1}        NZZZZZZZZZZZ${c2}MMMMM
+${c1}           ZZZZZZZZZ${c2}MM)
+END
+        )";;
+
+        "porteus") ascii_art="$(cat <<'END'
+${c1}             `.-:::-.`
+         -+ydmNNNNNNNmdy+-
+      .+dNmdhs+//////+shdmdo.
+    .smmy+-`             ./sdy:
+  `omdo.    `.-/+osssso+/-` `+dy.
+ `yms.   `:shmNmdhsoo++osyyo-``oh.
+ hm/   .odNmds/.`    ``.....:::-+s
+/m:  `+dNmy:`   `./oyhhhhyyooo++so
+ys  `yNmy-    .+hmmho:-.`     ```
+s:  yNm+`   .smNd+.
+`` /Nm:    +dNd+`
+   yN+   `smNy.
+   dm    oNNy`
+   hy   -mNm.
+   +y   oNNo
+   `y`  sNN:
+    `:  +NN:
+     `  .mNo
+         /mm`
+          /my`
+           .sy`
+             .+:
+                `
+END
+        )";;
+
+        "puppy") ascii_art="$(cat <<'END'
+${c1}           `-/osyyyysosyhhhhhyys+-
+  -ohmNNmh+/hMMMMMMMMNNNNd+dMMMMNM+
+ yMMMMNNmmddo/NMMMNNNNNNNNNo+NNNNNy
+.NNNNNNmmmddds:MMNNNNNNNNNNNh:mNNN/
+-NNNdyyyhdmmmd`dNNNNNmmmmNNmdd/os/
+.Nm+shddyooo+/smNNNNmmmmNh.   :mmd.
+ NNNNy:`   ./hmmmmmmmNNNN:     hNMh
+ NMN-    -++- +NNNNNNNNNNm+..-sMMMM-
+.MMo    oNNNNo hNNNNNNNNmhdNNNMMMMM+
+.MMs    /NNNN/ dNmhs+:-`  yMMMMMMMM+
+ mMM+     .. `sNN+.      hMMMMhhMMM-
+ +MMMmo:...:sNMMMMMms:` hMMMMm.hMMy
+  yMMMMMMMMMMMNdMMMMMM::/+o+//dMMd`
+   sMMMMMMMMMMN+:oyyo:sMMMNNMMMNy`
+    :mMMMMMMMMMMMmddNMMMMMMMMmh/
+      /dMMMMMMMMMMMMMMMMMMNdy/`
+        .+hNMMMMMMMMMNmdhs/.
+            .:/+ooo+/:-.
+END
+        )";;
+
+        "qubes") ascii_art="$(cat <<'END'
+${c1}               `..--..`
+            `.----------.`
+        `..----------------..`
+     `.------------------------.``
+ `..-------------....-------------..`
+.::----------..``    ``..----------:+:
+:////:----..`            `..---:/ossso
+:///////:`                  `/osssssso
+:///////:                    /ssssssso
+:///////:                    /ssssssso
+:///////:                    /ssssssso
+:///////:                    /ssssssso
+:///////:                    /ssssssso
+:////////-`                .:sssssssso
+:///////////-.`        `-/osssssssssso
+`//////////////:-```.:+ssssssssssssso-
+  .-://////////////sssssssssssssso/-`
+     `.:///////////sssssssssssssso:.
+         .-:///////ssssssssssssssssss/`
+            `.:////ssss+/+ssssssssssss.
+                `--//-    `-/osssso/.
+END
+        )";;
+
+        "raspbian") ascii_art="$(cat <<'END'
+${c1}  `.::///+:/-.        --///+//-:``
+ `+oooooooooooo:   `+oooooooooooo:
+  /oooo++//ooooo:  ooooo+//+ooooo.
+  `+ooooooo:-:oo-  +o+::/ooooooo:
+   `:oooooooo+``    `.oooooooo+-
+     `:++ooo/.        :+ooo+/.`
+        ${c2}...`  `.----.` ``..
+     .::::-``:::::::::.`-:::-`
+    -:::-`   .:::::::-`  `-:::-
+   `::.  `.--.`  `` `.---.``.::`
+       .::::::::`  -::::::::` `
+ .::` .:::::::::- `::::::::::``::.
+-:::` ::::::::::.  ::::::::::.`:::-
+::::  -::::::::.   `-::::::::  ::::
+-::-   .-:::-.``....``.-::-.   -::-
+ .. ``       .::::::::.     `..`..
+   -:::-`   -::::::::::`  .:::::`
+   :::::::` -::::::::::` :::::::.
+   .:::::::  -::::::::. ::::::::
+    `-:::::`   ..--.`   ::::::.
+      `...`  `...--..`  `...`
+            .::::::::::
+             `.-::::-`
+END
+        )";;
+
+        "redhat") ascii_art="$(cat <<'END'
+${c1}             `.-..........`
+            `////////::.`-/.
+            -: ....-////////.
+            //:-::///////////`
+     `--::: `-://////////////:
+     //////-    ``.-:///////// .`
+     `://////:-.`    :///////::///:`
+       .-/////////:---/////////////:
+          .-://////////////////////.
+${c2}         yMN+`.-${c1}::///////////////-`
+${c2}      .-`:NMMNMs`  `..-------..`
+       MN+/mMMMMMhoooyysshsss
+MMM    MMMMMMMMMMMMMMyyddMMM+
+ MMMM   MMMMMMMMMMMMMNdyNMMh`     hyhMMM
+  MMMMMMMMMMMMMMMMyoNNNMMM+.   MMMMMMMM
+   MMNMMMNNMMMMMNM+ mhsMNyyyyMNMMMMsMM
+END
+        )";;
+
+        "redstar") ascii_art="$(cat <<'END'
+${c1}                    ..
+                  .oK0l
+                 :0KKKKd.
+               .xKO0KKKKd
+              ,Od' .d0000l
+             .c;.   .'''...           ..'.
+.,:cloddxxxkkkkOOOOkkkkkkkkxxxxxxxxxkkkx:
+;kOOOOOOOkxOkc'...',;;;;,,,'',;;:cllc:,.
+ .okkkkd,.lko  .......',;:cllc:;,,'''''.
+   .cdo. :xd' cd:.  ..';'',,,'',,;;;,'.
+      . .ddl.;doooc'..;oc;'..';::;,'.
+        coo;.oooolllllllcccc:'.  .
+       .ool''lllllccccccc:::::;.
+       ;lll. .':cccc:::::::;;;;'
+       :lcc:'',..';::::;;;;;;;,,.
+       :cccc::::;...';;;;;,,,,,,.
+       ,::::::;;;,'.  ..',,,,'''.
+        ........          ......
+END
+        )";;
+
+        "rosa") ascii_art="$(cat <<'END'
+${c1}           ROSAROSAROSAROSAR
+        ROSA               AROS
+      ROS   SAROSAROSAROSAR   AROS
+    RO   ROSAROSAROSAROSAROSAR   RO
+  ARO  AROSAROSAROSARO      AROS  ROS
+ ARO  ROSAROS         OSAR   ROSA  ROS
+ RO  AROSA   ROSAROSAROSA    ROSAR  RO
+RO  ROSAR  ROSAROSAROSAR  R  ROSARO  RO
+RO  ROSA  AROSAROSAROSA  AR  ROSARO  AR
+RO AROS  ROSAROSAROSA   ROS  AROSARO AR
+RO AROS  ROSAROSARO   ROSARO  ROSARO AR
+RO  ROS  AROSAROS   ROSAROSA AROSAR  AR
+RO  ROSA  ROS     ROSAROSAR  ROSARO  RO
+ RO  ROS     AROSAROSAROSA  ROSARO  AR
+ ARO  ROSA   ROSAROSAROS   AROSAR  ARO
+  ARO  OROSA      R      ROSAROS  ROS
+    RO   AROSAROS   AROSAROSAR   RO
+     AROS   AROSAROSAROSARO   AROS
+        ROSA               SARO
+           ROSAROSAROSAROSAR
+END
+        )";;
+
+        "sabayon") ascii_art="$(cat <<'END'
+${c1}            ...........
+         ..             ..
+      ..                   ..
+    ..           ${c2}o           ${c1}..
+  ..            ${c2}:W'            ${c1}..
+ ..             ${c2}.d.             ${c1}..
+:.             ${c2}.KNO              ${c1}.:
+:.             ${c2}cNNN.             ${c1}.:
+:              ${c2}dXXX,              ${c1}:
+:   ${c2}.          dXXX,       .cd,   ${c1}:
+:   ${c2}'kc ..     dKKK.    ,ll;:'    ${c1}:
+:     ${c2}.xkkxc;..dkkkc',cxkkl       ${c1}:
+:.     ${c2}.,cdddddddddddddo:.       ${c1}.:
+ ..         ${c2}:lllllll:           ${c1}..
+   ..         ${c2}',,,,,          ${c1}..
+     ..                     ..
+        ..               ..
+          ...............
+END
+        )";;
+
+        "sailfishos") ascii_art="$(cat <<'END'
+${c1}              .+eWWW
+          .+ee+++eee      e.
+       .ee++eeeeeeee    +e.
+     .e++ee++eeeeeee+eee+e+
+    ee.e+.ee+eee++eeeeee+
+   W.+e.e+.e++ee+eee
+  W.+e.W.ee.W++ee'
+ +e.W W.e+.W.W+
+ W.e.+e.W W W.
+ e e e +e.W.W
+       .W W W.
+        W.+e.W.
+         W++e.ee+.
+          ++ +ee++eeeee++.
+          '     '+++e   'ee.
+                           ee
+                            ee
+                             e
+END
+        )";;
+
+        "salentos") ascii_art="$(cat <<'END'
+${c1}                 ``..``
+        .-:+oshdNMMMMMMNdhyo+:-.`
+  -oydmMMMMMMMMMMMMMMMMMMMMMMMMMMNdhs/
+${c4} +hdddm${c1}NMMMMMMMMMMMMMMMMMMMMMMMMN${c4}mdddh+`
+${c2}`MMMMMN${c4}mdddddm${c1}MMMMMMMMMMMM${c4}mdddddm${c3}NMMMMM-
+${c2} mMMMMMMMMMMMN${c4}ddddhyyhhddd${c3}NMMMMMMMMMMMM`
+${c2} dMMMMMMMMMMMMMMMMM${c4}oo${c3}MMMMMMMMMMMMMMMMMN`
+${c2} yMMMMMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMMMMMd
+${c2} +MMMMMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMMMMMy
+${c2} :MMMMMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMMMMMo
+${c2} .MMMMMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMMMMM/
+${c2} `NMMMMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMMMMM-
+${c2}  mMMMMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMMMMN`
+${c2}  hMMMMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMMMMm
+${c2}  /MMMMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMMMMy
+${c2}   .+hMMMMMMMMMMMMM${c4}hh${c3}MMMMMMMMMMMMMms:
+${c2}      `:smMMMMMMMMM${c4}hh${c3}MMMMMMMMMNh+.
+${c2}          .+hMMMMMM${c4}hh${c3}MMMMMMdo:
+${c2}             `:smMM${c4}yy${c3}MMNy/`
+                 ${c2}.- ${c4}`${c3}:.
+END
+        )";;
+
+        "scientific") ascii_art="$(cat <<'END'
+${c1}                 =/;;/-
+                +:    //
+               /;      /;
+              -X        H.
+.//;;;:;;-,   X=        :+   .-;:=;:;#;.
+M-       ,=;;;#:,      ,:#;;:=,       ,@
+:#           :#.=/++++/=.$=           #=
+ ,#;         #/:+/;,,/++:+/         ;+.
+   ,+/.    ,;@+,        ,#H;,    ,/+,
+      ;+;;/= @.  ${c3}.H${c2}#${c3}#X   ${c1}-X :///+;
+      ;+=;;;.@,  ${c2}.X${c3}M${c2}@$.  ${c1}=X.//;=#/.
+   ,;:      :@#=        =$H:     .+#-
+ ,#=         #;-///==///-//         =#,
+;+           :#-;;;:;;;;-X-           +:
+@-      .-;;;;M-        =M/;;;-.      -X
+ :;;::;;-.    #-        :+    ,-;;-;:==
+              ,X        H.
+               ;/      #=
+                //    +;
+                 '////'
+END
+        )";;
+
+        "slackware") ascii_art="$(cat <<'END'
+${c1}                  :::::::
+            :::::::::::::::::::
+         :::::::::::::::::::::::::
+       ::::::::${c2}cllcccccllllllll${c1}::::::
+    :::::::::${c2}lc               dc${c1}:::::::
+   ::::::::${c2}cl   clllccllll    oc${c1}:::::::::
+  :::::::::${c2}o   lc${c1}::::::::${c2}co   oc${c1}::::::::::
+ ::::::::::${c2}o    cccclc${c1}:::::${c2}clcc${c1}::::::::::::
+ :::::::::::${c2}lc        cclccclc${c1}:::::::::::::
+::::::::::::::${c2}lcclcc          lc${c1}::::::::::::
+::::::::::${c2}cclcc${c1}:::::${c2}lccclc     oc${c1}:::::::::::
+::::::::::${c2}o    l${c1}::::::::::${c2}l    lc${c1}:::::::::::
+ :::::${c2}cll${c1}:${c2}o     clcllcccll     o${c1}:::::::::::
+ :::::${c2}occ${c1}:${c2}o                  clc${c1}:::::::::::
+  ::::${c2}ocl${c1}:${c2}ccslclccclclccclclc${c1}:::::::::::::
+   :::${c2}oclcccccccccccccllllllllllllll${c1}:::::
+    ::${c2}lcc1lcccccccccccccccccccccccco${c1}::::
+      ::::::::::::::::::::::::::::::::
+        ::::::::::::::::::::::::::::
+           ::::::::::::::::::::::
+                ::::::::::::
+END
+        )";;
+
+        "slitaz") ascii_art="$(cat <<'END'
+${c1}        @    @(               @        
+      @@   @@                  @    @/ 
+     @@   @@                   @@   @@ 
+    @@  %@@                     @@   @@
+   @@  %@@@       @@@@@.       @@@@  @@
+  @@@    @@@@    @@@@@@@    &@@@    @@@
+   @@@@@@@ %@@@@@@@@@@@@ &@@@% @@@@@@@/
+       ,@@@@@@@@@@@@@@@@@@@@@@@@@      
+  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@/  
+@@@@@@.  @@@@@@@@@@@@@@@@@@@@@  /@@@@@@
+@@    @@@@@  @@@@@@@@@@@@,  @@@@@   @@@
+@@ @@@@.    @@@@@@@@@@@@@%    #@@@@ @@.
+@@ ,@@      @@@@@@@@@@@@@      @@@  @@ 
+@   @@.     @@@@@@@@@@@@@     @@@  *@  
+@    @@     @@@@@@@@@@@@      @@   @   
+      @      @@@@@@@@@.     #@         
+       @      ,@@@@@       @           
+END
+        )";;
+
+        "smartos") ascii_art="$(cat <<'END'
+${c1}yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+yyyys             oyyyyyyyyyyyyyyyy
+yyyys  yyyyyyyyy  oyyyyyyyyyyyyyyyy
+yyyys  yyyyyyyyy  oyyyyyyyyyyyyyyyy
+yyyys  yyyyyyyyy  oyyyyyyyyyyyyyyyy
+yyyys  yyyyyyyyy  oyyyyyyyyyyyyyyyy
+yyyys  yyyyyyyyyyyyyyyyyyyyyyyyyyyy
+yyyyy                         syyyy
+yyyyyyyyyyyyyyyyyyyyyyyyyyyy  syyyy
+yyyyyyyyyyyyyyyy  syyyyyyyyy  syyyy
+yyyyyyyyyyyyyyyy  oyyyyyyyyy  syyyy
+yyyyyyyyyyyyyyyy  oyyyyyyyyy  syyyy
+yyyyyyyyyyyyyyyy  syyyyyyyyy  syyyy
+yyyyyyyyyyyyyyyy              yyyyy
+yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+END
+        )";;
+
+        "solaris") ascii_art="$(cat <<'END'
+${c1}                 `-     `
+          `--    `+-    .:
+           .+:  `++:  -/+-     .
+    `.::`  -++/``:::`./+/  `.-/.
+      `++/-`.`          ` /++:`
+  ``   ./:`                .: `..`.-
+``./+/:-                     -+++:-
+    -/+`                      :.
+END
+        )";;
+
+        "solus") ascii_art="$(cat <<'END'
+${c2}            -```````````
+          `-+/------------.`
+       .---:mNo---------------.
+     .-----yMMMy:---------------.
+   `------oMMMMMm/----------------`
+  .------/MMMMMMMN+----------------.
+ .------/NMMMMMMMMm-+/--------------.
+`------/NMMMMMMMMMN-:mh/-------------`
+.-----/NMMMMMMMMMMM:-+MMd//oso/:-----.
+-----/NMMMMMMMMMMMM+--mMMMh::smMmyo:--
+----+NMMMMMMMMMMMMMo--yMMMMNo-:yMMMMd/.
+.--oMMMMMMMMMMMMMMMy--yMMMMMMh:-yMMMy-`
+`-sMMMMMMMMMMMMMMMMh--dMMMMMMMd:/Ny+y.
+`-/+osyhhdmmNNMMMMMm-/MMMMMMMmh+/ohm+
+  .------------:://+-/++++++${c1}oshddys:
+   -hhhhyyyyyyyyyyyhhhhddddhysssso-
+    `:ossssssyysssssssssssssssso:`
+      `:+ssssssssssssssssssss+-
+         `-/+ssssssssssso+/-`
+              `.-----..`
+END
+        )";;
+
+        "sparky") ascii_art="$(cat <<'END'
+${c1}
+           .            `-:-`
+          .o`       .-///-`
+         `oo`    .:/++:.
+         os+`  -/+++:` ``.........```
+        /ys+`./+++/-.-::::::----......``
+       `syyo`++o+--::::-::/+++/-``
+       -yyy+.+o+`:/:-:sdmmmmmmmmdy+-`
+::-`   :yyy/-oo.-+/`ymho++++++oyhdmdy/`
+`/yy+-`.syyo`+o..o--h..osyhhddhs+//osyy/`
+  -ydhs+-oyy/.+o.-: ` `  :/::+ydhy+```-os-
+   .sdddy::syo--/:.     `.:dy+-ohhho    ./:
+     :yddds/:+oo+//:-`- /+ +hy+.shhy:     ``
+      `:ydmmdysooooooo-.ss`/yss--oyyo
+        `./ossyyyyo+:-/oo:.osso- .oys
+       ``..-------::////.-oooo/   :so
+    `...----::::::::--.`/oooo:    .o:
+           ```````     ++o+:`     `:`
+                     ./+/-`        `
+                   `-:-.
+                   ``
+END
+        )";;
+
+        "steamos") ascii_art="$(cat <<'END'
+${c1}              .,,,,.
+        .,'onNMMMMMNNnn',.
+     .'oNMANKMMMMMMMMMMMNNn'.
+   .'ANMMMMMMMXKNNWWWPFFWNNMNn.
+  ;NNMMMMMMMMMMNWW'' ,.., 'WMMM,
+ ;NMMMMV+##+VNWWW' .+;'':+, 'WMW,
+,VNNWP+${c2}######${c1}+WW,  ${c2}+:    ${c1}:+, +MMM,
+'${c2}+#############,   +.    ,+' ${c1}+NMMM
+${c2}  '*#########*'     '*,,*' ${c1}.+NMMMM.
+${c2}     `'*###*'          ,.,;###${c1}+WNM,
+${c2}         .,;;,      .;##########${c1}+W
+${c2},',.         ';  ,+##############'
+ '###+. :,. .,; ,###############'
+  '####.. `'' .,###############'
+    '#####+++################'
+      '*##################*'
+         ''*##########*''
+              ''''''
+END
+        )";;
+
+        "suse") ascii_art="$(cat <<'END'
+${c2}           .;ldkO0000Okdl;.
+       .;d00xl:^''''''^:ok00d;.
+     .d00l'                'o00d.
+   .d0Kd'${c1}  Okxol:;,.          ${c2}:O0d.
+  .OK${c1}KKK0kOKKKKKKKKKKOxo:,      ${c2}lKO.
+ ,0K${c1}KKKKKKKKKKKKKKK0P^${c2},,,${c1}^dx:${c2}    ;00,
+.OK${c1}KKKKKKKKKKKKKKKk'${c2}.oOPPb.${c1}'0k.${c2}   cKO.
+:KK${c1}KKKKKKKKKKKKKKK: ${c2}kKx..dd ${c1}lKd${c2}   'OK:
+dKK${c1}KKKKKKKKKOx0KKKd ${c2}^0KKKO' ${c1}kKKc${c2}   dKd
+dKK${c1}KKKKKKKKKK;.;oOKx,..${c2}^${c1}..;kKKK0.${c2}  dKd
+:KK${c1}KKKKKKKKKK0o;...^cdxxOK0O/^^'  ${c2}.0K:
+ kKK${c1}KKKKKKKKKKKKK0x;,,......,;od  ${c2}lKk
+ '0K${c1}KKKKKKKKKKKKKKKKKKKK00KKOo^  ${c2}c00'
+  'kK${c1}KKOxddxkOO00000Okxoc;''   ${c2}.dKk'
+    l0Ko.                    .c00l'
+     'l0Kk:.              .;xK0l'
+        'lkK0xl:;,,,,;:ldO0kl'
+            '^:ldxkkkkxdl:^'
+END
+        )";;
+
+        "swagarch") ascii_art="$(cat <<'END'
+${c2}        .;ldkOKXXNNNNXXK0Oxoc,.
+   ,lkXMMNK0OkkxkkOKWMMMMMMMMMM;
+ 'K0xo  ..,;:c:.     `'lKMMMMM0
+     .lONMMMMMM'         `lNMk'
+${c2}    ;WMMMMMMMMMO.              ${c1}....::...
+${c2}    OMMMMMMMMMMMMKl.       ${c1}.,;;;;;ccccccc,
+${c2}    `0MMMMMMMMMMMMMM0:         ${c1}.. .ccccccc.
+${c2}      'kWMMMMMMMMMMMMMNo.   ${c1}.,:'  .ccccccc.
+${c2}        `c0MMMMMMMMMMMMMN,${c1},:c;    :cccccc:
+${c2} ckl.      `lXMMMMMMMMMX${c1}occcc:.. ;ccccccc.
+${c2}dMMMMXd,     `OMMMMMMWk${c1}ccc;:''` ,ccccccc:
+${c2}XMMMMMMMWKkxxOWMMMMMNo${c1}ccc;     .cccccccc.
+${c2} `':ldxO0KXXXXXK0Okdo${c1}cccc.     :cccccccc.
+                    :ccc:'     `cccccccc:,
+                                   ''
+END
+        )";;
+
+        "tails") ascii_art="$(cat <<'END'
+${c1}      ``
+  ./yhNh
+syy/Nshh         `:o/
+N:dsNshh  █   `ohNMMd
+N-/+Nshh      `yMMMMd
+N-yhMshh       yMMMMd
+N-s:hshh  █    yMMMMd so//.
+N-oyNsyh       yMMMMd d  Mms.
+N:hohhhd:.     yMMMMd  syMMM+
+Nsyh+-..+y+-   yMMMMd   :mMM+
++hy-      -ss/`yMMMM     `+d+
+  :sy/.     ./yNMMMMm      ``
+    .+ys- `:+hNMMMMMMy/`
+      `hNmmMMMMMMMMMMMMdo.
+       dMMMMMMMMMMMMMMMMMNh:
+       +hMMMMMMMMMMMMMMMMMmy.
+         -oNMMMMMMMMMMmy+.`
+           `:yNMMMds/.`
+              .//`
+END
+        )";;
+
+        "trisquel") ascii_art="$(cat <<'END'
+${c1}                         ▄▄▄▄▄▄
+                      ▄█████████▄
+      ▄▄▄▄▄▄         ████▀   ▀████
+   ▄██████████▄     ████▀   ▄▄ ▀███
+ ▄███▀▀   ▀▀████     ███▄   ▄█   ███
+▄███   ▄▄▄   ████▄    ▀██████   ▄███
+███   █▀▀██▄  █████▄     ▀▀   ▄████
+▀███      ███  ███████▄▄  ▄▄██████
+${c1} ▀███▄   ▄███  █████████████${c2}████▀
+${c1}  ▀█████████    ███████${c2}███▀▀▀
+    ▀▀███▀▀     ██████▀▀
+               ██████▀   ▄▄▄▄
+              █████▀   ████████
+              █████   ███▀  ▀███
+               ████▄   ██▄▄▄  ███
+                █████▄   ▀▀  ▄██
+                  ██████▄▄▄████
+                     ▀▀█████▀▀
+END
+        )";;
+
+        "trueos") ascii_art="$(cat <<'END'
+${c1}                       ..
+                        s.
+                        +y
+                        yN
+                       -MN  `.
+                      :NMs `m
+                    .yMMm` `No
+            `-/+++sdMMMNs+-`+Ms
+        `:oo+-` .yMMMMy` `-+oNMh
+      -oo-     +NMMMM/       oMMh-
+    .s+` `    oMMMMM/     -  oMMMhy.
+   +s`- ::   :MMMMMd     -o `mMMMy`s+
+  y+  h .Ny+oNMMMMMN/    sh+NMMMMo  +y
+ s+ .ds  -NMMMMMMMMMMNdhdNMMMMMMh`   +s
+-h .NM`   `hMMMMMMMMMMMMMMNMMNy:      h-
+y- hMN`     hMMmMMMMMMMMMNsdMNs.      -y
+m` mMMy`    oMMNoNMMMMMMo`  sMMMo     `m
+m` :NMMMdyydMMMMo+MdMMMs     sMMMd`   `m
+h-  `+ymMMMMMMMM--M+hMMN/    +MMMMy   -h
+:y     `.sMMMMM/ oMM+.yMMNddNMMMMMm   y:
+ y:   `s  dMMN- .MMMM/ :MMMMMMMMMMh  :y
+ `h:  `mdmMMM/  yMMMMs  sMMMMMMMMN- :h`
+   so  -NMMMN   /mmd+  `dMMMMMMMm- os
+    :y: `yMMM`       `+NMMMMMMNo`:y:
+      /s+`.omy      /NMMMMMNh/.+s:
+        .+oo:-.     /mdhs+::oo+.
+            -/o+++++++++++/-
+END
+        )";;
+
+        "ubuntu") ascii_art="$(cat <<'END'
+${c1}            .-/+oossssoo+/-.
+        `:+ssssssssssssssssss+:`
+      -+ssssssssssssssssssyyssss+-
+    .ossssssssssssssssss${c2}dMMMNy${c1}sssso.
+   /sssssssssss${c2}hdmmNNmmyNMMMMh${c1}ssssss/
+  +sssssssss${c2}hm${c1}yd${c2}MMMMMMMNddddy${c1}ssssssss+
+ /ssssssss${c2}hNMMM${c1}yh${c2}hyyyyhmNMMMNh${c1}ssssssss/
+.ssssssss${c2}dMMMNh${c1}ssssssssss${c2}hNMMMd${c1}ssssssss.
++ssss${c2}hhhyNMMNy${c1}ssssssssssss${c2}yNMMMy${c1}sssssss+
+oss${c2}yNMMMNyMMh${c1}ssssssssssssss${c2}hmmmh${c1}ssssssso
+oss${c2}yNMMMNyMMh${c1}sssssssssssssshmmmh${c1}ssssssso
++ssss${c2}hhhyNMMNy${c1}ssssssssssss${c2}yNMMMy${c1}sssssss+
+.ssssssss${c2}dMMMNh${c1}ssssssssss${c2}hNMMMd${c1}ssssssss.
+ /ssssssss${c2}hNMMM${c1}yh${c2}hyyyyhdNMMMNh${c1}ssssssss/
+  +sssssssss${c2}dm${c1}yd${c2}MMMMMMMMddddy${c1}ssssssss+
+   /sssssssssss${c2}hdmNNNNmyNMMMMh${c1}ssssss/
+    .ossssssssssssssssss${c2}dMMMNy${c1}sssso.
+      -+sssssssssssssssss${c2}yyy${c1}ssss+-
+        `:+ssssssssssssssssss+:`
+            .-/+oossssoo+/-.
+END
+        )";;
+
+        "ubuntu-budgie") ascii_art="$(cat <<'END'
+${c2}           ./oydmMMMMMMmdyo/.
+        :smMMMMMMMMMMMhs+:++yhs:
+     `omMMMMMMMMMMMN+`        `odo`
+    /NMMMMMMMMMMMMN-            `sN/
+  `hMMMMmhhmMMMMMMh               sMh`
+ .mMmo-     /yMMMMm`              `MMm.
+ mN/       yMMMMMMMd-              MMMm
+oN-        oMMMMMMMMMms+//+o+:    :MMMMo
+m/          +NMMMMMMMMMMMMMMMMm. :NMMMMm
+M`           .NMMMMMMMMMMMMMMMNodMMMMMMM
+M-            sMMMMMMMMMMMMMMMMMMMMMMMMM
+mm`           mMMMMMMMMMNdhhdNMMMMMMMMMm
+oMm/        .dMMMMMMMMh:      :dMMMMMMMo
+ mMMNyo/:/sdMMMMMMMMM+          sMMMMMm
+ .mMMMMMMMMMMMMMMMMMs           `NMMMm.
+  `hMMMMMMMMMMM.oo+.            `MMMh`
+    /NMMMMMMMMMo                sMN/
+     `omMMMMMMMMy.            :dmo`
+        :smMMMMMMMh+-`   `.:ohs:
+           ./oydmMMMMMMdhyo/.
+END
+        )";;
+
+        "ubuntu-gnome") ascii_art="$(cat <<'END'
+${c3}          ./o.
+        .oooooooo
+      .oooo```soooo
+    .oooo`     `soooo
+   .ooo`   ${c4}.o.${c3}   `\/ooo.
+   :ooo   ${c4}:oooo.${c3}   `\/ooo.
+    sooo    ${c4}`ooooo${c3}    \/oooo
+     \/ooo    ${c4}`soooo${c3}    `ooooo
+      `soooo    ${c4}`\/ooo${c3}    `soooo
+${c4}./oo    ${c3}`\/ooo    ${c4}`/oooo.${c3}   `/ooo
+${c4}`\/ooo.   ${c3}`/oooo.   ${c4}`/oooo.${c3}   ``
+${c4}  `\/ooo.    ${c3}/oooo     ${c4}/ooo`
+${c4}     `ooooo    ${c3}``    ${c4}.oooo
+${c4}       `soooo.     .oooo`
+         `\/oooooooooo`
+            ``\/oo``
+END
+        )";;
+
+        "ubuntu-mate") ascii_art="$(cat <<'END'
+${c1}           `:+shmNNMMNNmhs+:`
+        .odMMMMMMMMMMMMMMMMMMdo.
+      /dMMMMMMMMMMMMMMMmMMMMMMMMd/
+    :mMMMMMMMMMMMMNNNNM/`/yNMMMMMMm:
+  `yMMMMMMMMMms:..-::oM:    -omMMMMMy`
+ `dMMMMMMMMy-.odNMMMMMM:    -odMMMMMMd`
+ hMMMMMMMm-.hMMy/....+M:`/yNm+mMMMMMMMh
+/MMMMNmMN-:NMy`-yNMMMMMmNyyMN:`dMMMMMMM/
+hMMMMm -odMMh`sMMMMMMMMMMs sMN..MMMMMMMh
+NMMMMm    `/yNMMMMMMMMMMMM: MM+ mMMMMMMN
+NMMMMm    `/yNMMMMMMMMMMMM: MM+ mMMMMMMN
+hMMMMm -odMMh sMMMMMMMMMMs oMN..MMMMMMMh
+/MMMMNNMN-:NMy`-yNMMMMMNNsyMN:`dMMMMMMM/
+ hMMMMMMMm-.hMMy/....+M:.+hNd+mMMMMMMMh
+ `dMMMMMMMMy-.odNMMMMMM:    :smMMMMMMd`
+   yMMMMMMMMMms/..-::oM:    .+dMMMMMy
+    :mMMMMMMMMMMMMNNNNM: :smMMMMMMm:
+      /dMMMMMMMMMMMMMMMdNMMMMMMMd/
+        .odMMMMMMMMMMMMMMMMMMdo.
+           `:+shmNNMMNNmhs+:`
+END
+        )";;
+
+        "ubuntu-studio") ascii_art="$(cat <<'END'
+${c1}              ..-::::::-.`
+         `.:+++++++++++${c2}ooo${c1}++:.`
+       ./+++++++++++++${c2}sMMMNdyo${c1}+/.
+     .++++++++++++++++${c2}oyhmMMMMms${c1}++.
+   `/+++++++++${c2}osyhddddhys${c1}+${c2}osdMMMh${c1}++/`
+  `+++++++++${c2}ydMMMMNNNMMMMNds${c1}+${c2}oyyo${c1}++++`
+  +++++++++${c2}dMMNhso${c1}++++${c2}oydNMMmo${c1}++++++++`
+ :+${c2}odmy${c1}+++${c2}ooysoohmNMMNmyoohMMNs${c1}+++++++:
+ ++${c2}dMMm${c1}+${c2}oNMd${c1}++${c2}yMMMmhhmMMNs+yMMNo${c1}+++++++
+`++${c2}NMMy${c1}+${c2}hMMd${c1}+${c2}oMMMs${c1}++++${c2}sMMN${c1}++${c2}NMMs${c1}+++++++.
+`++${c2}NMMy${c1}+${c2}hMMd${c1}+${c2}oMMMo${c1}++++${c2}sMMN${c1}++${c2}mMMs${c1}+++++++.
+ ++${c2}dMMd${c1}+${c2}oNMm${c1}++${c2}yMMNdhhdMMMs${c1}+y${c2}MMNo${c1}+++++++
+ :+${c2}odmy${c1}++${c2}oo${c1}+${c2}ss${c1}+${c2}ohNMMMMmho${c1}+${c2}yMMMs${c1}+++++++:
+  +++++++++${c2}hMMmhs+ooo+oshNMMms${c1}++++++++
+  `++++++++${c2}oymMMMMNmmNMMMMmy+oys${c1}+++++`
+   `/+++++++++${c2}oyhdmmmmdhso+sdMMMs${c1}++/
+     ./+++++++++++++++${c2}oyhdNMMMms${c1}++.
+       ./+++++++++++++${c2}hMMMNdyo${c1}+/.
+         `.:+++++++++++${c2}sso${c1}++:.
+              ..-::::::-..
+END
+        )";;
+
+        "ubuntu_old") ascii_art="$(cat <<'END'
+
+${c1}                         ./+o+-
+${c2}                 yyyyy- ${c1}-yyyyyy+
+${c2}              ${c2}://+//////${c1}-yyyyyyo
+${c3}          .++ ${c2}.:/++++++/-${c1}.+sss/`
+${c3}        .:++o:  ${c2}/++++++++/:--:/-
+${c3}       o:+o+:++.${c2}`..```.-/oo+++++/
+${c3}      .:+o:+o/.${c2}          `+sssoo+/
+${c2} .++/+:${c3}+oo+o:`${c2}             /sssooo.
+${c2}/+++//+:${c3}`oo+o${c2}               /::--:.
+${c2}+/+o+++${c3}`o++o${c1}               ++////.
+${c2} .++.o+${c3}++oo+:`${c1}             /dddhhh.
+${c3}      .+.o+oo:.${c1}          `oddhhhh+
+${c3}       +.++o+o`${c1}`-````.:ohdhhhhh+
+${c3}        `:o+++ ${c1}`ohhhhhhhhyo++os:
+${c3}          .o:${c1}`.syhhhhhhh/${c3}.oo++o`
+${c1}              /osyyyyyyo${c3}++ooo+++/
+${c1}                  ````` ${c3}+oo+++o:
+${c3}                         `oo++.
+END
+        )";;
+
+        "void") ascii_art="$(cat <<'END'
+${c1}                __.;=====;.__
+            _.=+==++=++=+=+===;.
+             -=+++=+===+=+=+++++=_
+        .     -=:``     `--==+=++==.
+       _vi,    `            --+=++++:
+      .uvnvi.       _._       -==+==+.
+     .vvnvnI`    .;==|==;.     :|=||=|.
+${c2}+QmQQm${c1}pvvnv; ${c2}_yYsyQQWUUQQQm #QmQ#${c1}:${c2}QQQWUV$QQmL
+${c2} -QQWQW${c1}pvvo${c2}wZ?.wQQQE${c1}==<${c2}QWWQ/QWQW.QQWW${c1}(: ${c2}jQWQE
+${c2}  -$QQQQmmU'  jQQQ@${c1}+=<${c2}QWQQ)mQQQ.mQQQC${c1}+;${c2}jWQQ@'
+${c2}   -$WQ8Y${c1}nI:   ${c2}QWQQwgQQWV${c1}`${c2}mWQQ.jQWQQgyyWW@!
+${c1}     -1vvnvv.     `~+++`        ++|+++
+      +vnvnnv,                 `-|===
+       +vnvnvns.           .      :=-
+        -Invnvvnsi..___..=sv=.     `
+          +Invnvnvnnnnnnnnvvnn;.
+            ~|Invnvnvvnvvvnnv}+`
+               -~|{*l}*|~
+END
+        )";;
+
+        "void_small") ascii_art="$(cat <<'END'
+${c1}    _______
+ _ \______ -
+| \  ___  \ |
+| | /   \ | |
+| | \___/ | |
+| \______ \_|
+ -_______\nEND
+        )";;
+
+        "windows") ascii_art="$(cat <<'END'
+${c1}        ,.=:!!t3Z3z.,
+       :tt:::tt333EE3
+${c1}       Et:::ztt33EEEL${c2} @Ee.,      ..,
+${c1}      ;tt:::tt333EE7${c2} ;EEEEEEttttt33#
+${c1}     :Et:::zt333EEQ.${c2} $EEEEEttttt33QL
+${c1}     it::::tt333EEF${c2} @EEEEEEttttt33F
+${c1}    ;3=*^```"*4EEV${c2} :EEEEEEttttt33@.
+${c3}    ,.=::::!t=., ${c1}`${c2} @EEEEEEtttz33QF
+${c3}   ;::::::::zt33)${c2}   "4EEEtttji3P*
+${c3}  :t::::::::tt33.${c4}:Z3z..${c2}  ``${c4} ,..g.
+${c3}  i::::::::zt33F${c4} AEEEtttt::::ztF
+${c3} ;:::::::::t33V${c4} ;EEEttttt::::t3
+${c3} E::::::::zt33L${c4} @EEEtttt::::z3F
+${c3}{3=*^```"*4E3)${c4} ;EEEtttt:::::tZ`
+${c3}             `${c4} :EEEEtttt::::z7
+                 "VEzjt:;;z>*`
+END
+        )";;
+
+        "windows10") ascii_art="$(cat <<'END'
+${c1}                                ..,
+                    ....,,:;+ccllll
+      ...,,+:;  cllllllllllllllllll
+,cclllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+`'ccllllllllll  lllllllllllllllllll
+       `' \*::  :ccllllllllllllllll
+                       ````''*::cll
+                                 ``
+END
+        )";;
+
+        "xubuntu") ascii_art="$(cat <<'END'
+${c1}           `-/osyhddddhyso/-`
+        .+yddddddddddddddddddy+.
+      :yddddddddddddddddddddddddy:
+    -yddddddddddddddddddddhdddddddy-
+   odddddddddddyshdddddddh`dddd+ydddo
+ `yddddddhshdd-   ydddddd+`ddh.:dddddy`
+ sddddddy   /d.   :dddddd-:dy`-ddddddds
+:ddddddds    /+   .dddddd`yy`:ddddddddd:
+sdddddddd`    .    .-:/+ssdyodddddddddds
+ddddddddy                  `:ohddddddddd
+dddddddd.                      +dddddddd
+sddddddy                        ydddddds
+:dddddd+                      .oddddddd:
+ sdddddo                   ./ydddddddds
+ `yddddd.              `:ohddddddddddy`
+   oddddh/`      `.:+shdddddddddddddo
+    -ydddddhyssyhdddddddddddddddddy-
+      :yddddddddddddddddddddddddy:
+        .+yddddddddddddddddddy+.
+           `-/osyhddddhyso/-`
+END
+        )";;
+
+        "zorin") ascii_art="$(cat <<'END'
+${c1}        `osssssssssssssssssssso`
+       .osssssssssssssssssssssso.
+      .+oooooooooooooooooooooooo+.
+
+
+  `::::::::::::::::::::::.         .:`
+ `+ssssssssssssssssss+:.`     `.:+ssso`
+.ossssssssssssssso/.       `-+ossssssso.
+ssssssssssssso/-`      `-/osssssssssssss
+.ossssssso/-`      .-/ossssssssssssssso.
+ `+sss+:.      `.:+ssssssssssssssssss+`
+  `:.         .::::::::::::::::::::::`
+
+
+      .+oooooooooooooooooooooooo+.
+       -osssssssssssssssssssssso-
+        `osssssssssssssssssssso`
+END
+        )";;
+    esac
+}
+
 set_colors() {
     c1="$(color "$1")${ascii_bold}"
     c2="$(color "$2")${ascii_bold}"
@@ -3625,8 +6123,9 @@ get_user_config() {
     if [ -f "$config_file" ]; then
         . "$config_file"
         err "Config: Sourced user config.    (${config_file})"
+        old_options # todo: rm this
+        return
     fi
-    old_options # todo: rm this
 }
 
 bar() {
@@ -3918,7 +6417,7 @@ Neofetch is a CLI system information tool written in BASH. Neofetch
 displays information about your system next to an image, your OS logo,
 or any ASCII file of your choice.
 
-Neofetch-Sh is portable and POSIX compliant version of the tool.
+Neofetch-Sh is a POSIX-compliant version of the tool.
 
 NOTE: Every launch flag has a config option.
 
@@ -4322,6 +6821,7 @@ main() {
     get_distro 2>/dev/null
     get_bold
     get_distro_colors
+    get_distro_art
 
     # Minix doesn't support these sequences.
     if [ "$TERM" != "minix" ]; then
