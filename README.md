@@ -1,3 +1,14 @@
+## Neofetch-One
+
+A clone of Neofetch where similar to screenFetch everything is in a single file.
+
+That allows the following simple retrieval and usage:
+
+```Shell
+curl -L https://ptpb.pw/Cql8 > neofetch
+bash ./neofetch
+```
+
 # Neofetch
 
 [![Gitter](https://badges.gitter.im/dylanaraps/fetch.svg)](https://gitter.im/dylanaraps/fetch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)

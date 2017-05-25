@@ -6412,6 +6412,9 @@ Neofetch is a CLI system information tool written in BASH. Neofetch
 displays information about your system next to an image, your OS logo,
 or any ASCII file of your choice.
 
+Neofetch-One is a simplified version of the tool, where config
+and ASCII art are integrated into a single file.
+
 NOTE: Every launch flag has a config option.
 
 Options:
@@ -6592,6 +6595,8 @@ OTHER:
 
 
 Report bugs to https://github.com/konfou/neofetch-sh/issues
+or directly to https://github.com/dylanaraps/neofetch/issues
+if you know it isn't a problem of modifications done in Nf-One.
 
 "
 exit 1
@@ -6621,6 +6626,7 @@ Written by Dylan Araps with help from the following people:
 
 https://github.com/dylanaraps/neofetch/contributors
 
+It has been modified by Konstantinos Foutzopoulos.
 "
 exit 1
 }
