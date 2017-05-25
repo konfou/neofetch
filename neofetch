@@ -212,6 +212,9 @@ get_distro() {
             elif type -p tazpkg >/dev/null; then
                 distro="SliTaz $(< /etc/slitaz-release)"
 
+            elif type -p kpm > /dev/null; then
+                distro="KSLinux"
+
             elif [[ -d "/system/app/" && -d "/system/priv-app" ]]; then
                 distro="Android $(getprop ro.build.version.release)"
 
@@ -543,6 +546,9 @@ get_packages() {
 
             type -p dpkg >/dev/null && \
                 packages="$((packages+=$(dpkg --get-selections | grep -cv deinstall$)))"
+
+            type -p kpm >/dev/null && \
+                packages="$((packages+=$(kpm --get-selections | grep -cv deinstall$)))"
 
             type -p pkgtool >/dev/null && \
                 packages="$((packages+=$(ls -1 /var/log/packages | wc -l)))"
@@ -1743,7 +1749,6 @@ get_term() {
     while [[ -z "$term" ]]; do
         parent="$(get_ppid "$parent")"
         name="$(get_process_name "$parent")"
-
         case "${name// }" in
             "${SHELL/*\/}" | *"sh" | "tmux"* | "screen" | "su"*) ;;
             "login"* | *"Login"* | "init" | "(init)") term="$(tty)" ;;
@@ -3158,6 +3163,11 @@ get_distro_colors() {
         "Korora"*)
             set_colors 4 7 1
             ascii_file="korora"
+        ;;
+
+        "KSLinux"*)
+            set_colors 4 7 1
+            ascii_file="kslinux"
         ;;
 
         "Kubuntu"*)
@@ -4584,6 +4594,20 @@ ${c2}                ____________
 :#baaaaaaas!J'${c1}`
  ```````````
 END
+        )";;
+
+        "kslinux") ascii_art="$(cat <<'END'
+${c1} K   K U   U RRRR   ooo 
+ K  K  U   U R   R o   o
+ KKK   U   U RRRR  o   o
+ K  K  U   U R  R  o   o
+ K   K  UUU  R   R  ooo 
+
+${c2}  SSS   AAA  W   W  AAA 
+ S     A   A W   W A   A
+  SSS  AAAAA W W W AAAAA
+     S A   A WW WW A   A
+  SSS  A   A W   W A   A
         )";;
 
         "kubuntu") ascii_art="$(cat <<'END'
