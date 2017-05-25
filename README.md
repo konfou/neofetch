@@ -12,8 +12,8 @@ sh ./neofetch
 Where `sh` could or couldn't be just a symlink to `bash`. If you want to check for POSIX-compliance use `dash`.
 
 This isn't a serious project as Neofetch already works great and `bash` usually is or can easily be ported everywhere.
-Also it is far slower than as many builtins had to be switched to external cat/awk/sed calls.
-Alternatively you may prefer [Neofetch-One](/konfou/neofetch-sh/tree/the_one).
+Also it is far slower as many builtins had to be switched to external cat/awk/sed calls.
+Alternatively you may prefer [Neofetch-One](https://konfou/neofetch-sh/tree/the_one).
 A clone which simply combines config+ascii in a singe file and it is only a curl away.
 
 **References used**:
